@@ -155,12 +155,10 @@ section{padding:90px 5%;}
 .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:70px;align-items:center;margin-top:50px;}
 .about-photo{
   width:100%;aspect-ratio:3/4;border-radius:20px;overflow:hidden;
-  background:linear-gradient(145deg,rgba(124,58,237,.2),rgba(201,150,58,.1));
   border:1px solid rgba(201,150,58,.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;color:var(--muted);text-align:center;padding:20px;
   position:relative;
 }
+.about-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
 .about-photo-placeholder{
   display:flex;flex-direction:column;align-items:center;gap:12px;
 }
@@ -450,13 +448,7 @@ footer{
     <div class="about-grid reveal">
       <div>
         <div class="about-photo">
-          <div class="about-photo-placeholder">
-            <svg width="64" height="64" fill="none" viewBox="0 0 64 64">
-              <circle cx="32" cy="24" r="12" stroke="#C9963A" stroke-width="2"/>
-              <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" stroke="#C9963A" stroke-width="2"/>
-            </svg>
-            <span>Agrega tu foto aquí<br>en Canva o en el código</span>
-          </div>
+          <img src="foto.jpeg" alt="Dayana Aguirre — @dayanna.aguirremkt">
         </div>
       </div>
       <div class="about-text">
