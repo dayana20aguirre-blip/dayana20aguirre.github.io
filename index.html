@@ -3,749 +3,466 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dayana Aguirre — Marca Personal con IA</title>
-<meta name="description" content="Estratega de Marca Personal con IA. Te enseño a crear contenido, crecer en Instagram y vender tu primer producto digital.">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<title>Dayanna Aguirre — Social Media & IA para Emprendedores</title>
+<meta name="description" content="Hago crecer tu marca en Instagram con inteligencia artificial. Plan de contenido, copies y diseño para emprendedores de LATAM.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:#03030B;color:#fff;overflow-x:hidden;line-height:1.7;}
+body{
+  font-family:'Inter',sans-serif;
+  background:#0C0E08;
+  color:#EDE6D4;
+  overflow-x:hidden;
+  line-height:1.7;
+}
 
-/* ══════════════════════════════
-   NAV
-══════════════════════════════ */
+:root{
+  --gold:#C9A562;
+  --cream:#F0E8D0;
+  --bg:#0C0E08;
+  --bg2:#0E1009;
+  --line:rgba(201,165,98,0.15);
+}
+
+/* ── NAV ── */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   padding:20px 6%;
   display:flex;align-items:center;justify-content:space-between;
-  background:rgba(3,3,11,0);
-  transition:background .4s,backdrop-filter .4s;
+  transition:background 0.4s,backdrop-filter 0.4s;
 }
-nav.scrolled{background:rgba(3,3,11,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);}
+nav.scrolled{
+  background:rgba(12,14,8,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+}
 .nav-logo{
   font-family:'Playfair Display',serif;
-  font-size:1.1rem;font-weight:800;letter-spacing:.02em;
-  background:linear-gradient(90deg,#fff,rgba(255,255,255,.7));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  text-decoration:none;
+  font-size:1.05rem;font-weight:800;
+  color:var(--cream);text-decoration:none;
 }
-.nav-links{display:flex;gap:36px;list-style:none;}
-.nav-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.02em;transition:color .2s;}
-.nav-links a:hover{color:#fff;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{
+  font-size:12px;font-weight:500;letter-spacing:1px;
+  color:rgba(237,230,212,0.45);
+  text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--cream);}
 .nav-cta{
-  background:#fff;color:#03030B;
-  font-weight:700;font-size:.82rem;letter-spacing:.04em;
-  padding:11px 24px;border-radius:50px;text-decoration:none;
-  transition:background .2s,transform .2s;
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--bg);background:var(--gold);
+  padding:11px 26px;border-radius:2px;
+  text-decoration:none;transition:background 0.2s;
 }
-.nav-cta:hover{background:rgba(255,255,255,.88);transform:translateY(-1px);}
-.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;}
-.hamburger span{display:block;width:22px;height:1.5px;background:#fff;border-radius:2px;}
-.mobile-menu{display:none;position:fixed;inset:0;background:rgba(3,3,11,.98);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+.nav-cta:hover{background:#E8C87A;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--cream);}
+.mobile-menu{
+  display:none;position:fixed;inset:0;
+  background:rgba(12,14,8,0.98);z-index:99;
+  flex-direction:column;align-items:center;justify-content:center;gap:32px;
+}
 .mobile-menu.open{display:flex;}
-.mobile-menu a{color:#fff;font-size:1.4rem;font-weight:600;text-decoration:none;}
+.mobile-menu a{font-size:1.3rem;font-weight:600;color:var(--cream);text-decoration:none;}
+.mobile-close{position:absolute;top:24px;right:24px;background:none;border:none;color:var(--cream);font-size:1.5rem;cursor:pointer;}
 
-/* ══════════════════════════════
-   HERO
-══════════════════════════════ */
+/* ── HERO ── */
 .hero{
   min-height:100vh;
   display:grid;grid-template-columns:1fr 1fr;
   position:relative;overflow:hidden;
 }
-
-/* Left content */
+.hero::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2;
+}
 .hero-left{
   display:flex;flex-direction:column;justify-content:center;
-  padding:140px 6% 80px 8%;
-  position:relative;z-index:2;
+  padding:140px 6% 80px 8%;position:relative;z-index:2;
 }
-
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  margin-bottom:32px;
-}
-.eyebrow-line{width:28px;height:1px;background:rgba(255,255,255,.4);}
-.eyebrow-text{font-size:11px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,.5);}
-
-.hero-headline{
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.ey-line{width:24px;height:1px;background:rgba(201,165,98,0.5);}
+.ey-text{font-size:10px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:rgba(201,165,98,0.6);}
+.hero-title{
   font-family:'Playfair Display',serif;
-  font-size:clamp(3.2rem,6vw,5.5rem);
-  font-weight:900;line-height:1.0;
-  letter-spacing:-2px;
-  margin-bottom:28px;
+  font-size:clamp(2.8rem,5vw,4.8rem);
+  font-weight:900;line-height:1.0;letter-spacing:-2px;
+  color:var(--cream);margin-bottom:24px;
 }
-.hero-headline em{
-  font-style:italic;font-weight:700;
-  color:rgba(255,255,255,.45);
+.hero-title em{font-style:italic;font-weight:400;color:var(--gold);display:block;}
+.hero-desc{
+  font-size:14px;font-weight:300;
+  color:rgba(237,230,212,0.5);
+  line-height:1.95;max-width:400px;margin-bottom:40px;
 }
-.hero-headline .gold{
-  background:linear-gradient(135deg,#B8860B,#E8B84B,#F5D87A,#E8B84B);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+.hero-desc strong{color:rgba(237,230,212,0.85);font-weight:500;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-gold{
+  display:inline-block;background:var(--gold);color:var(--bg);
+  font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  padding:16px 32px;border-radius:2px;text-decoration:none;
+  transition:background 0.2s,transform 0.2s;
 }
-
-.hero-sub{
-  font-size:1.05rem;color:rgba(255,255,255,.5);
-  line-height:1.85;max-width:440px;margin-bottom:44px;
+.btn-gold:hover{background:#E8C87A;transform:translateY(-2px);}
+.btn-ghost{
+  display:inline-block;border:1px solid var(--line);
+  color:rgba(237,230,212,0.6);
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  padding:16px 32px;border-radius:2px;text-decoration:none;
+  transition:border-color 0.2s,color 0.2s;
 }
-.hero-sub strong{color:rgba(255,255,255,.85);font-weight:600;}
-
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:56px;}
-.btn-white{
-  background:#fff;color:#03030B;
-  font-weight:700;font-size:.9rem;
-  padding:15px 32px;border-radius:50px;text-decoration:none;
-  transition:transform .2s,box-shadow .2s;
-  box-shadow:0 8px 30px rgba(255,255,255,.15);
-}
-.btn-white:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,255,255,.25);}
-.btn-outline{
-  background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;
-  font-weight:600;font-size:.9rem;
-  padding:15px 32px;border-radius:50px;text-decoration:none;
-  transition:border-color .2s,background .2s;
-}
-.btn-outline:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);}
-
-/* Social proof strip */
-.hero-proof{display:flex;gap:32px;align-items:center;}
-.proof-item{text-align:center;}
-.proof-num{
-  font-family:'Playfair Display',serif;
-  font-size:1.8rem;font-weight:900;
-  background:linear-gradient(135deg,#E8B84B,#F5D87A);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  display:block;line-height:1.1;
-}
-.proof-label{font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);}
-.proof-divider{width:1px;height:36px;background:rgba(255,255,255,.1);}
-
-/* Right photo */
-.hero-right{
-  position:relative;overflow:hidden;
-}
-.hero-photo{
-  width:100%;height:100%;
-  object-fit:cover;object-position:top center;
-  display:block;
-  filter:grayscale(10%) contrast(1.05);
-}
-/* Dark overlay on left of photo */
+.btn-ghost:hover{border-color:rgba(201,165,98,0.4);color:var(--cream);}
+.hero-right{position:relative;overflow:hidden;}
+.hero-right img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:brightness(0.85) contrast(1.05);}
 .hero-right::before{
   content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to right, rgba(3,3,11,1) 0%, rgba(3,3,11,.4) 30%, transparent 65%);
-}
-/* Bottom fade */
-.hero-right::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:200px;z-index:1;
-  background:linear-gradient(to top, rgba(3,3,11,1), transparent);
+  background:linear-gradient(to right,rgba(12,14,8,0.6) 0%,rgba(12,14,8,0) 40%);
 }
 
-/* Background elements */
-.hero-bg-text{
-  position:absolute;
-  bottom:80px;left:6%;
-  font-family:'Playfair Display',serif;
-  font-size:220px;font-weight:900;
-  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.04);
-  line-height:1;letter-spacing:-10px;
-  pointer-events:none;z-index:0;
-  white-space:nowrap;
-}
+/* ── MARQUEE ── */
+.marquee-wrap{background:var(--gold);padding:14px 0;overflow:hidden;white-space:nowrap;}
+.marquee-track{display:inline-flex;animation:marquee 20s linear infinite;}
+.marquee-item{font-size:10px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--bg);padding:0 28px;}
+.marquee-dot{color:rgba(12,14,8,0.4);}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
-/* ══════════════════════════════
-   MARQUEE STRIP
-══════════════════════════════ */
-.marquee-strip{
-  background:rgba(255,255,255,.04);
-  border-top:1px solid rgba(255,255,255,.06);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  padding:18px 0;overflow:hidden;
-}
-.marquee-track{
-  display:flex;gap:48px;width:max-content;
-  animation:marquee 20s linear infinite;
-}
-@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.marquee-item{
-  display:flex;align-items:center;gap:12px;white-space:nowrap;
-  font-size:.8rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,255,255,.3);
-}
-.marquee-dot{width:4px;height:4px;border-radius:50%;background:rgba(240,201,110,.6);}
+/* ── SECTIONS ── */
+section{padding:90px 6%;}
+.inner{max-width:900px;margin:0 auto;}
+.inner-sm{max-width:660px;margin:0 auto;}
+.sec-label{font-size:10px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:rgba(201,165,98,0.5);display:block;margin-bottom:14px;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:var(--cream);line-height:1.1;letter-spacing:-1px;margin-bottom:12px;}
+.sec-title em{color:var(--gold);font-style:italic;}
+.sec-intro{font-size:14px;font-weight:300;color:rgba(237,230,212,0.45);line-height:1.9;max-width:520px;margin-bottom:52px;}
 
-/* ══════════════════════════════
-   SECTION BASE
-══════════════════════════════ */
-section{padding:110px 8%;}
-.section-eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  margin-bottom:20px;
-}
-.s-line{width:24px;height:1px;background:rgba(255,255,255,.3);}
-.s-tag{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.4);}
-.section-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.4rem,5vw,4rem);
-  font-weight:900;line-height:1.1;
-  letter-spacing:-1.5px;margin-bottom:20px;
-}
-.section-title .italic{font-style:italic;font-weight:700;color:rgba(255,255,255,.45);}
-.section-sub{color:rgba(255,255,255,.45);font-size:1rem;line-height:1.85;max-width:560px;}
-.gold-text{
-  background:linear-gradient(135deg,#B8860B,#E8B84B,#F5D87A);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
+/* ── SERVICIOS ── */
+.servicios{background:var(--bg);}
+.srv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;}
+.srv-card{background:var(--bg);padding:32px 28px;transition:background 0.2s;position:relative;}
+.srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background 0.2s;}
+.srv-card:hover{background:var(--bg2);}
+.srv-card:hover::before{background:var(--gold);}
+.srv-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:rgba(201,165,98,0.12);margin-bottom:16px;line-height:1;display:block;}
+.srv-title{font-size:14px;font-weight:700;color:var(--cream);margin-bottom:8px;letter-spacing:0.02em;}
+.srv-text{font-size:12.5px;font-weight:300;color:rgba(237,230,212,0.4);line-height:1.8;}
 
-/* ══════════════════════════════
-   SOBRE MÍ
-══════════════════════════════ */
-#sobre-mi{
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
-  background:#03030B;
-}
-.about-photo-wrap{position:relative;}
-.about-photo-frame{
-  width:100%;aspect-ratio:4/5;border-radius:4px;
-  overflow:hidden;position:relative;
-}
-.about-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
-.about-photo-frame::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to top, rgba(3,3,11,.6) 0%, transparent 50%);
-}
-/* Gold border accent */
-.about-photo-wrap::before{
-  content:'';position:absolute;
-  top:-12px;left:-12px;
-  width:60%;height:60%;
-  border-top:2px solid rgba(240,201,110,.3);
-  border-left:2px solid rgba(240,201,110,.3);
-  border-radius:2px;z-index:-1;
-}
-.about-photo-wrap::after{
-  content:'';position:absolute;
-  bottom:-12px;right:-12px;
-  width:60%;height:60%;
-  border-bottom:2px solid rgba(240,201,110,.3);
-  border-right:2px solid rgba(240,201,110,.3);
-  border-radius:2px;z-index:-1;
-}
-.about-content{}
-.about-quote{
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:1.4rem;font-weight:300;
-  color:rgba(255,255,255,.4);line-height:1.6;
-  margin-bottom:32px;padding-left:20px;
-  border-left:2px solid rgba(240,201,110,.3);
-}
-.about-content h3{
-  font-family:'Playfair Display',serif;
-  font-size:2.2rem;font-weight:900;margin-bottom:20px;
-}
-.about-content p{color:rgba(255,255,255,.5);font-size:.95rem;line-height:1.9;margin-bottom:16px;}
-.about-content p strong{color:rgba(255,255,255,.85);font-weight:600;}
-.about-tags{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0;}
-.about-tag{
-  font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  padding:6px 16px;border-radius:2px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  color:rgba(255,255,255,.5);
-}
-.ig-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  color:#fff;font-weight:700;font-size:.85rem;letter-spacing:.04em;
-  text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);
-  padding-bottom:4px;transition:border-color .2s;margin-top:8px;
-}
-.ig-btn:hover{border-color:rgba(255,255,255,.6);}
+/* ── CÓMO FUNCIONA ── */
+.como{background:var(--bg2);}
+.steps{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;}
+.step{display:flex;align-items:flex-start;gap:24px;padding:28px 32px;border-bottom:1px solid var(--line);transition:background 0.2s;}
+.step:last-child{border-bottom:none;}
+.step:hover{background:rgba(201,165,98,0.03);}
+.step-n{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:rgba(201,165,98,0.2);flex-shrink:0;width:40px;line-height:1;margin-top:4px;}
+.step-title{font-size:14px;font-weight:700;color:var(--cream);margin-bottom:5px;}
+.step-text{font-size:13px;font-weight:300;color:rgba(237,230,212,0.45);line-height:1.8;margin:0;}
 
-/* ══════════════════════════════
-   MÉTODO
-══════════════════════════════ */
-#metodo{
-  background:rgba(255,255,255,.02);
-  border-top:1px solid rgba(255,255,255,.05);
-  border-bottom:1px solid rgba(255,255,255,.05);
-}
-.method-header{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:72px;}
-.method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);}
-.method-card{
-  background:#03030B;
-  padding:36px 28px;
-  transition:background .25s;
-  position:relative;overflow:hidden;
-}
-.method-card:hover{background:rgba(255,255,255,.03);}
-.method-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,rgba(240,201,110,.4),transparent);
-  opacity:0;transition:opacity .25s;
-}
-.method-card:hover::before{opacity:1;}
-.method-step{
-  font-size:.65rem;font-weight:800;letter-spacing:4px;text-transform:uppercase;
-  color:rgba(255,255,255,.2);margin-bottom:20px;
-}
-.method-icon{font-size:2rem;margin-bottom:16px;display:block;}
-.method-name{
-  font-family:'Playfair Display',serif;
-  font-size:1.2rem;font-weight:800;margin-bottom:12px;
-}
-.method-desc{font-size:.85rem;color:rgba(255,255,255,.4);line-height:1.75;}
+/* ── SOBRE MÍ ── */
+.sobre{background:var(--bg);}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.sobre-img{position:relative;}
+.sobre-img img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;border-radius:4px;filter:brightness(0.9) contrast(1.05);position:relative;z-index:1;}
+.sobre-img::before{content:'';position:absolute;top:-12px;left:-12px;right:12px;bottom:12px;border:1px solid var(--line);border-radius:4px;z-index:0;}
+.sobre-quote{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;font-weight:300;color:var(--gold);line-height:1.6;margin-bottom:24px;border-left:2px solid rgba(201,165,98,0.3);padding-left:20px;}
+.sobre-text{font-size:13.5px;font-weight:300;color:rgba(237,230,212,0.5);line-height:1.95;margin-bottom:14px;}
+.sobre-text strong{color:rgba(237,230,212,0.85);font-weight:500;}
+.sobre-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;}
+.tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--line);color:rgba(201,165,98,0.6);padding:6px 14px;border-radius:2px;}
 
-/* ══════════════════════════════
-   PRODUCTO
-══════════════════════════════ */
-#producto{background:#03030B;}
-.product-inner{
-  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
-}
-.product-photo{
-  position:relative;aspect-ratio:4/5;border-radius:4px;overflow:hidden;
-}
-.product-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;}
-.product-photo::before{
-  content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(135deg,rgba(184,134,11,.15),rgba(109,40,217,.1));
-}
-.product-photo-badge{
-  position:absolute;bottom:24px;left:24px;right:24px;z-index:2;
-  background:rgba(3,3,11,.85);backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.1);border-radius:12px;
-  padding:16px 20px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.ppb-left .ppb-tag{font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:4px;}
-.ppb-left .ppb-title{font-size:.95rem;font-weight:700;color:#fff;}
-.ppb-price{
-  font-family:'Playfair Display',serif;
-  font-size:1.6rem;font-weight:900;
-  background:linear-gradient(135deg,#E8B84B,#F5D87A);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
+/* ── INVERSIÓN ── */
+.inversion{background:var(--bg2);text-align:center;}
+.price-card{display:inline-block;border:1px solid var(--line);border-radius:4px;padding:52px 64px;background:var(--bg);position:relative;max-width:460px;width:100%;}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.price-badge{font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(201,165,98,0.5);margin-bottom:20px;display:block;}
+.price-num{font-family:'Playfair Display',serif;font-size:5.5rem;font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px;}
+.price-sub{font-size:12px;font-weight:400;color:rgba(237,230,212,0.3);margin-bottom:32px;letter-spacing:1px;}
+.price-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:36px;text-align:left;}
+.price-list li{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:400;color:rgba(237,230,212,0.6);}
+.pdot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.price-note{font-size:11px;font-weight:300;color:rgba(237,230,212,0.2);margin-top:12px;}
 
-.product-content{}
-.product-includes{list-style:none;margin:32px 0;display:flex;flex-direction:column;gap:0;}
-.pi-item{
-  display:flex;align-items:flex-start;gap:14px;
-  padding:18px 0;border-bottom:1px solid rgba(255,255,255,.06);
-  font-size:.9rem;
-}
-.pi-item:last-child{border-bottom:none;}
-.pi-check{
-  width:22px;height:22px;border-radius:50%;
-  background:rgba(240,201,110,.1);border:1px solid rgba(240,201,110,.3);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  font-size:.7rem;color:#F5D87A;margin-top:1px;
-}
-.pi-text{color:rgba(255,255,255,.65);line-height:1.5;}
-.pi-text strong{color:#fff;font-weight:600;}
+/* ── AGENDA ── */
+.agenda{background:var(--bg);}
+.agenda-box{border:1px solid var(--line);border-radius:4px;padding:52px;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;position:relative;overflow:hidden;}
+.agenda-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.agenda-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--cream);line-height:1.1;letter-spacing:-1px;margin-bottom:14px;}
+.agenda-title em{color:var(--gold);font-style:italic;}
+.agenda-desc{font-size:13.5px;font-weight:300;color:rgba(237,230,212,0.45);line-height:1.9;}
+.agenda-right{display:flex;flex-direction:column;gap:12px;}
+.contact-opt{display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px solid var(--line);border-radius:4px;text-decoration:none;background:var(--bg2);transition:border-color 0.2s,background 0.2s;}
+.contact-opt:hover{border-color:rgba(201,165,98,0.35);background:rgba(201,165,98,0.04);}
+.co-icon{font-size:1.3rem;flex-shrink:0;}
+.co-title{font-size:13px;font-weight:700;color:var(--cream);margin-bottom:2px;}
+.co-sub{font-size:11px;font-weight:300;color:rgba(237,230,212,0.35);}
+.co-arrow{margin-left:auto;font-size:14px;color:rgba(201,165,98,0.3);transition:transform 0.2s,color 0.2s;}
+.contact-opt:hover .co-arrow{transform:translateX(4px);color:rgba(201,165,98,0.7);}
 
-.price-section{margin-top:40px;}
-.price-row{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;}
-.price-current{
-  font-family:'Playfair Display',serif;
-  font-size:4rem;font-weight:900;
-  background:linear-gradient(135deg,#C9963A,#E8B84B,#F5D87A);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.price-was{font-size:1.1rem;color:rgba(255,255,255,.25);text-decoration:line-through;}
-.price-note{font-size:.8rem;color:rgba(255,255,255,.35);margin-bottom:28px;}
-.price-note span{color:rgba(240,201,110,.7);font-weight:600;}
-.buy-btn{
-  display:block;width:100%;text-align:center;
-  background:#fff;color:#03030B;
-  font-weight:800;font-size:1rem;letter-spacing:.02em;
-  padding:18px;border-radius:4px;text-decoration:none;
-  transition:background .2s,transform .2s;
-  box-shadow:0 8px 30px rgba(255,255,255,.12);
-}
-.buy-btn:hover{background:rgba(255,255,255,.9);transform:translateY(-2px);}
-.guarantee-note{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  margin-top:16px;font-size:.78rem;color:rgba(255,255,255,.3);
-}
+/* ── FOOTER ── */
+footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:rgba(237,230,212,0.3);}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;}
+.footer-links a{font-size:11px;font-weight:500;letter-spacing:1px;color:rgba(237,230,212,0.2);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:rgba(237,230,212,0.6);}
 
-/* ══════════════════════════════
-   TESTIMONIOS
-══════════════════════════════ */
-#testimonios{
-  background:rgba(255,255,255,.02);
-  border-top:1px solid rgba(255,255,255,.05);
-}
-.testimonios-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.06);
-  margin-top:60px;
-}
-.testimonio{background:#03030B;padding:40px 32px;}
-.t-stars{font-size:.9rem;color:#E8B84B;letter-spacing:3px;margin-bottom:20px;}
-.t-quote{
-  font-family:'Playfair Display',serif;
-  font-style:italic;font-size:1.05rem;
-  color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:24px;
-}
-.t-author{display:flex;align-items:center;gap:12px;}
-.t-avatar{
-  width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,rgba(240,201,110,.3),rgba(109,40,217,.3));
-  display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;font-weight:800;color:#fff;flex-shrink:0;
-}
-.t-name{font-weight:700;font-size:.85rem;color:#fff;}
-.t-role{font-size:.75rem;color:rgba(255,255,255,.3);}
-
-/* ══════════════════════════════
-   CTA FINAL
-══════════════════════════════ */
-#cta-final{
-  text-align:center;padding:120px 8%;
-  position:relative;overflow:hidden;
-}
-#cta-final::before{
-  content:'';position:absolute;
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  width:800px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(240,201,110,.08) 0%,transparent 65%);
-  pointer-events:none;
-}
-.cta-final-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.5rem,6vw,5rem);
-  font-weight:900;line-height:1.05;letter-spacing:-2px;
-  margin-bottom:24px;
-}
-.cta-final-sub{color:rgba(255,255,255,.45);font-size:1.05rem;max-width:500px;margin:0 auto 44px;line-height:1.85;}
-.cta-final-btn{
-  display:inline-block;
-  background:#fff;color:#03030B;
-  font-weight:800;font-size:1rem;letter-spacing:.04em;
-  padding:18px 48px;border-radius:50px;text-decoration:none;
-  box-shadow:0 8px 40px rgba(255,255,255,.15);
-  transition:transform .2s,box-shadow .2s;
-}
-.cta-final-btn:hover{transform:translateY(-3px);box-shadow:0 16px 50px rgba(255,255,255,.25);}
-
-/* ══════════════════════════════
-   FOOTER
-══════════════════════════════ */
-footer{
-  padding:36px 8%;
-  border-top:1px solid rgba(255,255,255,.06);
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
-}
-.footer-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:800;color:rgba(255,255,255,.6);}
-.footer-links{display:flex;gap:28px;list-style:none;}
-.footer-links a{color:rgba(255,255,255,.3);font-size:.8rem;text-decoration:none;transition:color .2s;}
-.footer-links a:hover{color:#fff;}
-.footer-copy{font-size:.75rem;color:rgba(255,255,255,.2);}
-
-/* ══════════════════════════════
-   RESPONSIVE
-══════════════════════════════ */
-@media(max-width:900px){
-  .hero{grid-template-columns:1fr;min-height:auto;}
-  .hero-left{padding:120px 6% 60px;}
-  .hero-right{height:60vw;}
-  .hero-right::before{background:linear-gradient(to top, rgba(3,3,11,1) 0%, rgba(3,3,11,.3) 40%, transparent 70%);}
-  .nav-links,.nav-cta{display:none;}
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;}
+  .hero-right{height:50vh;order:-1;}
+  .hero-left{padding:100px 6% 60px;}
+  .hero-title{letter-spacing:-1px;}
+  .nav-links{display:none;}
   .hamburger{display:flex;}
-  #sobre-mi{grid-template-columns:1fr;gap:40px;}
-  .method-grid{grid-template-columns:1fr 1fr;}
-  .method-header{grid-template-columns:1fr;}
-  .product-inner{grid-template-columns:1fr;}
-  .testimonios-grid{grid-template-columns:1fr;}
+  .sobre-grid{grid-template-columns:1fr;}
+  .sobre-img{display:none;}
+  .agenda-box{grid-template-columns:1fr;padding:32px 24px;gap:32px;}
+  .price-card{padding:36px 24px;}
+  .price-num{font-size:4rem;}
   footer{flex-direction:column;text-align:center;}
-  .footer-links{justify-content:center;}
-  .hero-bg-text{display:none;}
 }
-@media(max-width:560px){
-  section{padding:80px 6%;}
-  .method-grid{grid-template-columns:1fr;}
-  .hero-proof{gap:20px;}
-}
-
-/* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
-.reveal.visible{opacity:1;transform:none;}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">Dayana Aguirre</a>
+<nav id="nav">
+  <a href="#" class="nav-logo">Dayanna Aguirre</a>
   <ul class="nav-links">
-    <li><a href="#sobre-mi">Sobre mí</a></li>
-    <li><a href="#metodo">Método</a></li>
-    <li><a href="#producto">Ebook</a></li>
-    <li><a href="#testimonios">Resultados</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#como">Cómo funciona</a></li>
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#inversion">Inversión</a></li>
   </ul>
-  <a href="https://hotmart.com" target="_blank" class="nav-cta">Quiero el ebook →</a>
-  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  <a href="#agenda" class="nav-cta">Agendar reunión</a>
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#sobre-mi" onclick="toggleMenu()">Sobre mí</a>
-  <a href="#metodo" onclick="toggleMenu()">Método</a>
-  <a href="#producto" onclick="toggleMenu()">Ebook</a>
-  <a href="#testimonios" onclick="toggleMenu()">Resultados</a>
-  <a href="https://hotmart.com" target="_blank" class="nav-cta" style="font-size:1rem;" onclick="toggleMenu()">Quiero el ebook →</a>
+  <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">✕</button>
+  <a href="#servicios" onclick="document.getElementById('mobileMenu').classList.remove('open')">Servicios</a>
+  <a href="#como" onclick="document.getElementById('mobileMenu').classList.remove('open')">Cómo funciona</a>
+  <a href="#sobre" onclick="document.getElementById('mobileMenu').classList.remove('open')">Sobre mí</a>
+  <a href="#inversion" onclick="document.getElementById('mobileMenu').classList.remove('open')">Inversión</a>
+  <a href="#agenda" class="btn-gold" onclick="document.getElementById('mobileMenu').classList.remove('open')">Agendar reunión</a>
 </div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
     <div class="hero-eyebrow">
-      <div class="eyebrow-line"></div>
-      <span class="eyebrow-text">Estratega · IA · Instagram · LATAM</span>
+      <div class="ey-line"></div>
+      <span class="ey-text">Social Media & IA · LATAM</span>
     </div>
-
-    <h1 class="hero-headline">
-      Deja de ser<br>
-      <em>invisible</em> en<br>
-      <span class="gold">Instagram.</span>
+    <h1 class="hero-title">
+      Hago crecer<br>
+      tu marca<br>
+      <em>en Instagram.</em>
     </h1>
-
-    <p class="hero-sub">
-      Te enseño a construir tu <strong>marca personal</strong>, crear contenido viral con <strong>ChatGPT</strong> y vender tu primer producto digital — aunque hoy partas desde cero.
+    <p class="hero-desc">
+      Estrategia de contenido, copies y diseño potenciados con
+      <strong>inteligencia artificial</strong> para que tú te enfoques
+      en tu negocio mientras tu marca crece.
     </p>
-
     <div class="hero-btns">
-      <a href="#producto" class="btn-white">Ver el ebook →</a>
-      <a href="#sobre-mi" class="btn-outline">Conoce mi historia</a>
-    </div>
-
-    <div class="hero-proof">
-      <div class="proof-item">
-        <span class="proof-num">100+</span>
-        <span class="proof-label">Prompts IA</span>
-      </div>
-      <div class="proof-divider"></div>
-      <div class="proof-item">
-        <span class="proof-num">30</span>
-        <span class="proof-label">Ganchos virales</span>
-      </div>
-      <div class="proof-divider"></div>
-      <div class="proof-item">
-        <span class="proof-num">$17</span>
-        <span class="proof-label">USD lanzamiento</span>
-      </div>
+      <a href="#agenda" class="btn-gold">Agendar reunión gratis</a>
+      <a href="#servicios" class="btn-ghost">Ver servicios</a>
     </div>
   </div>
-
   <div class="hero-right">
-    <img class="hero-photo" src="foto3.jpeg" alt="Dayana Aguirre"
-      onerror="this.src='foto2.jpeg'">
+    <img src="foto2.jpeg" alt="Dayanna Aguirre"
+         onerror="this.style.display='none';this.parentElement.style.background='#1a2010'">
   </div>
-
-  <div class="hero-bg-text">DA</div>
 </section>
 
 <!-- MARQUEE -->
-<div class="marquee-strip">
+<div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item"><span class="marquee-dot"></span>Marca Personal</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>ChatGPT</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Reels con IA</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Hotmart</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>CapCut</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Contenido Viral</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Instagram</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Producto Digital</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>LATAM</span>
-    <!-- repeat -->
-    <span class="marquee-item"><span class="marquee-dot"></span>Marca Personal</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>ChatGPT</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Reels con IA</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Hotmart</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>CapCut</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Contenido Viral</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Instagram</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>Producto Digital</span>
-    <span class="marquee-item"><span class="marquee-dot"></span>LATAM</span>
+    <span class="marquee-item">Plan de Contenido</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Copies & CTAs</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Diseño de Formatos</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Estrategia con IA</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Páginas Web</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Seguidores a Clientes</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Plan de Contenido</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Copies & CTAs</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Diseño de Formatos</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Estrategia con IA</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Páginas Web</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Seguidores a Clientes</span><span class="marquee-dot">✦</span>
   </div>
 </div>
 
+<!-- SERVICIOS -->
+<section class="servicios" id="servicios">
+  <div class="inner">
+    <span class="sec-label">Lo que hago por ti</span>
+    <h2 class="sec-title">Servicios que <em>transforman</em><br>tu presencia digital</h2>
+    <p class="sec-intro">Todo lo que necesita tu marca para verse profesional, crecer en Instagram y generar ventas — sin que tú tengas que hacerlo solo.</p>
+    <div class="srv-grid">
+      <div class="srv-card">
+        <span class="srv-num">01</span>
+        <div class="srv-title">Plan de Contenido Mensual</div>
+        <p class="srv-text">Te digo exactamente qué publicar cada día — qué videos hacer, qué fotos tomar y cuándo publicar para máximo alcance.</p>
+      </div>
+      <div class="srv-card">
+        <span class="srv-num">02</span>
+        <div class="srv-title">Copies & CTAs</div>
+        <p class="srv-text">Los textos de tus publicaciones, Stories y bio escritos para conectar con tu audiencia y llevarla a la acción.</p>
+      </div>
+      <div class="srv-card">
+        <span class="srv-num">03</span>
+        <div class="srv-title">Diseño de Formatos</div>
+        <p class="srv-text">Carruseles, portadas de Reels y Stories diseñados con tu identidad visual para que tu feed se vea coherente y profesional.</p>
+      </div>
+      <div class="srv-card">
+        <span class="srv-num">04</span>
+        <div class="srv-title">Página Web</div>
+        <p class="srv-text">Una landing page profesional donde tus seguidores llegan, conocen lo que ofreces y te contactan directamente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="como" id="como">
+  <div class="inner">
+    <span class="sec-label">El proceso</span>
+    <h2 class="sec-title">Cómo <em>trabajamos</em> juntos</h2>
+    <p class="sec-intro">Simple, claro y sin complicaciones. Tú te enfocas en crear, yo me encargo del resto.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div>
+          <div class="step-title">Reunión gratuita de 30 minutos</div>
+          <p class="step-text">Hablamos sobre tu marca, tu audiencia y tus metas. Entiendo tu negocio antes de proponer cualquier estrategia.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div>
+          <div class="step-title">Creo tu estrategia personalizada</div>
+          <p class="step-text">Diseño tu plan de contenido mensual, los copies y los formatos visuales adaptados a tu nicho y tu audiencia.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div>
+          <div class="step-title">Tú grabas, yo lo trabajo</div>
+          <p class="step-text">Me envías el material (videos y fotos) siguiendo mi guía. Yo lo edito, diseño y dejo todo listo para publicar.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div>
+          <div class="step-title">Seguimiento y ajustes</div>
+          <p class="step-text">Revisamos los resultados cada mes y ajustamos la estrategia según lo que mejor funcione para tu marca.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- SOBRE MÍ -->
-<section id="sobre-mi">
-  <div class="about-photo-wrap reveal">
-    <div class="about-photo-frame">
-      <img src="foto2.jpeg" alt="Dayana Aguirre" onerror="this.src='foto3.jpeg'">
-    </div>
-  </div>
-  <div class="about-content reveal">
-    <div class="section-eyebrow">
-      <div class="s-line"></div>
-      <span class="s-tag">Sobre mí</span>
-    </div>
-    <blockquote class="about-quote">"La IA no reemplaza tu voz — la amplifica."</blockquote>
-    <h2 class="section-title">Hola, soy <span class="gold">Dayana.</span></h2>
-    <p>Soy estratega de <strong>marca personal con IA</strong> en LATAM. Llevo años en el mundo digital y descubrí que la mayoría de emprendedoras fallan no por falta de talento, sino por falta de sistema.</p>
-    <p>Creé <strong>MARCA PERSONAL CON IA</strong> para darte el sistema exacto que yo uso: desde definir tu identidad hasta publicar contenido y vender tu primer producto digital — todo usando inteligencia artificial como tu asistente 24/7.</p>
-    <div class="about-tags">
-      <span class="about-tag">Creadora de contenido</span>
-      <span class="about-tag">Estrategia digital</span>
-      <span class="about-tag">IA aplicada</span>
-      <span class="about-tag">LATAM</span>
-    </div>
-    <a href="https://instagram.com/dayanna.aguirremkt" target="_blank" class="ig-btn">
-      Seguirme en Instagram @dayanna.aguirremkt →
-    </a>
-  </div>
-</section>
-
-<!-- MÉTODO -->
-<section id="metodo">
-  <div class="method-header">
-    <div class="reveal">
-      <div class="section-eyebrow">
-        <div class="s-line"></div>
-        <span class="s-tag">El método</span>
+<section class="sobre" id="sobre">
+  <div class="inner">
+    <div class="sobre-grid">
+      <div class="sobre-img">
+        <img src="foto3.jpeg" alt="Dayanna Aguirre" onerror="this.style.display='none'">
       </div>
-      <h2 class="section-title">4 pasos.<br><span class="italic">Un sistema.</span></h2>
-    </div>
-    <p class="section-sub reveal">Sin teoría infinita. Sin complicaciones técnicas. Solo el sistema exacto que te lleva de 0 a tu primera venta digital en Instagram.</p>
-  </div>
-  <div class="method-grid">
-    <div class="method-card reveal">
-      <div class="method-step">Paso 01</div>
-      <span class="method-icon">🧠</span>
-      <div class="method-name">Tu Identidad de Marca</div>
-      <p class="method-desc">Define quién eres, a quién ayudas y qué te hace única. Configura ChatGPT como tu estratega personal de marca en minutos.</p>
-    </div>
-    <div class="method-card reveal">
-      <div class="method-step">Paso 02</div>
-      <span class="method-icon">✍️</span>
-      <div class="method-name">Contenido que Convierte</div>
-      <p class="method-desc">Sistema de 4 pilares: Educar · Conectar · Entretener · Vender. Semanas de contenido en 30 minutos con IA.</p>
-    </div>
-    <div class="method-card reveal">
-      <div class="method-step">Paso 03</div>
-      <span class="method-icon">🎬</span>
-      <div class="method-name">Herramientas Pro</div>
-      <p class="method-desc">Canva + CapCut en 10 minutos. Reels y diseños de nivel profesional sin diseñador ni editor contratado.</p>
-    </div>
-    <div class="method-card reveal">
-      <div class="method-step">Paso 04</div>
-      <span class="method-icon">💰</span>
-      <div class="method-name">Tu Primer Producto</div>
-      <p class="method-desc">Crea y vende en Hotmart. Estrategia de lanzamiento paso a paso para tu primera venta digital.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PRODUCTO -->
-<section id="producto">
-  <div class="product-inner">
-    <div class="product-photo reveal">
-      <img src="foto3.jpeg" alt="MARCA PERSONAL CON IA" onerror="this.src='foto2.jpeg'">
-      <div class="product-photo-badge">
-        <div class="ppb-left">
-          <div class="ppb-tag">Ebook digital</div>
-          <div class="ppb-title">MARCA PERSONAL CON IA</div>
+      <div class="sobre-content">
+        <span class="sec-label">Sobre mí</span>
+        <h2 class="sec-title" style="margin-bottom:20px;">Hola, soy<br><em>Dayanna</em></h2>
+        <div class="sobre-quote">"Creo que cada emprendedor merece una presencia digital que refleje el valor real de lo que ofrece."</div>
+        <p class="sobre-text">Soy estratega de contenido y Social Media Manager para emprendedores de LATAM. Combino <strong>creatividad, estrategia e inteligencia artificial</strong> para crear marcas digitales que conectan y venden.</p>
+        <p class="sobre-text">Mi método está pensado para que tú no tengas que convertirte en experta en redes sociales — yo me encargo de la estrategia mientras tú haces lo que mejor sabes hacer.</p>
+        <div class="sobre-tags">
+          <span class="tag">Social Media</span>
+          <span class="tag">IA</span>
+          <span class="tag">Estrategia</span>
+          <span class="tag">LATAM</span>
         </div>
-        <div class="ppb-price">$17</div>
       </div>
     </div>
-    <div class="product-content reveal">
-      <div class="section-eyebrow">
-        <div class="s-line"></div>
-        <span class="s-tag">El producto</span>
-      </div>
-      <h2 class="section-title">El ebook que <span class="italic">cambia</span> <span class="gold">el juego.</span></h2>
-      <p class="section-sub">Todo lo que necesitas para construir, crear y monetizar tu marca personal — en un solo lugar.</p>
-      <ul class="product-includes">
-        <li class="pi-item"><div class="pi-check">✓</div><div class="pi-text"><strong>4 capítulos completos</strong> con sistema paso a paso</div></li>
-        <li class="pi-item"><div class="pi-check">✓</div><div class="pi-text"><strong>Voz de Marca en ChatGPT</strong> — configuración única y permanente</div></li>
-        <li class="pi-item"><div class="pi-check">✓</div><div class="pi-text"><strong>Sistema CapCut en 10 minutos</strong> para Reels profesionales</div></li>
-        <li class="pi-item"><div class="pi-check">✓</div><div class="pi-text"><strong>Método Docuselling</strong> — vende sin parecer que vendes</div></li>
-        <li class="pi-item"><div class="pi-check">✓</div><div class="pi-text"><strong>BONUS:</strong> 100 prompts para ChatGPT — valor $47</div></li>
-        <li class="pi-item"><div class="pi-check">✓</div><div class="pi-text"><strong>BONUS:</strong> 30 ganchos virales por nicho — valor $27</div></li>
+  </div>
+</section>
+
+<!-- INVERSIÓN -->
+<section class="inversion" id="inversion">
+  <div class="inner" style="text-align:center;">
+    <span class="sec-label">Inversión</span>
+    <h2 class="sec-title" style="margin-bottom:12px;">Un precio, <em>todo incluido</em></h2>
+    <p class="sec-intro" style="margin:0 auto 48px;">Sin sorpresas ni costos ocultos. Todo lo que necesita tu marca digital en un solo paquete.</p>
+    <div class="price-card">
+      <span class="price-badge">Precio de lanzamiento · Cupos limitados</span>
+      <div class="price-num">$99</div>
+      <div class="price-sub">USD / mes · Pago mensual</div>
+      <ul class="price-list">
+        <li><div class="pdot"></div>Plan de contenido mensual completo</li>
+        <li><div class="pdot"></div>Copies y CTAs para todas tus publicaciones</li>
+        <li><div class="pdot"></div>Diseño de formatos (carruseles, Stories, Reels)</li>
+        <li><div class="pdot"></div>Estrategia con inteligencia artificial</li>
+        <li><div class="pdot"></div>Seguimiento mensual de resultados</li>
+        <li><div class="pdot"></div>Soporte directo por WhatsApp</li>
       </ul>
-      <div class="price-section">
-        <div class="price-row">
-          <span class="price-current">$17</span>
-          <span class="price-was">$47</span>
-        </div>
-        <p class="price-note">Precio de lanzamiento — <span>solo primeros 50 compradores 🔥</span></p>
-        <a href="https://hotmart.com" target="_blank" class="buy-btn">Quiero el ebook ahora →</a>
-        <div class="guarantee-note">🔒 Garantía de devolución 7 días · Sin preguntas</div>
+      <a href="#agenda" class="btn-gold" style="display:block;text-align:center;">Quiero empezar — Agendar reunión</a>
+      <p class="price-note">Primero hablamos gratis. Sin compromiso.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section class="agenda" id="agenda">
+  <div class="inner">
+    <div class="agenda-box">
+      <div class="agenda-left">
+        <span class="sec-label">Hablemos</span>
+        <div class="agenda-title">Agenda tu<br>reunión<br><em>gratuita</em></div>
+        <p class="agenda-desc">30 minutos para conocer tu marca y ver cómo puedo ayudarte. Sin compromiso, sin presión.</p>
+      </div>
+      <div class="agenda-right">
+        <a href="https://wa.me/51980583248?text=Hola%20Dayanna%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20gratuita" target="_blank" class="contact-opt">
+          <span class="co-icon">💬</span>
+          <div>
+            <div class="co-title">WhatsApp</div>
+            <div class="co-sub">Escríbeme directamente</div>
+          </div>
+          <span class="co-arrow">→</span>
+        </a>
+        <a href="https://instagram.com/dayanna.aguirremkt" target="_blank" class="contact-opt">
+          <span class="co-icon">📱</span>
+          <div>
+            <div class="co-title">Instagram DM</div>
+            <div class="co-sub">@dayanna.aguirremkt</div>
+          </div>
+          <span class="co-arrow">→</span>
+        </a>
+        <a href="mailto:dayana20aguirre@gmail.com" class="contact-opt">
+          <span class="co-icon">✉️</span>
+          <div>
+            <div class="co-title">Email</div>
+            <div class="co-sub">dayana20aguirre@gmail.com</div>
+          </div>
+          <span class="co-arrow">→</span>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIOS -->
-<section id="testimonios">
-  <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
-    <div class="section-eyebrow" style="justify-content:center;">
-      <div class="s-line"></div>
-      <span class="s-tag">Resultados reales</span>
-      <div class="s-line"></div>
-    </div>
-    <h2 class="section-title">Lo que dicen <span class="italic gold">ellas.</span></h2>
-  </div>
-  <div class="testimonios-grid">
-    <div class="testimonio reveal">
-      <div class="t-stars">★★★★★</div>
-      <p class="t-quote">"En una semana tenía mi calendario de contenido listo para todo el mes. Nunca pensé que la IA podía ser tan fácil."</p>
-      <div class="t-author"><div class="t-avatar">M</div><div><div class="t-name">María G.</div><div class="t-role">Emprendedora digital</div></div></div>
-    </div>
-    <div class="testimonio reveal">
-      <div class="t-stars">★★★★★</div>
-      <p class="t-quote">"Los 100 prompts solos ya valen más que el precio del ebook. Me ahorro horas de trabajo cada semana."</p>
-      <div class="t-author"><div class="t-avatar">V</div><div><div class="t-name">Valentina R.</div><div class="t-role">Coach de vida</div></div></div>
-    </div>
-    <div class="testimonio reveal">
-      <div class="t-stars">★★★★★</div>
-      <p class="t-quote">"Hice mi primera venta en Hotmart a los 12 días de leer el ebook. El capítulo de producto digital es oro puro."</p>
-      <div class="t-author"><div class="t-avatar">C</div><div><div class="t-name">Carolina M.</div><div class="t-role">Diseñadora freelance</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA FINAL -->
-<section id="cta-final">
-  <h2 class="cta-final-title reveal">¿Lista para <span class="gold">brillar</span><br>en Instagram?</h2>
-  <p class="cta-final-sub reveal">Únete a las emprendedoras de LATAM que ya están construyendo su marca personal y vendiendo con IA.</p>
-  <a href="https://hotmart.com" target="_blank" class="cta-final-btn reveal">Quiero el ebook por $17 →</a>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <span class="footer-logo">Dayana Aguirre</span>
-  <ul class="footer-links">
-    <li><a href="#sobre-mi">Sobre mí</a></li>
-    <li><a href="#producto">Ebook</a></li>
-    <li><a href="mailto:dayana20aguirre@gmail.com">Contacto</a></li>
-    <li><a href="links.html">Links</a></li>
-  </ul>
-  <span class="footer-copy">© 2025 Dayana Aguirre</span>
+  <div class="footer-logo">Dayanna Aguirre · Social Media & IA</div>
+  <div class="footer-links">
+    <a href="https://instagram.com/dayanna.aguirremkt" target="_blank">Instagram</a>
+    <a href="links.html">Links</a>
+    <a href="ebook.html">Ebook</a>
+    <a href="mailto:dayana20aguirre@gmail.com">Contacto</a>
+  </div>
 </footer>
 
 <script>
-function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
-document.addEventListener('click',e=>{
-  const m=document.getElementById('mobileMenu');
-  if(m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.hamburger'))m.classList.remove('open');
-});
-const nav=document.getElementById('navbar');
-window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>50);});
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
-},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
-  });
-});
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
 </script>
 </body>
 </html>
