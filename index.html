@@ -19,6 +19,7 @@ body{
 
 :root{
   --gold:#C9A562;
+  --gold-dim:rgba(201,165,98,0.15);
   --cream:#F0E8D0;
   --bg:#0C0E08;
   --bg2:#0E1009;
@@ -128,80 +129,290 @@ nav.scrolled{
 .marquee-dot{color:rgba(12,14,8,0.4);}
 @keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
-/* ── SECTIONS ── */
-section{padding:90px 6%;}
-.inner{max-width:900px;margin:0 auto;}
+/* ── SECTIONS BASE ── */
+section{padding:100px 6%;}
+.inner{max-width:960px;margin:0 auto;}
 .inner-sm{max-width:660px;margin:0 auto;}
-.sec-label{font-size:10px;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:rgba(201,165,98,0.5);display:block;margin-bottom:14px;}
-.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;color:var(--cream);line-height:1.1;letter-spacing:-1px;margin-bottom:12px;}
+
+.sec-label{
+  font-size:10px;font-weight:700;letter-spacing:5px;text-transform:uppercase;
+  color:rgba(201,165,98,0.5);display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
+}
+.sec-label::before{content:'';display:inline-block;width:20px;height:1px;background:rgba(201,165,98,0.4);}
+.sec-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:900;color:var(--cream);line-height:1.05;letter-spacing:-1.5px;margin-bottom:16px;
+}
 .sec-title em{color:var(--gold);font-style:italic;}
-.sec-intro{font-size:14px;font-weight:300;color:rgba(237,230,212,0.45);line-height:1.9;max-width:520px;margin-bottom:52px;}
+.sec-intro{
+  font-size:14px;font-weight:300;color:rgba(237,230,212,0.4);
+  line-height:1.9;max-width:520px;margin-bottom:60px;
+}
 
 /* ── SERVICIOS ── */
-.servicios{background:var(--bg);}
-.srv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;}
-.srv-card{background:var(--bg);padding:32px 28px;transition:background 0.2s;position:relative;}
-.srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background 0.2s;}
-.srv-card:hover{background:var(--bg2);}
-.srv-card:hover::before{background:var(--gold);}
-.srv-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:rgba(201,165,98,0.12);margin-bottom:16px;line-height:1;display:block;}
-.srv-title{font-size:14px;font-weight:700;color:var(--cream);margin-bottom:8px;letter-spacing:0.02em;}
-.srv-text{font-size:12.5px;font-weight:300;color:rgba(237,230,212,0.4);line-height:1.8;}
+.servicios{background:var(--bg);position:relative;overflow:hidden;}
+.servicios::before{
+  content:'SERVICIOS';
+  position:absolute;right:-2%;top:50%;transform:translateY(-50%);
+  font-family:'Playfair Display',serif;font-size:12rem;font-weight:900;
+  color:rgba(201,165,98,0.025);letter-spacing:-5px;pointer-events:none;line-height:1;
+}
+.srv-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;
+}
+.srv-card{
+  background:var(--bg);padding:40px 32px;
+  transition:background 0.3s,transform 0.3s;
+  position:relative;overflow:hidden;
+  cursor:default;
+}
+.srv-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,165,98,0),transparent);
+  transition:background 0.3s;
+}
+.srv-card:hover{background:#101208;}
+.srv-card:hover::after{
+  background:linear-gradient(90deg,transparent,rgba(201,165,98,0.3),transparent);
+}
+.srv-icon{
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(201,165,98,0.2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;transition:border-color 0.3s,background 0.3s;
+  font-size:16px;
+}
+.srv-card:hover .srv-icon{
+  border-color:rgba(201,165,98,0.5);
+  background:rgba(201,165,98,0.08);
+}
+.srv-num{
+  font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;
+  color:rgba(201,165,98,0.06);position:absolute;top:16px;right:20px;line-height:1;
+}
+.srv-title{
+  font-size:13.5px;font-weight:700;color:var(--cream);
+  margin-bottom:10px;letter-spacing:0.02em;
+}
+.srv-text{font-size:12.5px;font-weight:300;color:rgba(237,230,212,0.38);line-height:1.85;}
+.srv-arrow{
+  display:inline-block;margin-top:18px;
+  font-size:11px;font-weight:600;letter-spacing:1.5px;
+  color:rgba(201,165,98,0.3);text-transform:uppercase;
+  transition:color 0.2s,transform 0.2s;
+}
+.srv-card:hover .srv-arrow{color:rgba(201,165,98,0.7);transform:translateX(4px);}
 
 /* ── CÓMO FUNCIONA ── */
-.como{background:var(--bg2);}
-.steps{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;}
-.step{display:flex;align-items:flex-start;gap:24px;padding:28px 32px;border-bottom:1px solid var(--line);transition:background 0.2s;}
-.step:last-child{border-bottom:none;}
-.step:hover{background:rgba(201,165,98,0.03);}
-.step-n{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:rgba(201,165,98,0.2);flex-shrink:0;width:40px;line-height:1;margin-top:4px;}
-.step-title{font-size:14px;font-weight:700;color:var(--cream);margin-bottom:5px;}
-.step-text{font-size:13px;font-weight:300;color:rgba(237,230,212,0.45);line-height:1.8;margin:0;}
+.como{background:var(--bg2);position:relative;}
+.como::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,165,98,0.2),transparent);
+}
+.como::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,165,98,0.2),transparent);
+}
+.steps-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;position:relative;
+}
+.steps-grid::before{
+  content:'';position:absolute;
+  top:28px;left:calc(12.5% + 20px);right:calc(12.5% + 20px);
+  height:1px;background:linear-gradient(90deg,rgba(201,165,98,0.15),rgba(201,165,98,0.4),rgba(201,165,98,0.15));
+  z-index:0;
+}
+.step-card{
+  padding:0 24px 40px;position:relative;z-index:1;
+  border-right:1px solid var(--line);
+}
+.step-card:last-child{border-right:none;}
+.step-num-wrap{
+  width:56px;height:56px;border-radius:50%;
+  border:1px solid rgba(201,165,98,0.25);
+  background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:28px;position:relative;
+}
+.step-num-wrap::before{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  border:1px solid rgba(201,165,98,0.08);
+}
+.step-n{
+  font-family:'Playfair Display',serif;font-size:1.3rem;
+  font-weight:900;color:var(--gold);line-height:1;
+}
+.step-title{font-size:13.5px;font-weight:700;color:var(--cream);margin-bottom:8px;line-height:1.3;}
+.step-text{font-size:12.5px;font-weight:300;color:rgba(237,230,212,0.38);line-height:1.85;}
 
 /* ── SOBRE MÍ ── */
-.sobre{background:var(--bg);}
-.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.sobre{background:var(--bg);position:relative;overflow:hidden;}
+.sobre::before{
+  content:'"';
+  position:absolute;left:4%;top:10%;
+  font-family:'Playfair Display',serif;font-size:20rem;font-weight:900;
+  color:rgba(201,165,98,0.02);line-height:1;pointer-events:none;
+}
+.sobre-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:center;}
 .sobre-img{position:relative;}
-.sobre-img img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;border-radius:4px;filter:brightness(0.9) contrast(1.05);position:relative;z-index:1;}
-.sobre-img::before{content:'';position:absolute;top:-12px;left:-12px;right:12px;bottom:12px;border:1px solid var(--line);border-radius:4px;z-index:0;}
-.sobre-quote{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;font-weight:300;color:var(--gold);line-height:1.6;margin-bottom:24px;border-left:2px solid rgba(201,165,98,0.3);padding-left:20px;}
-.sobre-text{font-size:13.5px;font-weight:300;color:rgba(237,230,212,0.5);line-height:1.95;margin-bottom:14px;}
-.sobre-text strong{color:rgba(237,230,212,0.85);font-weight:500;}
-.sobre-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;}
-.tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--line);color:rgba(201,165,98,0.6);padding:6px 14px;border-radius:2px;}
+.sobre-img-frame{
+  position:relative;
+  border-radius:4px;overflow:hidden;
+}
+.sobre-img-frame img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;
+  display:block;filter:brightness(0.88) contrast(1.05) saturate(0.95);
+}
+.sobre-img-frame::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(12,14,8,0.4) 0%,transparent 50%);
+}
+.sobre-img-deco{
+  position:absolute;top:-14px;left:-14px;right:14px;bottom:14px;
+  border:1px solid rgba(201,165,98,0.18);border-radius:4px;z-index:-1;
+}
+.sobre-img-deco2{
+  position:absolute;top:-28px;left:-28px;right:28px;bottom:28px;
+  border:1px solid rgba(201,165,98,0.06);border-radius:4px;z-index:-2;
+}
+.sobre-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-style:italic;font-weight:300;
+  color:var(--gold);line-height:1.55;
+  margin-bottom:28px;
+  padding-left:24px;
+  border-left:2px solid rgba(201,165,98,0.35);
+}
+.sobre-text{
+  font-size:13.5px;font-weight:300;
+  color:rgba(237,230,212,0.48);line-height:1.95;margin-bottom:16px;
+}
+.sobre-text strong{color:rgba(237,230,212,0.82);font-weight:500;}
+.sobre-divider{
+  width:40px;height:1px;background:rgba(201,165,98,0.3);
+  margin:24px 0;
+}
+.sobre-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.tag{
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  border:1px solid rgba(201,165,98,0.18);color:rgba(201,165,98,0.5);
+  padding:7px 16px;border-radius:2px;transition:border-color 0.2s,color 0.2s;
+}
+.tag:hover{border-color:rgba(201,165,98,0.35);color:rgba(201,165,98,0.8);}
 
 /* ── INVERSIÓN ── */
-.inversion{background:var(--bg2);text-align:center;}
-.price-card{display:inline-block;border:1px solid var(--line);border-radius:4px;padding:52px 64px;background:var(--bg);position:relative;max-width:460px;width:100%;}
-.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.price-badge{font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(201,165,98,0.5);margin-bottom:20px;display:block;}
-.price-num{font-family:'Playfair Display',serif;font-size:5.5rem;font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px;}
-.price-sub{font-size:12px;font-weight:400;color:rgba(237,230,212,0.3);margin-bottom:32px;letter-spacing:1px;}
-.price-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:36px;text-align:left;}
-.price-list li{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:400;color:rgba(237,230,212,0.6);}
-.pdot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
-.price-note{font-size:11px;font-weight:300;color:rgba(237,230,212,0.2);margin-top:12px;}
+.inversion{
+  background:var(--bg2);text-align:center;position:relative;overflow:hidden;
+}
+.inversion::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,165,98,0.2),transparent);
+}
+.inversion-inner{position:relative;z-index:1;}
+.inv-comparison{
+  display:inline-flex;align-items:center;gap:32px;
+  margin-bottom:56px;padding:20px 36px;
+  border:1px solid var(--line);border-radius:4px;
+  background:rgba(201,165,98,0.03);
+}
+.inv-comp-item{text-align:center;}
+.inv-comp-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(237,230,212,0.25);margin-bottom:6px;}
+.inv-comp-price{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;}
+.inv-comp-price.strike{color:rgba(237,230,212,0.2);text-decoration:line-through;}
+.inv-comp-price.highlight{color:var(--gold);}
+.inv-comp-sub{font-size:10px;color:rgba(237,230,212,0.2);margin-top:2px;}
+.inv-divider-text{font-size:10px;letter-spacing:3px;color:rgba(237,230,212,0.15);text-transform:uppercase;}
+.price-card{
+  display:inline-block;border:1px solid rgba(201,165,98,0.2);border-radius:6px;
+  padding:56px 64px;background:var(--bg);
+  position:relative;max-width:480px;width:100%;
+  box-shadow:0 0 80px rgba(201,165,98,0.04), 0 0 0 1px rgba(201,165,98,0.05);
+}
+.price-card::before{
+  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.price-card::after{
+  content:'';position:absolute;inset:0;border-radius:6px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(201,165,98,0.05) 0%,transparent 60%);
+  pointer-events:none;
+}
+.price-badge{
+  display:inline-block;
+  font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--bg);background:var(--gold);
+  padding:5px 14px;border-radius:2px;margin-bottom:28px;
+}
+.price-num{
+  font-family:'Playfair Display',serif;
+  font-size:6rem;font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px;
+}
+.price-sub{font-size:12px;font-weight:400;color:rgba(237,230,212,0.25);margin-bottom:36px;letter-spacing:1px;}
+.price-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:40px;text-align:left;}
+.price-list li{
+  display:flex;align-items:center;gap:12px;
+  font-size:13px;font-weight:400;color:rgba(237,230,212,0.55);
+  padding-bottom:12px;border-bottom:1px solid rgba(201,165,98,0.06);
+}
+.price-list li:last-child{border-bottom:none;padding-bottom:0;}
+.pdot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);flex-shrink:0;
+  box-shadow:0 0 6px rgba(201,165,98,0.4);
+}
+.price-note{font-size:11px;font-weight:300;color:rgba(237,230,212,0.18);margin-top:16px;font-style:italic;}
 
 /* ── AGENDA ── */
-.agenda{background:var(--bg);}
-.agenda-box{border:1px solid var(--line);border-radius:4px;padding:52px;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;position:relative;overflow:hidden;}
-.agenda-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.agenda-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--cream);line-height:1.1;letter-spacing:-1px;margin-bottom:14px;}
+.agenda{background:var(--bg);position:relative;}
+.agenda::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,165,98,0.15),transparent);
+}
+.agenda-box{
+  border:1px solid var(--line);border-radius:6px;padding:64px;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;
+  align-items:center;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(201,165,98,0.02) 0%,transparent 60%);
+}
+.agenda-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.agenda-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,3vw,2.8rem);font-weight:900;
+  color:var(--cream);line-height:1.05;letter-spacing:-1px;margin-bottom:16px;
+}
 .agenda-title em{color:var(--gold);font-style:italic;}
-.agenda-desc{font-size:13.5px;font-weight:300;color:rgba(237,230,212,0.45);line-height:1.9;}
+.agenda-desc{
+  font-size:13.5px;font-weight:300;
+  color:rgba(237,230,212,0.4);line-height:1.9;
+}
 .agenda-right{display:flex;flex-direction:column;gap:12px;}
-.contact-opt{display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px solid var(--line);border-radius:4px;text-decoration:none;background:var(--bg2);transition:border-color 0.2s,background 0.2s;}
-.contact-opt:hover{border-color:rgba(201,165,98,0.35);background:rgba(201,165,98,0.04);}
+.contact-opt{
+  display:flex;align-items:center;gap:18px;padding:20px 22px;
+  border:1px solid var(--line);border-radius:4px;
+  text-decoration:none;background:var(--bg2);
+  transition:border-color 0.25s,background 0.25s,transform 0.2s;
+}
+.contact-opt:hover{
+  border-color:rgba(201,165,98,0.3);
+  background:rgba(201,165,98,0.04);
+  transform:translateX(3px);
+}
 .co-icon{font-size:1.3rem;flex-shrink:0;}
 .co-title{font-size:13px;font-weight:700;color:var(--cream);margin-bottom:2px;}
-.co-sub{font-size:11px;font-weight:300;color:rgba(237,230,212,0.35);}
-.co-arrow{margin-left:auto;font-size:14px;color:rgba(201,165,98,0.3);transition:transform 0.2s,color 0.2s;}
-.contact-opt:hover .co-arrow{transform:translateX(4px);color:rgba(201,165,98,0.7);}
+.co-sub{font-size:11px;font-weight:300;color:rgba(237,230,212,0.3);}
+.co-arrow{margin-left:auto;font-size:14px;color:rgba(201,165,98,0.25);transition:transform 0.2s,color 0.2s;}
+.contact-opt:hover .co-arrow{transform:translateX(4px);color:var(--gold);}
 
 /* ── FOOTER ── */
 footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:20px;}
 .footer-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
-.footer-logo{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:rgba(237,230,212,0.3);}
+.footer-logo{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:rgba(237,230,212,0.25);}
 .footer-links{display:flex;gap:24px;flex-wrap:wrap;}
 .footer-links a{font-size:11px;font-weight:500;letter-spacing:1px;color:rgba(237,230,212,0.2);text-decoration:none;transition:color 0.2s;}
 .footer-links a:hover{color:rgba(237,230,212,0.6);}
@@ -221,21 +432,12 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
   background:#0E1009;
   border:1px solid var(--line);
   border-top:2px solid var(--gold);
-  border-radius:4px;
-  padding:32px 36px;
+  border-radius:4px;padding:32px 36px;
   max-width:680px;width:100%;
   box-shadow:0 -8px 60px rgba(0,0,0,0.6);
 }
-.consent-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.2rem;font-weight:700;
-  color:var(--cream);margin-bottom:10px;
-}
-.consent-text{
-  font-size:12.5px;font-weight:300;
-  color:rgba(237,230,212,0.45);
-  line-height:1.8;margin-bottom:22px;
-}
+.consent-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--cream);margin-bottom:10px;}
+.consent-text{font-size:12.5px;font-weight:300;color:rgba(237,230,212,0.45);line-height:1.8;margin-bottom:22px;}
 .consent-text a{color:var(--gold);text-decoration:none;}
 .consent-text a:hover{text-decoration:underline;}
 .consent-btns{display:flex;gap:12px;flex-wrap:wrap;}
@@ -247,8 +449,7 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
 }
 .consent-accept:hover{background:#E8C87A;}
 .consent-reject{
-  background:transparent;
-  border:1px solid var(--line);
+  background:transparent;border:1px solid var(--line);
   color:rgba(237,230,212,0.35);
   font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
   padding:13px 24px;border-radius:2px;cursor:pointer;
@@ -257,6 +458,13 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
 .consent-reject:hover{border-color:rgba(237,230,212,0.25);color:rgba(237,230,212,0.6);}
 
 /* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .srv-grid{grid-template-columns:repeat(2,1fr);}
+  .steps-grid{grid-template-columns:1fr 1fr;gap:32px;}
+  .steps-grid::before{display:none;}
+  .step-card{border-right:none;border-bottom:1px solid var(--line);padding:0 0 32px;}
+  .step-card:last-child{border-bottom:none;}
+}
 @media(max-width:768px){
   .hero{grid-template-columns:1fr;}
   .hero-right{height:50vh;order:-1;}
@@ -266,10 +474,14 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
   .hamburger{display:flex;}
   .sobre-grid{grid-template-columns:1fr;}
   .sobre-img{display:none;}
-  .agenda-box{grid-template-columns:1fr;padding:32px 24px;gap:32px;}
-  .price-card{padding:36px 24px;}
-  .price-num{font-size:4rem;}
+  .agenda-box{grid-template-columns:1fr;padding:36px 24px;gap:36px;}
+  .price-card{padding:40px 28px;}
+  .price-num{font-size:4.5rem;}
   footer{flex-direction:column;text-align:center;}
+  .srv-grid{grid-template-columns:1fr;}
+  .steps-grid{grid-template-columns:1fr;}
+  .inv-comparison{flex-direction:column;gap:20px;}
+  section{padding:72px 6%;}
 }
 </style>
 </head>
@@ -373,33 +585,45 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
     <div class="srv-grid">
       <div class="srv-card">
         <span class="srv-num">01</span>
+        <div class="srv-icon">✦</div>
         <div class="srv-title">Plan de Contenido Mensual</div>
         <p class="srv-text">Te digo exactamente qué publicar cada día — qué videos hacer, qué fotos tomar y cuándo publicar para máximo alcance.</p>
+        <span class="srv-arrow">Ver más →</span>
       </div>
       <div class="srv-card">
         <span class="srv-num">02</span>
+        <div class="srv-icon">◆</div>
         <div class="srv-title">Copies & CTAs</div>
         <p class="srv-text">Los textos de tus publicaciones, Stories y bio escritos para conectar con tu audiencia y llevarla a la acción.</p>
+        <span class="srv-arrow">Ver más →</span>
       </div>
       <div class="srv-card">
         <span class="srv-num">03</span>
+        <div class="srv-icon">▲</div>
         <div class="srv-title">Diseño de Formatos</div>
         <p class="srv-text">Carruseles, portadas de Reels y Stories diseñados con tu identidad visual para que tu feed se vea coherente y profesional.</p>
+        <span class="srv-arrow">Ver más →</span>
       </div>
       <div class="srv-card">
         <span class="srv-num">04</span>
+        <div class="srv-icon">◉</div>
         <div class="srv-title">Página Web</div>
         <p class="srv-text">Una landing page profesional donde tus seguidores llegan, conocen lo que ofreces y te contactan directamente.</p>
+        <span class="srv-arrow">Ver más →</span>
       </div>
       <div class="srv-card">
         <span class="srv-num">05</span>
+        <div class="srv-icon">◈</div>
         <div class="srv-title">Campañas de Publicidad</div>
-        <p class="srv-text">Creación y gestión de campañas en Meta Ads (Instagram & Facebook) para ampliar tu alcance y atraer clientes reales con presupuesto optimizado.</p>
+        <p class="srv-text">Creación y gestión de campañas en Meta Ads para ampliar tu alcance y atraer clientes reales con presupuesto optimizado.</p>
+        <span class="srv-arrow">Ver más →</span>
       </div>
       <div class="srv-card">
         <span class="srv-num">06</span>
+        <div class="srv-icon">◇</div>
         <div class="srv-title">Análisis de Data</div>
         <p class="srv-text">Reporte mensual con las métricas que importan: qué contenido funciona, quién es tu audiencia y qué ajustes hacer para seguir creciendo.</p>
+        <span class="srv-arrow">Ver más →</span>
       </div>
     </div>
   </div>
@@ -411,34 +635,26 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
     <span class="sec-label">El proceso</span>
     <h2 class="sec-title">Cómo <em>crecemos</em> juntos</h2>
     <p class="sec-intro">Simple, claro y sin complicaciones. Tú te enfocas en crear, yo me encargo del resto.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">1</div>
-        <div>
-          <div class="step-title">Reunión gratuita de 30 minutos</div>
-          <p class="step-text">Hablamos sobre tu marca, tu audiencia y tus metas. Entiendo tu negocio antes de proponer cualquier estrategia.</p>
-        </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num-wrap"><span class="step-n">1</span></div>
+        <div class="step-title">Reunión gratuita de 30 minutos</div>
+        <p class="step-text">Hablamos sobre tu marca, tu audiencia y tus metas. Entiendo tu negocio antes de proponer cualquier estrategia.</p>
       </div>
-      <div class="step">
-        <div class="step-n">2</div>
-        <div>
-          <div class="step-title">Creo tu estrategia personalizada</div>
-          <p class="step-text">Diseño tu plan de contenido mensual, los copies y los formatos visuales adaptados a tu nicho y tu audiencia.</p>
-        </div>
+      <div class="step-card">
+        <div class="step-num-wrap"><span class="step-n">2</span></div>
+        <div class="step-title">Creo tu estrategia personalizada</div>
+        <p class="step-text">Diseño tu plan de contenido mensual, los copies y los formatos visuales adaptados a tu nicho y tu audiencia.</p>
       </div>
-      <div class="step">
-        <div class="step-n">3</div>
-        <div>
-          <div class="step-title">Tú grabas, yo lo trabajo</div>
-          <p class="step-text">Me envías el material (videos y fotos) siguiendo mi guía. Yo lo edito, diseño y dejo todo listo para publicar.</p>
-        </div>
+      <div class="step-card">
+        <div class="step-num-wrap"><span class="step-n">3</span></div>
+        <div class="step-title">Tú grabas, yo lo trabajo</div>
+        <p class="step-text">Me envías el material siguiendo mi guía. Yo lo edito, diseño y dejo todo listo para publicar.</p>
       </div>
-      <div class="step">
-        <div class="step-n">4</div>
-        <div>
-          <div class="step-title">Seguimiento y ajustes</div>
-          <p class="step-text">Revisamos los resultados cada mes y ajustamos la estrategia según lo que mejor funcione para tu marca.</p>
-        </div>
+      <div class="step-card">
+        <div class="step-num-wrap"><span class="step-n">4</span></div>
+        <div class="step-title">Seguimiento y ajustes</div>
+        <p class="step-text">Revisamos los resultados cada mes y ajustamos la estrategia según lo que mejor funcione para tu marca.</p>
       </div>
     </div>
   </div>
@@ -449,19 +665,25 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
   <div class="inner">
     <div class="sobre-grid">
       <div class="sobre-img">
-        <img src="foto-perfil.png" alt="Dayanna Aguirre" onerror="this.style.display='none'">
+        <div class="sobre-img-frame">
+          <img src="foto-perfil.png" alt="Dayanna Aguirre" onerror="this.style.display='none'">
+        </div>
+        <div class="sobre-img-deco"></div>
+        <div class="sobre-img-deco2"></div>
       </div>
       <div class="sobre-content">
         <span class="sec-label">Sobre mí</span>
-        <h2 class="sec-title" style="margin-bottom:20px;">Hola, soy<br><em>Dayanna</em></h2>
+        <h2 class="sec-title" style="margin-bottom:24px;">Hola, soy<br><em>Dayanna</em></h2>
         <div class="sobre-quote">"Creo que cada emprendedor merece una presencia digital que refleje el valor real de lo que ofrece."</div>
         <p class="sobre-text">Soy estratega de contenido y Social Media Manager para emprendedores de LATAM. Combino <strong>creatividad, estrategia e inteligencia artificial</strong> para crear marcas digitales que conectan y venden.</p>
         <p class="sobre-text">Mi método está pensado para que tú no tengas que convertirte en experta en redes sociales — yo me encargo de la estrategia mientras tú haces lo que mejor sabes hacer.</p>
+        <div class="sobre-divider"></div>
         <div class="sobre-tags">
           <span class="tag">Social Media</span>
           <span class="tag">IA</span>
           <span class="tag">Estrategia</span>
           <span class="tag">LATAM</span>
+          <span class="tag">Pereira · Lima</span>
         </div>
       </div>
     </div>
@@ -470,10 +692,31 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
 
 <!-- INVERSIÓN -->
 <section class="inversion" id="inversion">
-  <div class="inner" style="text-align:center;">
-    <span class="sec-label">Inversión</span>
+  <div class="inner inversion-inner" style="text-align:center;">
+    <span class="sec-label" style="justify-content:center;">Inversión</span>
     <h2 class="sec-title" style="margin-bottom:12px;">Un precio, <em>todo incluido</em></h2>
     <p class="sec-intro" style="margin:0 auto 48px;">Sin sorpresas ni costos ocultos. Todo lo que necesita tu marca digital en un solo paquete.</p>
+
+    <div class="inv-comparison">
+      <div class="inv-comp-item">
+        <div class="inv-comp-label">Freelancer básico</div>
+        <div class="inv-comp-price strike">$200</div>
+        <div class="inv-comp-sub">sin estrategia</div>
+      </div>
+      <div class="inv-divider-text">vs</div>
+      <div class="inv-comp-item">
+        <div class="inv-comp-label">Agencia boutique</div>
+        <div class="inv-comp-price strike">$600</div>
+        <div class="inv-comp-sub">sin web incluida</div>
+      </div>
+      <div class="inv-divider-text">vs</div>
+      <div class="inv-comp-item">
+        <div class="inv-comp-label">Dayanna Aguirre</div>
+        <div class="inv-comp-price highlight">$99</div>
+        <div class="inv-comp-sub">todo incluido</div>
+      </div>
+    </div>
+
     <div class="price-card">
       <span class="price-badge">Precio de lanzamiento · Cupos limitados</span>
       <div class="price-num">$99</div>
@@ -541,7 +784,7 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
       <a href="links.html">Links</a>
       <a href="ebook.html">Ebook</a>
       <a href="mailto:dayana20aguirre@gmail.com">Contacto</a>
-    <a href="politicas.html">Políticas & Términos</a>
+      <a href="politicas.html">Políticas & Términos</a>
     </div>
   </div>
   <p class="footer-privacy">
@@ -558,7 +801,6 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
 const nav = document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
 
-// CONSENT
 function acceptConsent(){
   localStorage.setItem('consent','accepted');
   const banner = document.getElementById('consentBanner');
