@@ -207,6 +207,55 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
 .footer-links a:hover{color:rgba(237,230,212,0.6);}
 .footer-privacy{font-size:11px;font-weight:300;color:rgba(237,230,212,0.18);line-height:1.8;border-top:1px solid var(--line);padding-top:16px;}
 
+/* ── CONSENT BANNER ── */
+.consent-overlay{
+  position:fixed;inset:0;z-index:999;
+  background:rgba(12,14,8,0.7);
+  backdrop-filter:blur(6px);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding:24px;
+  opacity:1;transition:opacity 0.4s;
+}
+.consent-overlay.hidden{opacity:0;pointer-events:none;}
+.consent-box{
+  background:#0E1009;
+  border:1px solid var(--line);
+  border-top:2px solid var(--gold);
+  border-radius:4px;
+  padding:32px 36px;
+  max-width:680px;width:100%;
+  box-shadow:0 -8px 60px rgba(0,0,0,0.6);
+}
+.consent-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:var(--cream);margin-bottom:10px;
+}
+.consent-text{
+  font-size:12.5px;font-weight:300;
+  color:rgba(237,230,212,0.45);
+  line-height:1.8;margin-bottom:22px;
+}
+.consent-text a{color:var(--gold);text-decoration:none;}
+.consent-text a:hover{text-decoration:underline;}
+.consent-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.consent-accept{
+  background:var(--gold);color:var(--bg);
+  font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  padding:13px 28px;border-radius:2px;border:none;cursor:pointer;
+  transition:background 0.2s;flex-shrink:0;
+}
+.consent-accept:hover{background:#E8C87A;}
+.consent-reject{
+  background:transparent;
+  border:1px solid var(--line);
+  color:rgba(237,230,212,0.35);
+  font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  padding:13px 24px;border-radius:2px;cursor:pointer;
+  transition:border-color 0.2s,color 0.2s;
+}
+.consent-reject:hover{border-color:rgba(237,230,212,0.25);color:rgba(237,230,212,0.6);}
+
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
   .hero{grid-template-columns:1fr;}
@@ -225,6 +274,22 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
 </style>
 </head>
 <body>
+
+<!-- CONSENT BANNER -->
+<div class="consent-overlay" id="consentBanner">
+  <div class="consent-box">
+    <div class="consent-title">Antes de continuar ✦</div>
+    <p class="consent-text">
+      Este sitio web utiliza la información que compartes (nombre, email, datos de tu negocio) únicamente para brindarte el servicio solicitado. Nunca compartimos tus datos con terceros.<br><br>
+      Al hacer clic en <strong style="color:var(--cream);">"Acepto"</strong> confirmas que has leído y aceptas nuestras
+      <a href="politicas.html" target="_blank">Políticas de Privacidad y Términos y Condiciones</a>.
+    </p>
+    <div class="consent-btns">
+      <button class="consent-accept" onclick="acceptConsent()">Acepto los términos</button>
+      <button class="consent-reject" onclick="rejectConsent()">No acepto</button>
+    </div>
+  </div>
+</div>
 
 <nav id="nav">
   <a href="#" class="nav-logo">Dayanna Aguirre</a>
@@ -476,6 +541,7 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
       <a href="links.html">Links</a>
       <a href="ebook.html">Ebook</a>
       <a href="mailto:dayana20aguirre@gmail.com">Contacto</a>
+    <a href="politicas.html">Políticas & Términos</a>
     </div>
   </div>
   <p class="footer-privacy">
@@ -491,6 +557,23 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direct
 <script>
 const nav = document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+
+// CONSENT
+function acceptConsent(){
+  localStorage.setItem('consent','accepted');
+  const banner = document.getElementById('consentBanner');
+  banner.classList.add('hidden');
+  setTimeout(()=>banner.style.display='none', 400);
+}
+function rejectConsent(){
+  window.location.href = 'https://www.google.com';
+}
+(function(){
+  if(localStorage.getItem('consent')==='accepted'){
+    const banner = document.getElementById('consentBanner');
+    banner.style.display='none';
+  }
+})();
 </script>
 </body>
 </html>
