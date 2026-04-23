@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dayana Aguirre</title>
+<meta name="description" content="Estratega de Marca Personal con IA · @dayanna.aguirremkt">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{min-height:100vh;}
+
+body{
+  background:#0E1208;
+  color:#E8DFC8;
+  font-family:'Inter',sans-serif;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* subtle texture overlay */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ── PHOTO ── */
+.photo-section{
+  width:100%;max-width:480px;
+  height:55vh;min-height:300px;max-height:420px;
+  position:relative;overflow:hidden;
+}
+.photo-section img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 15%;
+  display:block;
+  filter:sepia(8%) contrast(1.05) brightness(0.95);
+}
+.photo-gradient{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(14,18,8,0.05) 0%,
+    rgba(14,18,8,0.0) 35%,
+    rgba(14,18,8,0.55) 75%,
+    rgba(14,18,8,1) 100%
+  );
+}
+/* thin gold top line */
+.photo-section::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent, #C9A562, transparent);
+  z-index:2;
+}
+
+/* ── CONTAINER ── */
+.wrap{
+  position:relative;z-index:1;
+  width:100%;max-width:480px;
+  padding:0 28px 64px;
+  display:flex;flex-direction:column;
+  align-items:center;
+}
+
+/* ── IDENTITY ── */
+.identity{
+  text-align:center;
+  padding:24px 0 32px;
+  width:100%;
+  border-bottom:1px solid rgba(201,165,98,0.15);
+  margin-bottom:32px;
+}
+.handle{
+  font-size:10px;font-weight:600;letter-spacing:5px;
+  text-transform:uppercase;
+  color:rgba(201,165,98,0.6);
+  margin-bottom:14px;
+  display:block;
+}
+.name{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;font-weight:900;
+  color:#F0E8D0;
+  letter-spacing:-0.5px;
+  line-height:1.05;
+  margin-bottom:6px;
+}
+.name-italic{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;font-style:italic;font-weight:300;
+  color:rgba(201,165,98,0.7);
+  letter-spacing:1px;
+  display:block;
+  margin-bottom:16px;
+}
+.bio{
+  font-size:12.5px;font-weight:300;
+  color:rgba(232,223,200,0.5);
+  line-height:1.85;
+  max-width:280px;
+  margin:0 auto;
+}
+.bio strong{color:rgba(232,223,200,0.8);font-weight:500;}
+
+/* ── LINKS ── */
+.links{
+  width:100%;
+  display:flex;flex-direction:column;
+  gap:8px;
+  margin-bottom:36px;
+}
+
+.link-item{
+  display:flex;align-items:center;
+  width:100%;
+  padding:17px 20px;
+  border-radius:4px;
+  text-decoration:none;
+  border:1px solid rgba(201,165,98,0.12);
+  background:rgba(201,165,98,0.03);
+  transition:all 0.25s ease;
+  position:relative;
+  overflow:hidden;
+}
+.link-item::after{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:2px;
+  background:rgba(201,165,98,0.3);
+  transition:background 0.25s;
+}
+.link-item:hover{
+  border-color:rgba(201,165,98,0.3);
+  background:rgba(201,165,98,0.06);
+  transform:translateX(3px);
+}
+.link-item:hover::after{
+  background:#C9A562;
+}
+
+/* featured ebook */
+.link-item.ebook{
+  border-color:rgba(201,165,98,0.25);
+  background:rgba(201,165,98,0.07);
+}
+.link-item.ebook::after{background:#C9A562;}
+
+.link-icon{
+  font-size:1.1rem;
+  margin-right:16px;
+  flex-shrink:0;
+  opacity:0.8;
+}
+.link-text{flex:1;}
+.link-title{
+  font-size:13.5px;font-weight:600;
+  color:#F0E8D0;
+  letter-spacing:0.02em;
+  margin-bottom:2px;
+}
+.link-sub{
+  font-size:11px;font-weight:300;
+  color:rgba(232,223,200,0.35);
+  letter-spacing:0.02em;
+}
+.link-arrow{
+  font-size:13px;
+  color:rgba(201,165,98,0.3);
+  flex-shrink:0;
+  transition:color 0.2s,transform 0.2s;
+  margin-left:12px;
+}
+.link-item:hover .link-arrow{
+  color:rgba(201,165,98,0.7);
+  transform:translateX(3px);
+}
+
+/* ── STATS ── */
+.stats{
+  width:100%;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  margin-bottom:36px;
+  border:1px solid rgba(201,165,98,0.12);
+  border-radius:4px;
+  overflow:hidden;
+}
+.stat{
+  padding:18px 8px;
+  text-align:center;
+  border-right:1px solid rgba(201,165,98,0.08);
+}
+.stat:last-child{border-right:none;}
+.stat-n{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;font-weight:700;
+  color:#C9A562;
+  display:block;margin-bottom:5px;
+}
+.stat-l{
+  font-size:8.5px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(232,223,200,0.22);
+}
+
+/* ── QUOTE ── */
+.quote{
+  width:100%;
+  margin-bottom:36px;
+  padding:24px 20px 20px;
+  border:1px solid rgba(201,165,98,0.1);
+  border-radius:4px;
+  position:relative;
+}
+.quote-mark{
+  font-family:'Cormorant Garamond',serif;
+  font-size:4rem;font-weight:300;
+  color:rgba(201,165,98,0.2);
+  position:absolute;top:-10px;left:16px;
+  line-height:1;
+}
+.quote-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;font-style:italic;font-weight:300;
+  color:rgba(232,223,200,0.55);
+  line-height:1.85;
+  margin-bottom:14px;
+  padding-top:12px;
+}
+.quote-author{
+  font-size:10px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;
+  color:rgba(201,165,98,0.4);
+}
+
+/* ── FOOTER ── */
+.footer{
+  font-size:9.5px;font-weight:400;letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:rgba(232,223,200,0.13);
+  text-align:center;
+}
+</style>
+</head>
+<body>
+
+<div class="photo-section">
+  <img src="foto3.jpeg" alt="Dayana Aguirre"
+       onerror="this.style.display='none';this.parentElement.style.background='#1a2010'">
+  <div class="photo-gradient"></div>
+</div>
+
+<div class="wrap">
+
+  <div class="identity">
+    <span class="handle">@dayanna.aguirremkt</span>
+    <div class="name">Dayana Aguirre</div>
+    <span class="name-italic">Estratega de Marca Personal</span>
+    <p class="bio">Te enseño a construir tu <strong>marca personal con IA</strong>, crecer en Instagram y vender tu primer producto digital.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-n">100+</span>
+      <span class="stat-l">Prompts</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">4</span>
+      <span class="stat-l">Capítulos</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">$17</span>
+      <span class="stat-l">Precio</span>
+    </div>
+  </div>
+
+  <div class="links">
+
+    <a href="https://dayana20aguirre-blip.github.io/dayana20aguirre.github.io/guia-gratis.pdf" target="_blank" class="link-item ebook">
+      <span class="link-icon">🎁</span>
+      <div class="link-text">
+        <div class="link-title">Guía Gratis — De Seguidores a Clientes</div>
+        <div class="link-sub">Descarga gratuita · PDF · Cualquier nicho</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://hotmart.com" target="_blank" class="link-item ebook">
+      <span class="link-icon">📖</span>
+      <div class="link-text">
+        <div class="link-title">Marca Personal con IA — Ebook</div>
+        <div class="link-sub">$17 USD · Precio de lanzamiento</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://instagram.com/dayanna.aguirremkt" target="_blank" class="link-item">
+      <span class="link-icon">📱</span>
+      <div class="link-text">
+        <div class="link-title">Instagram</div>
+        <div class="link-sub">Contenido diario sobre IA y marca personal</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://dayana20aguirre-blip.github.io/dayana20aguirre.github.io/" target="_blank" class="link-item">
+      <span class="link-icon">🌐</span>
+      <div class="link-text">
+        <div class="link-title">Mi Sitio Web</div>
+        <div class="link-sub">Sobre mí · Productos · Contacto</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="mailto:dayana20aguirre@gmail.com" class="link-item">
+      <span class="link-icon">✉️</span>
+      <div class="link-text">
+        <div class="link-title">Escríbeme</div>
+        <div class="link-sub">dayana20aguirre@gmail.com</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+  </div>
+
+  <div class="quote">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">Apliqué el método y en 12 días hice mi primera venta en Hotmart. Dayana explica todo de forma tan clara que hasta yo pude hacerlo.</p>
+    <div class="quote-author">Carolina M. · Diseñadora digital</div>
+  </div>
+
+  <div class="footer">© 2025 Dayana Aguirre · Todos los derechos reservados</div>
+
+</div>
+</body>
+</html>
