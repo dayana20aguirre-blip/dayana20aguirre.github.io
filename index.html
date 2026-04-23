@@ -199,11 +199,13 @@ section{padding:90px 6%;}
 .contact-opt:hover .co-arrow{transform:translateX(4px);color:rgba(201,165,98,0.7);}
 
 /* ── FOOTER ── */
-footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:20px;}
+.footer-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
 .footer-logo{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:rgba(237,230,212,0.3);}
 .footer-links{display:flex;gap:24px;flex-wrap:wrap;}
 .footer-links a{font-size:11px;font-weight:500;letter-spacing:1px;color:rgba(237,230,212,0.2);text-decoration:none;transition:color 0.2s;}
 .footer-links a:hover{color:rgba(237,230,212,0.6);}
+.footer-privacy{font-size:11px;font-weight:300;color:rgba(237,230,212,0.18);line-height:1.8;border-top:1px solid var(--line);padding-top:16px;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
@@ -228,7 +230,7 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;align-items
   <a href="#" class="nav-logo">Dayanna Aguirre</a>
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#como">Cómo funciona</a></li>
+    <li><a href="#como">Cómo crecemos</a></li>
     <li><a href="#sobre">Sobre mí</a></li>
     <li><a href="#inversion">Inversión</a></li>
   </ul>
@@ -241,7 +243,7 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;align-items
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">✕</button>
   <a href="#servicios" onclick="document.getElementById('mobileMenu').classList.remove('open')">Servicios</a>
-  <a href="#como" onclick="document.getElementById('mobileMenu').classList.remove('open')">Cómo funciona</a>
+  <a href="#como" onclick="document.getElementById('mobileMenu').classList.remove('open')">Cómo crecemos</a>
   <a href="#sobre" onclick="document.getElementById('mobileMenu').classList.remove('open')">Sobre mí</a>
   <a href="#inversion" onclick="document.getElementById('mobileMenu').classList.remove('open')">Inversión</a>
   <a href="#agenda" class="btn-gold" onclick="document.getElementById('mobileMenu').classList.remove('open')">Agendar reunión</a>
@@ -342,7 +344,7 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;align-items
 <section class="como" id="como">
   <div class="inner">
     <span class="sec-label">El proceso</span>
-    <h2 class="sec-title">Cómo <em>trabajamos</em> juntos</h2>
+    <h2 class="sec-title">Cómo <em>crecemos</em> juntos</h2>
     <p class="sec-intro">Simple, claro y sin complicaciones. Tú te enfocas en crear, yo me encargo del resto.</p>
     <div class="steps">
       <div class="step">
@@ -467,13 +469,23 @@ footer{padding:36px 6%;border-top:1px solid var(--line);display:flex;align-items
 </section>
 
 <footer>
-  <div class="footer-logo">Dayanna Aguirre · Social Media & IA</div>
-  <div class="footer-links">
-    <a href="https://instagram.com/dayanna.aguirremkt" target="_blank">Instagram</a>
-    <a href="links.html">Links</a>
-    <a href="ebook.html">Ebook</a>
-    <a href="mailto:dayana20aguirre@gmail.com">Contacto</a>
+  <div class="footer-top">
+    <div class="footer-logo">Dayanna Aguirre · Social Media & IA</div>
+    <div class="footer-links">
+      <a href="https://instagram.com/dayanna.aguirremkt" target="_blank">Instagram</a>
+      <a href="links.html">Links</a>
+      <a href="ebook.html">Ebook</a>
+      <a href="mailto:dayana20aguirre@gmail.com">Contacto</a>
+    </div>
   </div>
+  <p class="footer-privacy">
+    <strong style="color:rgba(237,230,212,0.3);font-weight:500;">Política de Privacidad —</strong>
+    La información que compartes al contactarme (nombre, email, datos de tu negocio) es utilizada únicamente para brindarte el servicio solicitado y nunca será compartida con terceros.
+    Al escribirme por WhatsApp, Instagram o email aceptas que tu información sea tratada con total confidencialidad.
+    Puedes solicitar la eliminación de tus datos en cualquier momento escribiendo a
+    <a href="mailto:dayana20aguirre@gmail.com" style="color:rgba(201,165,98,0.5);text-decoration:none;">dayana20aguirre@gmail.com</a>.
+    © 2026 Dayanna Aguirre · Todos los derechos reservados.
+  </p>
 </footer>
 
 <script>
