@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="SUAZO, centro de terapia fisica y rehabilitacion deportiva en Santiago de Surco. Miguel Suazo, fisioterapeuta deportivo. Av. Caminos del Inca 1818. Agenda tu evaluacion por WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SUAZO — Centro de Terapia Física y Rehabilitación Deportiva">
+<meta property="og:description" content="Recuperamos tu movimiento, potenciamos tu mejor version. Rehabilitacion deportiva y prevencion de lesiones en Surco, Lima.">
+<meta property="og:locale" content="es_PE">
+<meta property="og:image" content="logo-suazo.jpg">
+<meta name="theme-color" content="#163A72">
+<meta name="robots" content="noindex, nofollow">
+<title>SUAZO — Terapia Física y Rehabilitación Deportiva | Surco</title>
+<link rel="icon" href="logo-suazo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+/* ============================================================
+   SUAZO — CENTRO DE TERAPIA FÍSICA Y REHABILITACIÓN DEPORTIVA
+   Sistema visual tomado del logo:
+   azul marino (base) → teal (transición) → verde lima (energía).
+   Fondo claro, clínico. Degradado sólo como acento y gesto de marca.
+   ============================================================ */
+
+:root{
+  --navy:#163A72;
+  --navy-2:#0E2952;
+  --navy-3:#255A96;
+  --navy-lite:#2C5EA8;
+  --teal:#0E9C9A;
+  --green:#7DC242;
+
+  --grad:linear-gradient(100deg,#163A72 0%,#1B6FA8 42%,#0E9C9A 70%,#7DC242 100%);
+  --grad-light:linear-gradient(100deg,#4FC9C6 0%,#7DC242 100%);
+  --grad-soft:linear-gradient(100deg,rgba(22,58,114,.08),rgba(14,156,154,.08),rgba(125,194,66,.10));
+
+  --white:#FFFFFF;
+  --sky:#F2F7FB;
+  --sky-2:#E7F0F7;
+  --ink:#0F2440;
+  --muted:#5B6C80;
+  --muted-2:#8A9AAB;
+  --line:#DCE6EF;
+  --line-dk:rgba(255,255,255,.16);
+
+  --f-dis:"Montserrat",system-ui,sans-serif;
+  --f-body:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --pad:clamp(20px,5vw,64px);
+  --max:1180px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--white);color:var(--ink);
+  font-family:var(--f-body);font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--pad)}
+
+h1,h2,h3{font-family:var(--f-dis);font-weight:800;line-height:1.04;letter-spacing:-.022em;margin:0}
+h1{font-size:clamp(36px,6.4vw,68px);line-height:1.02}
+h2{font-size:clamp(29px,4.4vw,48px)}
+h3{font-size:clamp(18px,2vw,21px);font-weight:700;letter-spacing:-.012em;line-height:1.2}
+
+.mono{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:24px;height:70px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo img{width:46px;height:46px;object-fit:cover;border-radius:50%;flex:none}
+.logo .mark{width:40px;height:40px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-family:var(--f-dis);font-weight:800;font-size:16px;flex:none}
+.logo .txt{font-family:var(--f-dis);font-weight:800;font-size:20px;letter-spacing:.02em;color:var(--navy);line-height:1}
+.logo small{display:block;font-family:var(--f-mono);font-size:8.6px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;font-weight:400;margin-top:3px;white-space:nowrap}
+.nav-links{margin-left:auto;display:flex;gap:26px}
+.nav-links a{text-decoration:none;font-size:14.5px;color:var(--muted);font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--navy)}
+.nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-size:14.5px;font-weight:600;transition:background .2s,transform .2s;white-space:nowrap}
+.nav-cta:hover{background:var(--teal);transform:translateY(-1px)}
+@media(max-width:900px){.nav-links{display:none}.nav-in{gap:12px}.nav-cta{margin-left:auto}}
+@media(max-width:420px){.logo small{font-size:7.6px;letter-spacing:.08em}.nav-cta{padding:11px 15px;font-size:13.5px}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;padding-block:clamp(48px,8vw,86px) clamp(40px,6vw,68px);background:var(--white)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(70% 60% at 96% 0%,rgba(125,194,66,.16),transparent 60%),
+             radial-gradient(70% 70% at 78% 30%,rgba(14,156,154,.13),transparent 62%),
+             radial-gradient(80% 80% at 0% 100%,rgba(22,58,114,.07),transparent 60%);}
+.hero .wrap{position:relative}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,60px);align-items:center}
+@media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:34px}.hero-art{order:-1;max-width:300px}}
+
+.eyebrow{display:flex;align-items:center;gap:12px;color:var(--teal);margin-bottom:22px;font-weight:500}
+.eyebrow .rule{height:2px;width:40px;background:var(--grad);border-radius:2px}
+.hero h1{max-width:15ch}
+.hero p.lead{max-width:48ch;margin:22px 0 0;font-size:clamp(16.5px,1.9vw,18.5px);color:var(--muted)}
+.hero-art img{width:100%;max-width:390px;margin-inline:auto;border-radius:50%;box-shadow:0 18px 50px rgba(22,58,114,.16)}
+.hero-art .fallback{width:min(100%,320px);aspect-ratio:1;margin-inline:auto;border-radius:50%;background:var(--grad-soft);border:2px solid var(--sky-2);display:grid;place-items:center;text-align:center;padding:32px}
+.hero-art .fallback .txt{font-family:var(--f-dis);font-weight:800;font-size:44px;letter-spacing:.04em;color:var(--navy)}
+.hero-art .fallback small{display:block;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;color:var(--teal);text-transform:uppercase;margin-top:8px;line-height:1.7}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;padding:15px 26px;border-radius:999px;font-weight:600;font-size:16px;transition:transform .2s,background .2s,border-color .2s,box-shadow .2s;border:1px solid transparent}
+.btn:hover{transform:translateY(-2px)}
+.btn-a{background:var(--grad);color:#fff;box-shadow:0 6px 20px rgba(22,58,114,.22)}
+.btn-a:hover{box-shadow:0 10px 26px rgba(14,156,154,.3)}
+.btn-b{background:transparent;color:var(--navy);border-color:var(--line)}
+.btn-b:hover{border-color:var(--navy)}
+.btn-w{background:#fff;color:var(--navy)}
+.btn-o{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+.btn-o:hover{border-color:#fff}
+
+/* pilares */
+.pilares{border-block:1px solid var(--line);background:var(--sky)}
+.pilares .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);padding-inline:0;max-width:none}
+.pil{background:var(--sky);padding:clamp(26px,3vw,36px) clamp(20px,2.6vw,34px);text-align:center;transition:background .25s}
+.pil:hover{background:#fff}
+.pil svg{width:34px;height:34px;margin:0 auto 14px;stroke:var(--teal);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pil .t{font-family:var(--f-dis);font-weight:700;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--navy)}
+.pil .d{font-size:14px;color:var(--muted);margin-top:7px;line-height:1.5}
+@media(max-width:860px){.pilares .wrap{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.pilares .wrap{grid-template-columns:1fr}}
+
+/* ---------- secciones ---------- */
+section{padding-block:clamp(60px,8vw,102px)}
+.sec-head{margin-bottom:clamp(34px,4.6vw,54px);max-width:62ch}
+.sec-head .mono{color:var(--teal);display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sec-head .mono .rule{height:2px;width:32px;background:var(--grad);border-radius:2px}
+.band .sec-head .mono .rule{background:var(--grad-light)}
+.sec-head p{color:var(--muted);margin:16px 0 0;font-size:17.5px;max-width:56ch}
+.alt{background:var(--sky)}
+
+/* lesiones */
+.grid-les{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.les{background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px 22px 28px;transition:transform .25s,box-shadow .25s,border-color .25s}
+.les:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(15,36,64,.08);border-color:var(--sky-2)}
+.les .n{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;margin-bottom:14px;color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text;font-weight:500}
+.les h3{margin-bottom:9px;color:var(--navy)}
+.les p{margin:0;font-size:14.8px;color:var(--muted);line-height:1.55}
+@media(max-width:980px){.grid-les{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.grid-les{grid-template-columns:1fr}}
+
+/* banda oscura */
+.band{background:var(--navy);color:#fff}
+.band h2,.band h3{color:#fff}
+.band .sec-head .mono{color:var(--green)}
+.band .sec-head p{color:rgba(255,255,255,.74)}
+.band-deep{background:var(--navy-2)}
+
+/* metodo */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(22px,3vw,38px)}
+.step{padding-top:24px;border-top:2px solid rgba(255,255,255,.22);position:relative}
+.step::before{content:"";position:absolute;top:-2px;left:0;width:42%;height:2px;background:var(--grad-light)}
+.step .num{font-family:var(--f-dis);font-weight:800;font-size:40px;line-height:1;letter-spacing:-.04em;margin-bottom:12px;background:var(--grad-light);-webkit-background-clip:text;background-clip:text;color:transparent}
+.step h3{margin-bottom:9px}
+.step p{margin:0;font-size:15px;color:rgba(255,255,255,.72);line-height:1.6}
+@media(max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* equipo */
+.team{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media(max-width:820px){.team{grid-template-columns:1fr}}
+.member{background:#fff;border:1px solid var(--line);border-radius:12px;padding:30px 28px;position:relative;overflow:hidden}
+.member::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--grad)}
+.member .yrs{display:inline-block;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--grad);padding:5px 11px;border-radius:999px;margin-bottom:16px}
+.member h3{font-size:clamp(21px,2.4vw,26px);font-weight:800;color:var(--navy);margin-bottom:4px}
+.member .role{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+.member p{margin:0 0 16px;font-size:15.5px;color:var(--muted);line-height:1.6}
+.member .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.member .tag{font-size:12.5px;font-weight:500;color:var(--navy);background:var(--sky);border:1px solid var(--line);padding:5px 11px;border-radius:999px}
+.member .said{border-left:3px solid var(--green);padding-left:14px;font-family:var(--f-dis);font-style:italic;font-weight:600;font-size:15px;color:var(--navy);line-height:1.45}
+
+/* cita de marca */
+.quote{background:var(--grad-soft);border-left:3px solid transparent;border-image:var(--grad) 1;padding:26px 28px;border-radius:0 10px 10px 0;margin-top:26px}
+.quote q{font-family:var(--f-dis);font-weight:700;font-style:italic;font-size:clamp(17px,2.1vw,20px);line-height:1.4;color:var(--navy);quotes:"\201C" "\201D";display:block}
+.quote .src{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:12px}
+
+/* especialista */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,4.5vw,68px);align-items:start}
+@media(max-width:880px){.split{grid-template-columns:1fr}}
+.info-list{border-top:1px solid var(--line)}
+.info-row{display:flex;gap:20px;padding:17px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.info-row .k{flex:none;width:106px;color:var(--teal)}
+.info-row .v{font-size:16.5px;line-height:1.5}
+.info-row .v a{color:var(--navy);text-decoration:none;border-bottom:1px solid var(--line)}
+.info-row .v a:hover{border-color:var(--teal);color:var(--teal)}
+.band .info-list{border-top-color:var(--line-dk)}
+.band .info-row{border-bottom-color:var(--line-dk)}
+.band .info-row .k{color:var(--green)}
+.band .info-row .v a{color:#fff;border-bottom-color:rgba(255,255,255,.32)}
+.band .info-row .v a:hover{color:var(--green);border-color:var(--green)}
+
+/* opiniones */
+.rating{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:22px 26px;border:1px solid var(--line);background:#fff;border-radius:10px;margin-bottom:24px}
+.rating .score{font-family:var(--f-dis);font-weight:800;font-size:42px;line-height:1;letter-spacing:-.03em;color:var(--navy)}
+.stars{color:#F2B01E;letter-spacing:2px;font-size:17px}
+.rating .meta{font-size:14px;color:var(--muted)}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rev{background:#fff;border:1px solid var(--line);border-radius:10px;padding:26px 24px;display:flex;flex-direction:column;gap:13px}
+.rev .stars{font-size:14px}
+.rev q{font-size:16.5px;line-height:1.55;quotes:"\201C" "\201D";display:block;color:var(--ink)}
+.rev .who{margin-top:auto;font-size:13px;color:var(--muted-2);font-family:var(--f-mono);letter-spacing:.03em}
+@media(max-width:860px){.reviews{grid-template-columns:1fr}}
+
+/* horario */
+.hours{width:100%;border-collapse:collapse;font-size:16px}
+.hours td{padding:11px 0;border-bottom:1px solid var(--line-dk);color:#fff}
+.hours td:last-child{text-align:right;font-family:var(--f-mono);font-size:13.5px;color:rgba(255,255,255,.84)}
+.hours tr.off td{color:rgba(255,255,255,.45)}
+.map-btn{margin-top:24px}
+
+/* faq */
+details{border-bottom:1px solid var(--line);padding:20px 0}
+details summary{cursor:pointer;list-style:none;font-family:var(--f-dis);font-weight:700;font-size:clamp(17px,2vw,19.5px);letter-spacing:-.012em;display:flex;justify-content:space-between;gap:20px;align-items:center;color:var(--navy)}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--teal);font-family:var(--f-mono);font-size:22px;flex:none;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:13px 0 2px;color:var(--muted);font-size:16px;max-width:64ch}
+
+/* cierre */
+.close{background:var(--grad);color:#fff;text-align:center}
+.close h2{max-width:20ch;margin-inline:auto;color:#fff}
+.close p{color:rgba(255,255,255,.88);max-width:48ch;margin:18px auto 0}
+.close .cta-row{justify-content:center}
+.close .eyebrow{color:rgba(255,255,255,.9);justify-content:center}
+.close .eyebrow .rule{background:rgba(255,255,255,.6)}
+
+/* footer */
+footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding-block:34px;font-size:13.5px}
+.foot-in{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+.foot-in a{color:rgba(255,255,255,.78);text-decoration:none}
+.foot-in a:hover{color:var(--green)}
+.foot-in .right{margin-left:auto}
+
+/* whatsapp */
+.wa{position:fixed;right:18px;bottom:18px;z-index:80;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(15,36,64,.26);transition:transform .2s}
+.wa:hover{transform:scale(1.06)}
+.wa svg{width:29px;height:29px;fill:#fff}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+</style>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top">
+      <img src="logo-suazo.jpg" alt="Logo SUAZO" onerror="this.insertAdjacentHTML('afterend','&lt;span class=&quot;mark&quot;&gt;S&lt;/span&gt;');this.remove()">
+      <span>
+        <span class="txt">SUAZO</span>
+        <small>Terapia física · Rehabilitación deportiva</small>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#metodo">Método</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#ubicacion">Ubicación</a>
+    </nav>
+    <a class="nav-cta" href="https://wa.me/51938583839?text=Hola,%20quiero%20agendar%20una%20evaluaci%C3%B3n%20en%20SUAZO" target="_blank" rel="noopener">Agendar evaluación</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow mono"><span class="rule"></span>Santiago de Surco · Lima</div>
+      <h1>Recuperamos tu movimiento, potenciamos tu <span class="grad-text">mejor versión</span>.</h1>
+      <p class="lead">Centro de terapia física y rehabilitación deportiva en Santiago de Surco, con fisioterapeutas que llevan más de 55 años combinados acompañando a deportistas del fútbol y el tenis profesional peruano.</p>
+      <div class="cta-row">
+        <a class="btn btn-a" href="https://wa.me/51938583839?text=Hola,%20quiero%20agendar%20una%20evaluaci%C3%B3n%20en%20SUAZO" target="_blank" rel="noopener">Agendar por WhatsApp</a>
+        <a class="btn btn-b" href="tel:+51938583839">Llamar 938 583 839</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="logo-suazo.jpg" alt="SUAZO — Centro de Terapia Física y Rehabilitación Deportiva"
+           onerror="this.insertAdjacentHTML('afterend','&lt;div class=&quot;fallback&quot;&gt;&lt;div&gt;&lt;div class=&quot;txt&quot;&gt;SUAZO&lt;/div&gt;&lt;small&gt;Centro de terapia física y&lt;br&gt;rehabilitación deportiva&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;');this.remove()">
+    </div>
+  </div>
+</section>
+
+<section class="pilares" style="padding-block:0">
+  <div class="wrap">
+    <div class="pil">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2"/><path d="M12 6.5v6m0 0-3 5.5m3-5.5 3 5.5M7.5 9.5 12 8l4.5 1.5"/></svg>
+      <div class="t">Terapia personalizada</div>
+      <div class="d">Un plan armado para tu lesión, no una rutina de molde.</div>
+    </div>
+    <div class="pil">
+      <svg viewBox="0 0 24 24"><circle cx="15" cy="4.5" r="1.9"/><path d="m14 8-4 3 2.5 3 .5 5M10 11 6 9.5M12.5 14l4 1.5M8 20l2-4"/></svg>
+      <div class="t">Rehabilitación deportiva</div>
+      <div class="d">Vuelves a tu deporte listo para exigirte, no a medias.</div>
+    </div>
+    <div class="pil">
+      <svg viewBox="0 0 24 24"><path d="M3 15c2.5-3 6-4 9-4s6 1 9 4"/><path d="M3 15c0 2 1.5 3.5 3.5 3.5S10 17 10 15"/><circle cx="16.5" cy="7.5" r="2"/></svg>
+      <div class="t">Tecnología avanzada</div>
+      <div class="d">Equipos especializados para acelerar tu recuperación.</div>
+    </div>
+    <div class="pil">
+      <svg viewBox="0 0 24 24"><path d="M12 3l7 3v5.5c0 4.3-3 7.7-7 9.5-4-1.8-7-5.2-7-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>
+      <div class="t">Profesionales de confianza</div>
+      <div class="d">Fisioterapeutas con décadas en el deporte de alto rendimiento.</div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="mono"><span class="rule"></span>Nuestros servicios</div>
+      <h2>Todo lo que necesitas para volver a moverte.</h2>
+      <p>Desde el diagnóstico hasta el alta, en un mismo lugar y con el mismo equipo siguiendo tu caso.</p>
+    </div>
+
+    <div class="grid-les rv">
+      <div class="les"><div class="n">01</div><h3>Terapia física y rehabilitación</h3><p>El tratamiento base para recuperar movilidad, fuerza y función después de una lesión.</p></div>
+      <div class="les"><div class="n">02</div><h3>Rehabilitación deportiva</h3><p>Retorno al deporte con criterios claros: no vuelves porque ya no duele, vuelves porque estás listo.</p></div>
+      <div class="les"><div class="n">03</div><h3>Lesiones musculares y articulares</h3><p>Desgarros, esguinces, tendinopatías y sobrecargas por entrenamiento.</p></div>
+      <div class="les"><div class="n">04</div><h3>Recuperación post operatoria</h3><p>Continuidad del plan indicado por tu médico, fase por fase, sin saltarnos etapas.</p></div>
+      <div class="les"><div class="n">05</div><h3>Masajes terapéuticos</h3><p>Terapia manual para descargar tensión, contracturas y dolor acumulado.</p></div>
+      <div class="les"><div class="n">06</div><h3>Evaluación y diagnóstico</h3><p>Personalizado. Sales sabiendo qué tienes, por qué te pasó y cuánto tomará resolverlo.</p></div>
+      <div class="les"><div class="n">07</div><h3>Dolor de espalda, hombro, rodilla y tobillo</h3><p>Las zonas que más frenan a un deportista — y a quien pasa el día sentado.</p></div>
+      <div class="les"><div class="n">08</div><h3>Tecnología especializada</h3><p>Equipamiento de apoyo para que cada sesión rinda más que la anterior.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="metodo">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="mono"><span class="rule"></span>Cómo trabajamos</div>
+      <h2>Cuatro pasos, un objetivo: darte de alta.</h2>
+      <p>No vendemos sesiones sueltas. Cada cita tiene un lugar dentro de un plan con inicio y final.</p>
+    </div>
+    <div class="steps rv">
+      <div class="step"><div class="num">1</div><h3>Evaluación</h3><p>Historia de la lesión, pruebas de movilidad y fuerza, y análisis del gesto que te duele. Sales sabiendo qué tienes.</p></div>
+      <div class="step"><div class="num">2</div><h3>Plan de recuperación</h3><p>Te decimos cuántas sesiones estimamos, cada cuánto venir y qué señales indican que vas bien.</p></div>
+      <div class="step"><div class="num">3</div><h3>Terapia y ejercicio</h3><p>Terapia manual para el dolor y ejercicio terapéutico para el origen. Con tarea para casa, corta y clara.</p></div>
+      <div class="step"><div class="num">4</div><h3>Retorno deportivo</h3><p>Volvemos a probar el gesto que te lesionó. Si lo pasas, te damos el alta con un plan de prevención.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="equipo">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="mono"><span class="rule"></span>Quiénes te atienden</div>
+      <h2>Más de 55 años juntos<br>al servicio del deporte peruano.</h2>
+      <p>No es teoría de aula. Es experiencia a pie de cancha, con clubes profesionales y deportistas de alto rendimiento.</p>
+    </div>
+
+    <div class="team rv">
+      <div class="member">
+        <span class="yrs">+35 años de experiencia</span>
+        <h3>Percy Suazo</h3>
+        <div class="role">Fisioterapeuta deportivo</div>
+        <p>Una vida ligada al deporte peruano. Trabajó con el Club Alianza Lima en el fútbol profesional y es miembro del staff de la Federación Peruana de Tenis, a cargo de la rehabilitación de muchos tenistas del país.</p>
+        <div class="tags">
+          <span class="tag">Alianza Lima</span>
+          <span class="tag">Federación Peruana de Tenis</span>
+          <span class="tag">Fútbol profesional</span>
+        </div>
+        <div class="said">"Detrás de cada gran deportista hay un proceso de recuperación bien hecho."</div>
+      </div>
+
+      <div class="member">
+        <span class="yrs">+20 años de experiencia</span>
+        <h3>Miguel Suazo</h3>
+        <div class="role">Fisioterapeuta deportivo</div>
+        <p>Experiencia en el fútbol profesional peruano acompañando la recuperación y el rendimiento de plantillas completas, desde primera división hasta divisiones menores.</p>
+        <div class="tags">
+          <span class="tag">Sport Boys</span>
+          <span class="tag">Coopsol</span>
+          <span class="tag">Alianza Atlético de Sullana</span>
+          <span class="tag">CNI de Iquitos</span>
+          <span class="tag">ADT</span>
+        </div>
+        <div class="said">"Tu bienestar es mi misión, tu recuperación mi objetivo."</div>
+      </div>
+    </div>
+
+    <div class="quote rv" style="margin-top:34px">
+      <q>La fisioterapia es aquella pasión de crear movimiento con la mente, el cuerpo y con el corazón.</q>
+      <div class="src">Filosofía SUAZO</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="opiniones">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="mono"><span class="rule"></span>Opiniones</div>
+      <h2>Lo que dicen quienes ya pasaron por la camilla.</h2>
+    </div>
+    <div class="rating rv">
+      <div class="score">5.0</div>
+      <div>
+        <div class="stars">★★★★★</div>
+        <div class="meta">5 opiniones verificadas en Google</div>
+      </div>
+    </div>
+    <div class="reviews rv">
+      <div class="rev"><div class="stars">★★★★★</div><q>Muy buena atención y rehabilitación 👏</q><div class="who">Jair — Google</div></div>
+      <div class="rev"><div class="stars">★★★★★</div><q>Muy buena atención ⚽💪</q><div class="who">Nelson Chaparro — Google</div></div>
+      <div class="rev"><div class="stars">★★★★★</div><q>Excelente servicio, vuelves a las canchas como nuevo ⚽</q><div class="who">Alexander Torres — Google</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-deep" id="ubicacion">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="mono"><span class="rule"></span>Visítanos</div>
+      <h2>Estamos en Caminos del Inca, Surco.</h2>
+      <p>A 1.5 cuadras del cruce de Av. Benavides con Av. Caminos del Inca. Escríbenos antes de venir y coordinamos tu horario.</p>
+    </div>
+    <div class="split">
+      <div class="rv">
+        <div class="info-list">
+          <div class="info-row"><div class="k mono">Dirección</div><div class="v">Av. Caminos del Inca 1818<br>Santiago de Surco 15039, Lima</div></div>
+          <div class="info-row"><div class="k mono">Referencia</div><div class="v">A 1.5 cuadras del cruce de Av. Benavides con Av. Caminos del Inca</div></div>
+          <div class="info-row"><div class="k mono">Teléfono</div><div class="v"><a href="tel:+51938583839">938 583 839</a></div></div>
+          <div class="info-row"><div class="k mono">WhatsApp</div><div class="v"><a href="https://wa.me/51938583839?text=Hola,%20quiero%20agendar%20una%20evaluaci%C3%B3n%20en%20SUAZO" target="_blank" rel="noopener">Escribir ahora</a></div></div>
+          <div class="info-row"><div class="k mono">Redes</div><div class="v"><a href="https://www.instagram.com/fisiosuazo/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/FisioSuazo" target="_blank" rel="noopener">Facebook</a></div></div>
+        </div>
+        <a class="btn btn-w map-btn" href="https://www.google.com/maps/search/?api=1&query=Centro+de+Fisioterapia+Deportiva+Suazo+Av.+Caminos+del+Inca+1818+Santiago+de+Surco" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+      <div class="rv">
+        <table class="hours">
+          <tr><td>Lunes</td><td>9 a.m. – 8 p.m.</td></tr>
+          <tr><td>Martes</td><td>9 a.m. – 8 p.m.</td></tr>
+          <tr><td>Miércoles</td><td>9 a.m. – 8 p.m.</td></tr>
+          <tr><td>Jueves</td><td>9 a.m. – 8 p.m.</td></tr>
+          <tr><td>Viernes</td><td>9 a.m. – 8 p.m.</td></tr>
+          <tr><td>Sábado</td><td>9 a.m. – 2 p.m.</td></tr>
+          <tr class="off"><td>Domingo</td><td>Cerrado</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width:900px">
+    <div class="sec-head rv">
+      <div class="mono"><span class="rule"></span>Preguntas frecuentes</div>
+      <h2>Antes de agendar.</h2>
+    </div>
+    <div class="rv">
+      <details><summary>¿Necesito orden médica para atenderme?</summary><p>No es indispensable para una evaluación inicial. Si vienes de una operación o tienes exámenes (radiografías, resonancias, informe médico), tráelos: nos ayudan a ajustar mejor el plan.</p></details>
+      <details><summary>¿Cuántas sesiones voy a necesitar?</summary><p>Depende de la lesión y de hace cuánto la arrastras. En la primera evaluación te damos un estimado real y te explicamos qué debería mejorar en cada etapa.</p></details>
+      <details><summary>¿Solo atienden deportistas?</summary><p>No. Trabajamos con el enfoque de la rehabilitación deportiva, pero atendemos también dolor de espalda, cuello y hombro de personas que no compiten.</p></details>
+      <details><summary>¿Cuánto dura una sesión?</summary><p>Coordínalo por WhatsApp al agendar: te confirmamos duración y disponibilidad del horario que necesitas.</p></details>
+      <details><summary>¿Cómo agendo mi evaluación?</summary><p>Escríbenos al WhatsApp 938 583 839 contándonos qué te pasa y desde cuándo. Te respondemos con los horarios disponibles.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <div class="rv">
+      <div class="eyebrow mono"><span class="rule"></span>Agenda tu evaluación<span class="rule"></span></div>
+      <h2>Recupera tu movimiento.</h2>
+      <p>Cuéntanos qué te duele y desde cuándo. Te respondemos por WhatsApp con los horarios disponibles de esta semana.</p>
+      <div class="cta-row">
+        <a class="btn btn-w" href="https://wa.me/51938583839?text=Hola,%20quiero%20agendar%20una%20evaluaci%C3%B3n%20en%20SUAZO" target="_blank" rel="noopener">Agendar por WhatsApp</a>
+        <a class="btn btn-o" href="tel:+51938583839">Llamar 938 583 839</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>© <span id="y">2026</span> SUAZO — Centro de Terapia Física y Rehabilitación Deportiva</span>
+    <a href="https://www.google.com/maps/search/?api=1&query=Centro+de+Fisioterapia+Deportiva+Suazo+Av.+Caminos+del+Inca+1818+Santiago+de+Surco" target="_blank" rel="noopener">Av. Caminos del Inca 1818, Surco</a>
+    <a href="tel:+51938583839">938 583 839</a>
+    <a href="https://www.instagram.com/fisiosuazo/" target="_blank" rel="noopener">@fisiosuazo</a>
+    <span class="right">Lima, Perú</span>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/51938583839?text=Hola,%20quiero%20agendar%20una%20evaluaci%C3%B3n%20en%20SUAZO" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35zM12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01c-1.52 0-3.02-.41-4.32-1.18l-.31-.18-3.21.84.86-3.13-.2-.32a8.21 8.21 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24z"/></svg>
+</a>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
