@@ -91,8 +91,9 @@ h1,h2,h3,h4{
   font-family:var(--f-display);
   font-weight:800;
   text-transform:uppercase;
-  /* .88 era tan cerrado que las tildes de Ó, Á, Í chocaban con la línea de arriba */
-  line-height:.96;
+  /* Big Shoulders es muy condensada y su tilde sube mucho: por debajo de 1.02
+     la Ó de CONVERSACIÓN choca con la línea de arriba. 1.04 deja margen. */
+  line-height:1.04;
   letter-spacing:.005em;
   text-wrap:balance;
   margin:0;
