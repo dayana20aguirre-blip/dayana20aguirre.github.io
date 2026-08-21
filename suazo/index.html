@@ -86,7 +86,17 @@ h3{font-size:clamp(18px,2vw,21px);font-weight:700;letter-spacing:-.012em;line-he
 .nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-size:14.5px;font-weight:600;transition:background .2s,transform .2s;white-space:nowrap}
 .nav-cta:hover{background:var(--teal);transform:translateY(-1px)}
 @media(max-width:900px){.nav-links{display:none}.nav-in{gap:12px}.nav-cta{margin-left:auto}}
-@media(max-width:420px){.logo small{font-size:7.6px;letter-spacing:.08em}.nav-cta{padding:11px 15px;font-size:13.5px}}
+.nav-cta .t-sm{display:none}
+@media(max-width:620px){
+  .logo small{display:none}
+  .logo .txt{font-size:21px}
+  .logo img{width:40px;height:40px}
+  .nav-in{height:62px}
+  .nav-cta .t-lg{display:none}
+  .nav-cta .t-sm{display:inline}
+  .nav-cta{padding:11px 18px}
+}
+
 
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;padding-block:clamp(48px,8vw,86px) clamp(40px,6vw,68px);background:var(--white)}
@@ -96,7 +106,16 @@ h3{font-size:clamp(18px,2vw,21px);font-weight:700;letter-spacing:-.012em;line-he
              radial-gradient(80% 80% at 0% 100%,rgba(22,58,114,.07),transparent 60%);}
 .hero .wrap{position:relative}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,60px);align-items:center}
-@media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:34px}.hero-art{order:-1;max-width:300px}}
+@media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:30px}.hero-art{order:-1;max-width:300px}}
+@media(max-width:620px){
+  .hero{padding-block:30px 40px}
+  .hero-grid{gap:22px}
+  .hero-art{max-width:172px;margin:0}
+  .hero-art img{box-shadow:0 10px 26px rgba(22,58,114,.14)}
+  .eyebrow{margin-bottom:16px}
+  .cta-row{margin-top:26px;gap:10px}
+  .cta-row .btn{width:100%;justify-content:center}
+}
 
 .eyebrow{display:flex;align-items:center;gap:12px;color:var(--teal);margin-bottom:22px;font-weight:500}
 .eyebrow .rule{height:2px;width:40px;background:var(--grad);border-radius:2px}
@@ -192,6 +211,11 @@ section{padding-block:clamp(60px,8vw,102px)}
 .info-row .v{font-size:16.5px;line-height:1.5}
 .info-row .v a{color:var(--navy);text-decoration:none;border-bottom:1px solid var(--line)}
 .info-row .v a:hover{border-color:var(--teal);color:var(--teal)}
+@media(max-width:560px){
+  .info-row{flex-direction:column;gap:6px;padding:15px 0}
+  .info-row .k{width:auto}
+  .info-row .v{font-size:16px}
+}
 .band .info-list{border-top-color:var(--line-dk)}
 .band .info-row{border-bottom-color:var(--line-dk)}
 .band .info-row .k{color:var(--green)}
@@ -267,7 +291,7 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding-block:34px;f
       <a href="#opiniones">Opiniones</a>
       <a href="#ubicacion">Ubicación</a>
     </nav>
-    <a class="nav-cta" href="https://wa.me/51938583839?text=Hola,%20quiero%20agendar%20una%20evaluaci%C3%B3n%20en%20SUAZO" target="_blank" rel="noopener">Agendar evaluación</a>
+    <a class="nav-cta" href="https://wa.me/51938583839?text=Hola,%20quiero%20agendar%20una%20evaluaci%C3%B3n%20en%20SUAZO" target="_blank" rel="noopener"><span class="t-lg">Agendar evaluación</span><span class="t-sm">Agendar</span></a>
   </div>
 </header>
 
