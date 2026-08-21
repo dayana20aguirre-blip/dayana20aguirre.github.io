@@ -139,7 +139,7 @@ h3{font-size:clamp(18px,2vw,21px);font-weight:700;letter-spacing:-.012em;line-he
 
 /* pilares */
 .pilares{border-block:1px solid var(--line);background:var(--sky)}
-.pilares .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);padding-inline:0;max-width:none}
+.pilares .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);padding-inline:0;max-width:1500px}
 .pil{background:var(--sky);padding:clamp(26px,3vw,36px) clamp(20px,2.6vw,34px);text-align:center;transition:background .25s}
 .pil:hover{background:#fff}
 .pil svg{width:34px;height:34px;margin:0 auto 14px;stroke:var(--teal);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
@@ -266,7 +266,9 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding-block:34px;f
 
 /* whatsapp */
 .wa{position:fixed;right:18px;bottom:18px;z-index:80;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(15,36,64,.26);transition:transform .2s}
-.wa:hover{transform:scale(1.06)}
+.wa{opacity:0;visibility:hidden;transform:scale(.85);transition:opacity .3s,transform .3s,visibility .3s}
+.wa.show{opacity:1;visibility:visible;transform:none}
+.wa.show:hover{transform:scale(1.06)}
 .wa svg{width:29px;height:29px;fill:#fff}
 
 /* reveal */
@@ -526,4 +528,7 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding-block:34px;f
 document.getElementById('y').textContent=new Date().getFullYear();
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const wa=document.querySelector('.wa');
+const toggleWa=()=>wa.classList.toggle('show',scrollY>window.innerHeight*.55);
+toggleWa();addEventListener('scroll',toggleWa,{passive:true});
 </script>
