@@ -69,6 +69,7 @@ a{color:inherit}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px}
 .wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--pad)}
 section{padding-block:var(--sec)}
+section[id],main[id]{scroll-margin-top:clamp(84px,11vh,112px)}
 
 /* ── tipografía ─────────────────────────────────────────── */
 h1,h2,h3{
@@ -137,13 +138,14 @@ em.i{font-style:italic;font-weight:300}
 .nav{position:sticky;top:0;z-index:80;background:rgba(243,239,234,.86);backdrop-filter:blur(14px) saturate(1.1);border-bottom:1px solid transparent;transition:border-color .4s var(--ease)}
 .nav.stuck{border-bottom-color:var(--line)}
 .nav-in{display:flex;align-items:center;gap:28px;height:82px}
-.nav-links{margin-left:auto;display:flex;gap:30px}
+.nav-links{margin-left:auto;display:flex;gap:clamp(18px,2.2vw,30px)}
 .nav-links a{text-decoration:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);position:relative;padding-block:6px;transition:color .35s var(--ease)}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--red);transition:width .4s var(--ease)}
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{width:100%}
 .nav .btn{padding:14px 24px}
-@media(max-width:1040px){.nav-links{display:none}.nav-in{gap:14px}.nav .btn{margin-left:auto}}
+@media(max-width:1100px){.nav-links a{font-size:11.5px;letter-spacing:.11em}}
+@media(max-width:900px){.nav-links{display:none}.nav-in{gap:14px}.nav .btn{margin-left:auto}}
 @media(max-width:560px){.nav-in{height:70px}.nav-in .lk{--lk-n:25px;--lk-s:7px}.nav .btn{padding:13px 20px;font-size:11px;letter-spacing:.13em}}
 
 /* ── hero ───────────────────────────────────────────────── */
@@ -165,9 +167,9 @@ em.i{font-style:italic;font-weight:300}
 .stamp .n{font-family:var(--f-dis);font-size:28px;line-height:1;font-weight:400}
 .stamp .s{color:var(--red);font-size:12px;letter-spacing:.16em;line-height:1}
 .stamp .t{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mute);line-height:1.5;max-width:11ch}
-@media(max-width:920px){
-  .hero-grid{grid-template-columns:1fr;gap:32px}
-  .hero-art{order:-1;max-width:360px;margin-inline:0}
+@media(max-width:780px){
+  .hero-grid{grid-template-columns:1fr;gap:30px}
+  .hero-art{order:-1;max-width:340px;margin-inline:0}
 }
 @media(max-width:560px){
   .hero-art{max-width:100%}
