@@ -10,6 +10,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:image" content="foto-perfil.jpg">
 <title>Coach Espinoza</title>
+<script>document.documentElement.className+=" vistas"</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700..900&family=Chivo:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap">
@@ -554,6 +555,46 @@ section[id],[id]{scroll-margin-top:88px}
   .stat:first-child{border-top:0}
 }
 
+/* ---------- vistas: el menú cambia el bloque visible, sin recargar ---------- */
+
+html.vistas .vista{display:none}
+html.vistas .vista.activa{display:block}
+.nav-links a.activo{color:var(--oxide)}
+
+.resumenes{padding-block:var(--gap);border-top:1px solid var(--line)}
+.resumenes .eyebrow{margin-bottom:1.8rem}
+.tarjetas{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+}
+.tarjeta{
+  background:var(--iron);
+  padding:1.6rem 1.5rem 1.4rem;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  gap:.7rem;
+  transition:background .22s ease;
+}
+.tarjeta:hover{background:var(--iron-2)}
+.tarjeta h3{font-size:1.5rem}
+.tarjeta p{color:var(--chalk-2);font-size:.92rem;line-height:1.55;flex:1}
+.tarjeta span{
+  font-family:var(--f-mono);
+  font-size:.68rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--oxide);
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+.tarjeta span::after{content:"→";transition:transform .22s ease}
+.tarjeta:hover span::after{transform:translateX(4px)}
+
 /* ---------- método ---------- */
 
 .metodo-top{
@@ -1073,9 +1114,10 @@ footer{
 
 <header class="nav">
   <div class="nav-in">
-    <a class="brand" href="#top">Espinoza<span>.</span></a>
+    <a class="brand" href="#inicio">Espinoza<span>.</span></a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú"><i></i><i></i><i></i></button>
     <nav class="nav-links" id="menu">
+      <a href="#inicio">Inicio</a>
       <a href="#metodo">Método</a>
       <a href="#resultados">Resultados</a>
       <a href="#sobre">Sobre mí</a>
@@ -1087,8 +1129,10 @@ footer{
   </div>
 </header>
 
-<!-- ══════════════════ HERO ══════════════════ -->
 <main id="top">
+
+<div class="vista" id="v-inicio">
+<!-- ══════════════════ HERO ══════════════════ -->
 <section class="hero">
   <div class="hero-photo" aria-hidden="true"></div>
   <div class="shell hero-grid">
@@ -1114,6 +1158,44 @@ footer{
   </div>
 </div>
 
+
+<!-- ══════════════════ RESUMEN DE BLOQUES ══════════════════ -->
+<section class="resumenes">
+  <div class="shell">
+    <p class="eyebrow">Lo que encuentras aquí</p>
+    <div class="tarjetas">
+      <a class="tarjeta" href="#metodo">
+        <h3>El método</h3>
+        <p>Cuatro fases, doce semanas y una ficha real de entrenamiento.</p>
+        <span>Ver el método</span>
+      </a>
+      <a class="tarjeta" href="#resultados">
+        <h3>Resultados</h3>
+        <p>Casos con cifras medidas y lo que dicen quienes ya entrenan conmigo.</p>
+        <span>Ver resultados</span>
+      </a>
+      <a class="tarjeta" href="#sobre">
+        <h3>Sobre mí</h3>
+        <p>Certificación IFBB, formación en nutrición y cómo trabajo.</p>
+        <span>Conocerme</span>
+      </a>
+      <a class="tarjeta" href="#planes">
+        <h3>Planes</h3>
+        <p>Tres formas de entrenar conmigo, con lo que incluye cada una.</p>
+        <span>Ver planes</span>
+      </a>
+      <a class="tarjeta" href="#faq">
+        <h3>Preguntas</h3>
+        <p>Lo que me preguntan antes de empezar, respondido sin rodeos.</p>
+        <span>Ver preguntas</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="vista" id="v-metodo">
 <!-- ══════════════════ MÉTODO ══════════════════ -->
 <section id="metodo">
   <div class="shell">
@@ -1174,6 +1256,9 @@ footer{
 
 <div class="shell"><div class="knurl"></div></div>
 
+</div>
+
+<div class="vista" id="v-resultados">
 <!-- ══════════════════ RESULTADOS ══════════════════ -->
 <section id="resultados">
   <div class="shell">
@@ -1230,6 +1315,30 @@ footer{
   </div>
 </section>
 
+<!-- ══════════════════ TESTIMONIOS ══════════════════ -->
+<section style="padding-block:0">
+  <div class="quotes">
+    <figure class="quote">
+      <p class="stars" aria-label="5 de 5 estrellas">★★★★★</p>
+      <blockquote>"Probé cuatro entrenadores antes. Espinoza fue el primero que me preguntó cuántos días podía entrenar de verdad, en lugar de darme una rutina de seis días que nunca iba a cumplir."</blockquote>
+      <figcaption><b>Rocío Delgado</b>Contadora · 11 meses entrenando</figcaption>
+    </figure>
+    <figure class="quote">
+      <p class="stars" aria-label="5 de 5 estrellas">★★★★★</p>
+      <blockquote>"Tengo 52 años y dos hernias. Pensé que levantar pesas no era para mí. Hoy hago peso muerto con 90 kilos y me levanto sin dolor."</blockquote>
+      <figcaption><b>Jorge Ampuero</b>Ingeniero · 2 años entrenando</figcaption>
+    </figure>
+    <figure class="quote">
+      <p class="stars" aria-label="5 de 5 estrellas">★★★★★</p>
+      <blockquote>"Lo que más valoro es que me explicó el porqué de cada ejercicio. Ahora entiendo mi propio entrenamiento y no dependo de nadie."</blockquote>
+      <figcaption><b>Valeria Cruz</b>Diseñadora · 8 meses entrenando</figcaption>
+    </figure>
+  </div>
+</section>
+
+</div>
+
+<div class="vista" id="v-sobre">
 <!-- ══════════════════ SOBRE ══════════════════ -->
 <section id="sobre">
   <div class="shell about">
@@ -1272,6 +1381,9 @@ footer{
   </div>
 </section>
 
+</div>
+
+<div class="vista" id="v-planes">
 <!-- ══════════════════ PLANES ══════════════════ -->
 <section id="planes">
   <div class="shell">
@@ -1337,27 +1449,9 @@ footer{
   </div>
 </section>
 
-<!-- ══════════════════ TESTIMONIOS ══════════════════ -->
-<section style="padding-block:0">
-  <div class="quotes">
-    <figure class="quote">
-      <p class="stars" aria-label="5 de 5 estrellas">★★★★★</p>
-      <blockquote>"Probé cuatro entrenadores antes. Espinoza fue el primero que me preguntó cuántos días podía entrenar de verdad, en lugar de darme una rutina de seis días que nunca iba a cumplir."</blockquote>
-      <figcaption><b>Rocío Delgado</b>Contadora · 11 meses entrenando</figcaption>
-    </figure>
-    <figure class="quote">
-      <p class="stars" aria-label="5 de 5 estrellas">★★★★★</p>
-      <blockquote>"Tengo 52 años y dos hernias. Pensé que levantar pesas no era para mí. Hoy hago peso muerto con 90 kilos y me levanto sin dolor."</blockquote>
-      <figcaption><b>Jorge Ampuero</b>Ingeniero · 2 años entrenando</figcaption>
-    </figure>
-    <figure class="quote">
-      <p class="stars" aria-label="5 de 5 estrellas">★★★★★</p>
-      <blockquote>"Lo que más valoro es que me explicó el porqué de cada ejercicio. Ahora entiendo mi propio entrenamiento y no dependo de nadie."</blockquote>
-      <figcaption><b>Valeria Cruz</b>Diseñadora · 8 meses entrenando</figcaption>
-    </figure>
-  </div>
-</section>
+</div>
 
+<div class="vista" id="v-faq">
 <!-- ══════════════════ FAQ ══════════════════ -->
 <section id="faq">
   <div class="shell">
@@ -1394,6 +1488,8 @@ footer{
   </div>
 </section>
 
+</div>
+
 <!-- ══════════════════ CIERRE ══════════════════ -->
 <section class="close" id="contacto">
   <div class="shell close-in rv">
@@ -1408,6 +1504,7 @@ footer{
     </div>
   </div>
 </section>
+
 </main>
 
 <!-- ══════════════════ FOOTER ══════════════════ -->
@@ -1415,6 +1512,7 @@ footer{
   <div class="foot-in">
     <span>© 2026 Coach Espinoza · Personal trainer</span>
     <nav class="foot-links">
+      <a href="#inicio">Inicio</a>
       <a href="#metodo">Método</a>
       <a href="#planes">Planes</a>
       <a href="#faq">Preguntas</a>
@@ -1432,6 +1530,50 @@ footer{
 
 <script>
 document.documentElement.lang = 'es';
+
+/* El menú intercambia vistas en lugar de desplazarse. Si el JS fallara,
+   .vista nunca se oculta y la página sigue funcionando como un scroll largo. */
+(function(){
+  var vistas = Array.prototype.slice.call(document.querySelectorAll('.vista'));
+  var menu = document.getElementById('menu');
+  if (!vistas.length) return;
+
+  function mostrar(nombre){
+    var destino = document.getElementById('v-' + nombre) || document.getElementById('v-inicio');
+    vistas.forEach(function(v){
+      if (v === destino) v.classList.add('activa'); else v.classList.remove('activa');
+    });
+    if (menu) {
+      Array.prototype.forEach.call(menu.querySelectorAll('a'), function(a){
+        if (a.getAttribute('href') === '#' + nombre) a.classList.add('activo');
+        else a.classList.remove('activo');
+      });
+      menu.classList.remove('open');
+      var t = document.querySelector('.nav-toggle');
+      if (t) { t.setAttribute('aria-expanded','false'); t.setAttribute('aria-label','Abrir menú'); }
+    }
+    Array.prototype.forEach.call(destino.querySelectorAll('.rv'), function(e){ e.classList.add('in'); });
+    window.scrollTo(0, 0);
+  }
+
+  function desdeDireccion(){
+    mostrar((location.hash || '#inicio').slice(1));
+  }
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+    var nombre = a.getAttribute('href').slice(1);
+    if (!document.getElementById('v-' + nombre)) return;
+    e.preventDefault();
+    if (location.hash.slice(1) === nombre) mostrar(nombre);
+    else location.hash = nombre;
+  });
+
+  window.addEventListener('hashchange', desdeDireccion);
+  desdeDireccion();
+})();
+
 
 (function(){
   var frame = document.querySelector('.reel-frame');
