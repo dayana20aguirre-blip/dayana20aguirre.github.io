@@ -2,343 +2,634 @@
 <html lang="es">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Day Spa, salon de belleza en Miraflores. Cabello, manicure y pedicure OPI, pestanas, faciales y depilacion. Av. Alfredo Benavides 477. Abierto los 7 dias. English spoken.">
+<meta name="description" content="Day Spa, salon de belleza en Miraflores. Manicure y pedicure, rubber base, diseno de unas, pestanas, cejas, nanoplastia, faciales y masajes. Av. Alfredo Benavides 477. 4.8 estrellas con 542 resenas.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Day Spa — Salón de Belleza en Miraflores">
-<meta property="og:description" content="4.8 estrellas con mas de 500 resenas. Cabello, unas, pestanas y faciales en el corazon de Miraflores. Reserva por WhatsApp.">
+<meta property="og:description" content="4.8 estrellas con 542 resenas en Google. Unas, cabello, pestanas, faciales y masajes en el corazon de Miraflores. Reserva por WhatsApp.">
 <meta property="og:locale" content="es_PE">
-<meta name="theme-color" content="#2A211C">
+<meta property="og:image" content="foto-color.jpg">
+<meta name="theme-color" content="#F3EFEA">
 <meta name="robots" content="noindex, nofollow">
 <title>Day Spa — Salón de Belleza en Miraflores, Lima</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23F3EFEA'/><path fill='%23D3222A' d='M16 27S4 19.5 4 12.2C4 8.2 7.1 5 11 5c2.2 0 4.1 1 5 2.6C16.9 6 18.8 5 21 5c3.9 0 7 3.2 7 7.2C28 19.5 16 27 16 27z'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allura&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap">
 
 <style>
-/* ============================================================
-   DAY SPA — SALÓN DE BELLEZA, MIRAFLORES
-   Mundo visual: calma cálida. Crema, arcilla y madera oscura.
-   Serif suave para lo que se lee despacio; sans para lo funcional.
-   ============================================================ */
+/* ═══════════════════════════════════════════════════════════
+   DAY SPA — SALÓN DE BELLEZA · MIRAFLORES
+   Sistema visual derivado del logo: concreto cálido, tinta y
+   un único acento rojo, usado como puntuación y nunca como relleno.
+   Tipografía: Fraunces (editorial) · Instrument Sans (funcional)
+   · Allura (solo el lockup de marca).
+   ═══════════════════════════════════════════════════════════ */
 
 :root{
-  --cream:#F7F2EC;
-  --cream-2:#F0E8DE;
-  --white:#FFFDFB;
-  --ink:#2A211C;
-  --ink-2:#1E1815;
-  --muted:#6E625A;
-  --muted-2:#9B8D82;
-  --line:#E4DACE;
-  --line-dk:rgba(247,242,236,.15);
-  --clay:#C0765A;
-  --clay-dk:#A65E45;
-  --clay-soft:rgba(192,118,90,.12);
-  --olive:#7E8B6C;
+  /* — 4 colores activos — */
+  --paper:#F3EFEA;      /* concreto del logo */
+  --ink:#23201E;        /* tinta del logo */
+  --red:#D3222A;        /* corazón del logo */
+  --mute:#8B827A;       /* gris cálido */
 
-  --f-dis:"Fraunces",Georgia,serif;
+  /* — neutros derivados — */
+  --paper-2:#EDE8E2;
+  --card:#FBF9F7;
+  --line:#DDD6CE;
+  --line-ink:rgba(243,239,234,.14);
+  --ink-2:#1A1816;
+  --ink-soft:#4A443F;
+  --paper-soft:rgba(243,239,234,.66);
+
+  --f-dis:"Fraunces",Georgia,"Times New Roman",serif;
   --f-body:"Instrument Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-script:"Allura","Snell Roundhand",cursive;
 
-  --pad:clamp(20px,5vw,64px);
-  --max:1160px;
+  --pad:clamp(22px,5vw,72px);
+  --max:1220px;
+  --sec:clamp(84px,11vw,152px);
+  --ease:cubic-bezier(.22,.61,.36,1);
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--f-body);font-size:17px;line-height:1.66;font-weight:400;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+/* grano finísimo: hereda la textura de concreto del logo */
+body::after{
+  content:"";position:fixed;inset:0;z-index:900;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
 img{max-width:100%;display:block}
 a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 .wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--pad)}
+section{padding-block:var(--sec)}
 
-h1,h2,h3{font-family:var(--f-dis);font-weight:600;line-height:1.06;letter-spacing:-.018em;margin:0}
-h1{font-size:clamp(38px,6.6vw,72px);line-height:1.02}
-h2{font-size:clamp(29px,4.5vw,50px)}
-h3{font-size:clamp(18px,2vw,21px);line-height:1.2}
-em.i{font-style:italic;color:var(--clay)}
+/* ── tipografía ─────────────────────────────────────────── */
+h1,h2,h3{
+  font-family:var(--f-dis);font-weight:400;margin:0;
+  font-variation-settings:"SOFT" 0,"WONK" 0;
+  letter-spacing:-.021em;line-height:1.05;
+}
+h1{font-size:clamp(42px,6.9vw,94px);line-height:.99;letter-spacing:-.028em}
+h2{font-size:clamp(30px,4.7vw,58px);line-height:1.04;letter-spacing:-.025em}
+h3{font-size:clamp(19px,1.9vw,23px);line-height:1.22;letter-spacing:-.014em}
+em.i{font-style:italic;font-weight:300}
 
-.eyebrow{font-family:var(--f-body);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+.label{
+  font-family:var(--f-body);font-size:11px;font-weight:500;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--mute);
+  display:flex;align-items:center;gap:13px;
+}
+.label::before{content:"";height:1px;width:26px;background:var(--red);flex:none}
+.label.plain::before{display:none}
+.lead{font-size:clamp(17px,1.75vw,19.5px);line-height:1.62;color:var(--ink-soft);max-width:46ch}
+.dim{color:var(--mute)}
 
-/* nav */
-.nav{position:sticky;top:0;z-index:60;background:rgba(247,242,236,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;gap:24px;height:70px}
-.logo{display:flex;align-items:baseline;gap:10px;text-decoration:none}
-.logo .txt{font-family:var(--f-dis);font-weight:600;font-size:25px;letter-spacing:-.01em}
-.logo small{font-family:var(--f-body);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.nav-links{margin-left:auto;display:flex;gap:26px}
-.nav-links a{text-decoration:none;font-size:14.5px;color:var(--muted);transition:color .2s}
-.nav-links a:hover{color:var(--clay)}
-.nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--cream);text-decoration:none;padding:12px 20px;border-radius:2px;font-size:14px;font-weight:500;letter-spacing:.03em;transition:background .2s;white-space:nowrap}
-.nav-cta:hover{background:var(--clay)}
-.nav-cta .t-sm{display:none}
-@media(max-width:900px){.nav-links{display:none}.nav-in{gap:12px}.nav-cta{margin-left:auto}}
-@media(max-width:620px){.logo small{display:none}.nav-in{height:62px}.nav-cta .t-lg{display:none}.nav-cta .t-sm{display:inline}}
+/* ── lockup de marca ────────────────────────────────────── */
+.lk{display:inline-flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;line-height:1;color:inherit}
+.lk .name{font-family:var(--f-script);font-size:var(--lk-n,30px);line-height:.9;padding-inline:.12em;white-space:nowrap}
+.lk .rule{display:flex;align-items:center;gap:.5em;align-self:stretch;font-size:var(--lk-s,9px)}
+.lk .rule::before,.lk .rule::after{content:"";flex:1;height:1px;background:currentColor;opacity:.5}
+.lk .hrt{color:var(--red);font-style:normal;font-size:1.5em;line-height:0;transform:translateY(-.02em)}
+.lk .sub{font-family:var(--f-body);font-size:var(--lk-s,9px);letter-spacing:.3em;text-transform:uppercase;white-space:nowrap;padding-left:.3em;opacity:.8}
 
-/* hero */
-.hero{position:relative;overflow:hidden;padding-block:clamp(52px,8vw,96px) clamp(34px,5vw,56px)}
-.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 55% at 92% 4%,rgba(192,118,90,.14),transparent 60%),radial-gradient(60% 60% at 4% 96%,rgba(126,139,108,.11),transparent 62%)}
-.hero .wrap{position:relative}
-.hero .eyebrow{color:var(--clay);display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.hero .eyebrow::before{content:"";height:1px;width:38px;background:var(--clay)}
-.hero h1{max-width:16ch}
-.hero p.lead{max-width:50ch;margin:24px 0 0;font-size:clamp(16.5px,1.9vw,19px);color:var(--muted)}
-.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;padding:16px 30px;border-radius:2px;font-weight:500;font-size:15.5px;letter-spacing:.03em;transition:transform .2s,background .2s,border-color .2s;border:1px solid transparent}
-.btn:hover{transform:translateY(-2px)}
-.btn-a{background:var(--clay);color:#fff}
-.btn-a:hover{background:var(--clay-dk)}
+/* ── botones ────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  text-decoration:none;padding:17px 32px;border:1px solid transparent;
+  font-size:12px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;
+  transition:background .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease),transform .45s var(--ease);
+}
+.btn-a{background:var(--ink);color:var(--paper)}
+.btn-a:hover{background:var(--red);transform:translateY(-2px)}
 .btn-b{background:transparent;color:var(--ink);border-color:var(--line)}
-.btn-b:hover{border-color:var(--ink)}
-.btn-w{background:var(--cream);color:var(--ink)}
-.btn-o{background:transparent;color:var(--cream);border-color:rgba(247,242,236,.35)}
-.btn-o:hover{border-color:var(--cream)}
-@media(max-width:620px){.hero{padding-block:34px 34px}.cta-row .btn{width:100%}}
+.btn-b:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn-c{background:var(--paper);color:var(--ink)}
+.btn-c:hover{background:var(--red);color:var(--paper);transform:translateY(-2px)}
+.btn-d{background:transparent;color:var(--paper);border-color:rgba(243,239,234,.3)}
+.btn-d:hover{border-color:var(--paper);transform:translateY(-2px)}
+.cta-row{display:flex;flex-wrap:wrap;gap:11px;margin-top:clamp(30px,3.6vw,44px)}
+@media(max-width:620px){.cta-row .btn{width:100%}}
 
-/* franja de datos */
-.strip{border-block:1px solid var(--line);background:var(--cream-2)}
-.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);padding-inline:0;max-width:1500px}
-.st{background:var(--cream-2);padding:24px clamp(18px,2.4vw,30px);text-align:center}
-.st .v{font-family:var(--f-dis);font-weight:600;font-size:19px;line-height:1.2}
-.st .v .stars{color:var(--clay);font-size:15px;letter-spacing:1px}
-.st .k{font-size:13px;color:var(--muted);margin-top:6px}
-@media(max-width:820px){.strip .wrap{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:440px){.strip .wrap{grid-template-columns:1fr}}
+/* ── aviso de vista previa (quitar al cerrar la venta) ─── */
+.preview{background:var(--ink);color:var(--paper-soft);font-size:11px;letter-spacing:.11em;
+  text-transform:uppercase;text-align:center;padding:11px 20px;line-height:1.6}
+.preview b{color:var(--paper);font-weight:500}
 
-/* secciones */
-section{padding-block:clamp(58px,8vw,100px)}
-.sec-head{margin-bottom:clamp(32px,4.4vw,52px);max-width:60ch}
-.sec-head .eyebrow{color:var(--clay);display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.sec-head .eyebrow::before{content:"";height:1px;width:30px;background:var(--clay)}
-.sec-head p{color:var(--muted);margin:16px 0 0;font-size:17.5px;max-width:56ch}
-.alt{background:var(--cream-2)}
+/* ── muestrario de tonos: el objeto del oficio ──────────── */
+.tones{margin-top:clamp(52px,6.5vw,88px);padding-block:clamp(30px,3.4vw,42px);border-block:1px solid var(--line)}
+.tones .label{margin-bottom:clamp(24px,2.8vw,34px)}
+.tone-row{display:grid;grid-template-columns:repeat(8,1fr);gap:clamp(10px,1.6vw,22px)}
+.tone{text-align:center}
+.tone i{display:block;width:100%;max-width:62px;margin:0 auto 12px;aspect-ratio:1;border-radius:50%;
+  box-shadow:inset 0 -5px 12px rgba(0,0,0,.16),inset 0 4px 9px rgba(255,255,255,.34),0 2px 7px rgba(35,32,30,.09)}
+.tone span{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute);line-height:1.4;display:block}
+@media(max-width:760px){.tone-row{grid-template-columns:repeat(4,1fr);row-gap:24px}}
+@media(max-width:360px){.tone i{max-width:48px}}
 
-/* servicios */
-.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.sv{background:var(--cream);padding:32px 28px 34px;transition:background .3s}
-.sv:hover{background:var(--white)}
-.sv .n{font-family:var(--f-dis);font-style:italic;font-size:15px;color:var(--clay);margin-bottom:14px}
-.sv h3{margin-bottom:10px}
-.sv p{margin:0;font-size:15px;color:var(--muted);line-height:1.58}
+/* ── nav ────────────────────────────────────────────────── */
+.nav{position:sticky;top:0;z-index:80;background:rgba(243,239,234,.86);backdrop-filter:blur(14px) saturate(1.1);border-bottom:1px solid transparent;transition:border-color .4s var(--ease)}
+.nav.stuck{border-bottom-color:var(--line)}
+.nav-in{display:flex;align-items:center;gap:28px;height:82px}
+.nav-links{margin-left:auto;display:flex;gap:30px}
+.nav-links a{text-decoration:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);position:relative;padding-block:6px;transition:color .35s var(--ease)}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--red);transition:width .4s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.nav .btn{padding:14px 24px}
+@media(max-width:1040px){.nav-links{display:none}.nav-in{gap:14px}.nav .btn{margin-left:auto}}
+@media(max-width:560px){.nav-in{height:70px}.nav-in .lk{--lk-n:25px;--lk-s:7px}.nav .btn{padding:13px 20px;font-size:11px;letter-spacing:.13em}}
+
+/* ── hero ───────────────────────────────────────────────── */
+.hero{padding-block:clamp(44px,6vw,84px) clamp(58px,8vw,110px);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(58% 52% at 88% 6%,rgba(211,34,42,.045),transparent 62%)}
+.hero .wrap{position:relative}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(32px,5vw,80px);align-items:center}
+.hero h1{margin-top:clamp(22px,2.6vw,32px);max-width:13ch}
+.hero .lead{margin:clamp(22px,2.4vw,30px) 0 0}
+
+.hero-art{position:relative}
+.hero-art figure{margin:0;overflow:hidden;background:var(--paper-2)}
+.hero-art img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 66%}
+.stamp{
+  position:absolute;left:-1px;bottom:-1px;background:var(--paper);
+  padding:20px 26px 18px;display:flex;align-items:baseline;gap:14px;
+}
+.stamp .n{font-family:var(--f-dis);font-size:34px;line-height:1;font-weight:400}
+.stamp .s{color:var(--red);font-size:12px;letter-spacing:.16em;line-height:1}
+.stamp .t{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mute);line-height:1.5;max-width:11ch}
+@media(max-width:920px){
+  .hero-grid{grid-template-columns:1fr;gap:34px}
+  .hero-art{order:-1;max-width:440px}
+}
+@media(max-width:560px){
+  .hero-art{max-width:100%}
+  .stamp{padding:15px 19px 14px;gap:11px}
+  .stamp .n{font-size:27px}
+}
+
+/* ── franja de confianza ────────────────────────────────── */
+.trust{border-block:1px solid var(--line);padding-block:0}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding-inline:0;max-width:1520px}
+.tr{padding:34px clamp(20px,2.6vw,34px);text-align:center;border-left:1px solid var(--line)}
+.tr:first-child{border-left:0}
+.tr .v{font-family:var(--f-dis);font-size:clamp(19px,2vw,23px);line-height:1.2;font-weight:400}
+.tr .v .s{color:var(--red);font-size:13px;letter-spacing:1.5px;vertical-align:2px}
+.tr .k{font-size:12px;letter-spacing:.1em;color:var(--mute);margin-top:9px;line-height:1.5}
+@media(max-width:860px){.trust .wrap{grid-template-columns:repeat(2,1fr)}.tr:nth-child(3){border-left:0}.tr:nth-child(n+3){border-top:1px solid var(--line)}}
+@media(max-width:440px){.trust .wrap{grid-template-columns:1fr}.tr{border-left:0}.tr+.tr{border-top:1px solid var(--line)}}
+
+/* ── cabecera de sección ────────────────────────────────── */
+.head{max-width:64ch}
+.head h2{margin-top:clamp(16px,1.8vw,22px)}
+.head p{margin:clamp(18px,2vw,24px) 0 0;color:var(--ink-soft);font-size:17.5px;max-width:52ch}
+.head+*{margin-top:clamp(44px,5.5vw,80px)}
+
+/* ── servicios: lista editorial, sin cajas ──────────────── */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);column-gap:clamp(26px,3.4vw,54px)}
+.sv{padding:30px 0 32px;border-top:1px solid var(--line)}
+.sv .n{font-family:var(--f-dis);font-style:italic;font-weight:300;font-size:14px;color:var(--red);display:block;margin-bottom:16px;letter-spacing:.04em}
+.sv h3{margin-bottom:11px}
+.sv p{margin:0;font-size:15.5px;line-height:1.62;color:var(--mute)}
 @media(max-width:900px){.svc{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.svc{grid-template-columns:1fr}}
+@media(max-width:580px){.svc{grid-template-columns:1fr}}
 
-/* banda oscura */
-.band{background:var(--ink);color:var(--cream)}
-.band h2,.band h3{color:var(--cream)}
-.band .sec-head p{color:rgba(247,242,236,.72)}
-.band .sec-head .eyebrow{color:var(--clay)}
-.band .sec-head .eyebrow::before{background:var(--clay)}
-.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,4.5vw,66px);align-items:start}
-@media(max-width:880px){.split{grid-template-columns:1fr}}
+/* ── destacados ─────────────────────────────────────────── */
+.feat{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(28px,4.4vw,64px);align-items:center;margin-top:clamp(56px,7vw,104px)}
+.feat-rev{grid-template-columns:1.22fr .78fr}
+.feat-rev .feat-img{order:2}
+.feat-img{margin:0;overflow:hidden;background:var(--paper-2)}
+.feat-img img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.feat h3{font-size:clamp(26px,3.4vw,40px);letter-spacing:-.025em;margin:14px 0 16px}
+.feat p{margin:0 0 26px;color:var(--ink-soft);font-size:17px;max-width:54ch}
+.feat-l{list-style:none;margin:0 0 30px;padding:0;border-top:1px solid var(--line)}
+.feat-l li{padding:13px 0 13px 24px;border-bottom:1px solid var(--line);font-size:15.5px;position:relative;color:var(--ink-soft)}
+.feat-l li::before{content:"♥";position:absolute;left:0;top:13px;color:var(--red);font-size:11px}
+@media(max-width:860px){
+  .feat,.feat-rev{grid-template-columns:1fr;gap:28px}
+  .feat-rev .feat-img{order:0}
+  .feat-img{max-width:330px}
+  .feat .btn{width:100%}
+}
 
-/* razones */
-.why{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(24px,3.2vw,42px)}
-.wh{padding-top:22px;border-top:1px solid var(--line-dk)}
-.wh .num{font-family:var(--f-dis);font-style:italic;font-size:15px;color:var(--clay);margin-bottom:10px}
-.wh h3{margin-bottom:8px}
-.wh p{margin:0;font-size:15px;color:rgba(247,242,236,.72);line-height:1.6}
-@media(max-width:640px){.why{grid-template-columns:1fr}}
+/* ── momento tipográfico ────────────────────────────────── */
+.quiet{text-align:center;padding-block:clamp(96px,13vw,180px)}
+.quiet .mark{color:var(--red);font-size:13px;line-height:1;margin-bottom:clamp(26px,3vw,38px)}
+.quiet blockquote{margin:0;font-family:var(--f-dis);font-style:italic;font-weight:300;
+  font-size:clamp(27px,4.4vw,56px);line-height:1.16;letter-spacing:-.026em;max-width:17ch;margin-inline:auto}
+.quiet cite{display:block;font-style:normal;margin-top:clamp(26px,3vw,38px);
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute)}
 
-/* opiniones */
-.rating{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:24px 28px;border:1px solid var(--line);background:var(--white);margin-bottom:22px}
-.rating .score{font-family:var(--f-dis);font-weight:600;font-size:46px;line-height:1}
-.stars{color:var(--clay);letter-spacing:2px;font-size:17px}
-.rating .meta{font-size:14px;color:var(--muted)}
-.reviews{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.rev{background:var(--white);border:1px solid var(--line);padding:28px 26px;display:flex;flex-direction:column;gap:14px}
-.rev .stars{font-size:14px}
-.rev q{font-family:var(--f-dis);font-size:19px;line-height:1.42;quotes:"\201C" "\201D";display:block}
-.rev .who{margin-top:auto;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
-@media(max-width:760px){.reviews{grid-template-columns:1fr}}
+/* ── galería ────────────────────────────────────────────── */
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(9px,1.2vw,16px)}
+.gal figure{margin:0;position:relative;overflow:hidden;background:var(--paper-2)}
+.gal img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform 1.1s var(--ease)}
+.gal figure:hover img{transform:scale(1.05)}
+/* velo cálido: unifica fotos de fuentes distintas */
+.gal figure::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:#C08B62;opacity:.13;mix-blend-mode:soft-light}
+.gal figcaption{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:44px 18px 16px;color:#fff;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  background:linear-gradient(to top,rgba(26,24,22,.72),transparent)}
+@media(max-width:860px){.gal{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.gal figcaption{font-size:10px;letter-spacing:.14em;padding:32px 13px 12px}}
 
-/* info */
-.info-list{border-top:1px solid var(--line-dk)}
-.info-row{display:flex;gap:20px;padding:17px 0;border-bottom:1px solid var(--line-dk);align-items:baseline}
-.info-row .k{flex:none;width:104px;color:var(--clay);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
-.info-row .v{font-size:16.5px;line-height:1.5}
-.info-row .v a{color:var(--cream);text-decoration:none;border-bottom:1px solid rgba(247,242,236,.3)}
-.info-row .v a:hover{color:var(--clay);border-color:var(--clay)}
-@media(max-width:560px){.info-row{flex-direction:column;gap:6px;padding:15px 0}.info-row .k{width:auto}}
-.hours{width:100%;border-collapse:collapse;font-size:16px}
-.hours td{padding:12px 0;border-bottom:1px solid var(--line-dk);color:var(--cream)}
-.hours td:last-child{text-align:right;font-size:14.5px;color:rgba(247,242,236,.82)}
+/* ── novias ─────────────────────────────────────────────── */
+.bridal{display:grid;grid-template-columns:.88fr 1.12fr;gap:clamp(30px,4.6vw,72px);align-items:center}
+.bridal figure{margin:0;overflow:hidden;background:var(--paper-2)}
+.bridal img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 26%}
+.bridal h2{margin:clamp(16px,1.8vw,22px) 0 clamp(18px,2vw,24px)}
+.bridal p{color:var(--ink-soft);margin:0 0 28px;font-size:17.5px;max-width:48ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 32px;padding:0;list-style:none}
+.chips li{border:1px solid var(--line);padding:9px 17px;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mute)}
+@media(max-width:880px){.bridal{grid-template-columns:1fr;gap:30px}.bridal figure{max-width:380px}.bridal .btn{width:100%}}
 
-/* faq */
-details{border-bottom:1px solid var(--line);padding:20px 0}
-details summary{cursor:pointer;list-style:none;font-family:var(--f-dis);font-weight:600;font-size:clamp(17px,2vw,20px);display:flex;justify-content:space-between;gap:20px;align-items:center}
-details summary::-webkit-details-marker{display:none}
-details summary::after{content:"+";color:var(--clay);font-size:22px;flex:none;transition:transform .25s}
+/* ── banda oscura ───────────────────────────────────────── */
+.dark{background:var(--ink);color:var(--paper)}
+.dark h2,.dark h3{color:var(--paper)}
+.dark .head p{color:var(--paper-soft)}
+.dark .label{color:rgba(243,239,234,.55)}
+
+.why{display:grid;grid-template-columns:repeat(2,1fr);column-gap:clamp(30px,4.4vw,72px)}
+.wh{padding:28px 0 30px;border-top:1px solid var(--line-ink)}
+.wh .num{font-family:var(--f-dis);font-style:italic;font-weight:300;font-size:14px;color:var(--red);display:block;margin-bottom:14px}
+.wh h3{margin-bottom:10px}
+.wh p{margin:0;font-size:15.5px;line-height:1.62;color:var(--paper-soft)}
+@media(max-width:680px){.why{grid-template-columns:1fr}}
+
+/* ── opiniones ──────────────────────────────────────────── */
+.rev-lead{display:grid;grid-template-columns:auto 1fr;gap:clamp(28px,4vw,64px);align-items:start;
+  padding-bottom:clamp(38px,4.6vw,60px);border-bottom:1px solid var(--line)}
+.score{font-family:var(--f-dis);font-size:clamp(58px,8vw,104px);line-height:.86;font-weight:300;letter-spacing:-.04em}
+.score .s{display:block;color:var(--red);font-family:var(--f-body);font-size:14px;letter-spacing:3px;margin-top:14px}
+.rev-lead blockquote{margin:0;font-family:var(--f-dis);font-weight:300;
+  font-size:clamp(21px,2.9vw,34px);line-height:1.3;letter-spacing:-.02em}
+.rev-lead .who{margin-top:22px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.revs{display:grid;grid-template-columns:repeat(3,1fr);column-gap:clamp(26px,3.4vw,54px)}
+.rv-i{padding:32px 0 4px;border-top:1px solid transparent}
+.rv-i .s{color:var(--red);font-size:11px;letter-spacing:2px;display:block;margin-bottom:16px}
+.rv-i q{font-family:var(--f-dis);font-weight:300;font-size:18px;line-height:1.45;display:block;quotes:"\201C" "\201D"}
+.rv-i .who{margin-top:18px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+@media(max-width:880px){.rev-lead{grid-template-columns:1fr;gap:24px}.revs{grid-template-columns:1fr;row-gap:8px}.rv-i{border-top-color:var(--line)}}
+
+/* ── visítanos ──────────────────────────────────────────── */
+.place{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(32px,4.6vw,76px);align-items:start}
+.rows{border-top:1px solid var(--line)}
+.row{display:flex;gap:24px;padding:19px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.row .k{flex:none;width:112px;font-size:11px;letter-spacing:.19em;text-transform:uppercase;color:var(--red)}
+.row .v{font-size:16.5px;line-height:1.55;color:var(--ink-soft)}
+.row .v a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .35s var(--ease),color .35s var(--ease)}
+.row .v a:hover{color:var(--red);border-color:var(--red)}
+@media(max-width:560px){.row{flex-direction:column;gap:6px;padding:16px 0}.row .k{width:auto}}
+.hours{width:100%;border-collapse:collapse;font-size:16.5px;border-top:1px solid var(--line)}
+.hours td{padding:15px 0;border-bottom:1px solid var(--line);color:var(--ink-soft)}
+.hours td:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.hours tr.now td{color:var(--ink)}
+@media(max-width:880px){.place{grid-template-columns:1fr}}
+
+/* ── faq ────────────────────────────────────────────────── */
+details{border-bottom:1px solid var(--line);padding:24px 0}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;font-family:var(--f-dis);font-weight:400;
+  font-size:clamp(18px,2.1vw,22px);letter-spacing:-.016em;display:flex;justify-content:space-between;gap:24px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";flex:none;width:11px;height:11px;position:relative;
+  background:linear-gradient(var(--red),var(--red)) center/100% 1px no-repeat,
+             linear-gradient(var(--red),var(--red)) center/1px 100% no-repeat;
+  transition:transform .4s var(--ease)}
 details[open] summary::after{transform:rotate(45deg)}
-details p{margin:13px 0 2px;color:var(--muted);font-size:16px;max-width:64ch}
+details p{margin:16px 0 2px;color:var(--ink-soft);font-size:16.5px;max-width:66ch}
 
-/* cierre */
-.close{background:var(--ink);color:var(--cream);text-align:center}
-.close h2{max-width:18ch;margin-inline:auto}
-.close p{color:rgba(247,242,236,.78);max-width:46ch;margin:18px auto 0}
+/* ── cierre ─────────────────────────────────────────────── */
+.close{text-align:center}
+.close .label{justify-content:center;margin-bottom:clamp(22px,2.6vw,32px)}
+.close h2{max-width:15ch;margin-inline:auto}
+.close p{color:var(--paper-soft);max-width:44ch;margin:clamp(20px,2.4vw,28px) auto 0;font-size:17.5px}
 .close .cta-row{justify-content:center}
-.close .eyebrow{color:var(--clay);margin-bottom:20px}
 
-footer{background:var(--ink-2);color:rgba(247,242,236,.6);padding-block:32px;font-size:13.5px}
-.foot-in{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
-.foot-in a{color:rgba(247,242,236,.78);text-decoration:none}
-.foot-in a:hover{color:var(--clay)}
-.foot-in .right{margin-left:auto}
+footer{background:var(--ink-2);color:rgba(243,239,234,.55);padding-block:38px;font-size:12.5px;letter-spacing:.04em}
+.foot{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center}
+.foot a{color:rgba(243,239,234,.78);text-decoration:none;transition:color .35s var(--ease)}
+.foot a:hover{color:var(--red)}
+.foot .right{margin-left:auto}
+@media(max-width:700px){.foot .right{margin-left:0}}
 
-.wa{position:fixed;right:18px;bottom:18px;z-index:80;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(42,33,28,.26);opacity:0;visibility:hidden;transform:scale(.85);transition:opacity .3s,transform .3s,visibility .3s}
+/* ── whatsapp flotante ──────────────────────────────────── */
+.wa{position:fixed;right:20px;bottom:20px;z-index:95;width:54px;height:54px;border-radius:50%;
+  background:#25D366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(35,32,30,.22);
+  opacity:0;visibility:hidden;transform:scale(.85);transition:opacity .5s var(--ease),transform .5s var(--ease),visibility .5s}
 .wa.show{opacity:1;visibility:visible;transform:none}
-.wa.show:hover{transform:scale(1.06)}
-.wa svg{width:29px;height:29px;fill:#fff}
+.wa.show:hover{transform:scale(1.07)}
+.wa svg{width:28px;height:28px;fill:#fff}
 
-.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+/* ── tratamiento unificado de fotografía ────────────────── */
+.gal img,.feat-img img,.bridal img,.hero-art img{filter:saturate(.88) contrast(1.03)}
+
+/* ── reveal ─────────────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .rv.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  .gal figure:hover img{transform:none}
+}
 </style>
+
+<p class="preview"><b>Vista previa</b> · Fotos de referencia · Horario de domingo por confirmar</p>
 
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="logo" href="#top"><span class="txt">Day Spa</span><small>Miraflores</small></a>
-    <nav class="nav-links">
+    <a class="lk" href="#top" style="--lk-n:28px;--lk-s:7.8px" aria-label="Day Spa, salón de belleza">
+      <span class="name">Day Spa</span>
+      <span class="rule"><i class="hrt">&#9829;</i></span>
+      <span class="sub">Salon de Belleza</span>
+    </a>
+    <nav class="nav-links" aria-label="Secciones">
       <a href="#servicios">Servicios</a>
-      <a href="#porque">Por qué nosotras</a>
+      <a href="#trabajo">Trabajos</a>
+      <a href="#novias">Novias</a>
       <a href="#opiniones">Opiniones</a>
-      <a href="#ubicacion">Ubicación</a>
+      <a href="#visitanos">Visítanos</a>
     </nav>
-    <a class="nav-cta" href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20una%20cita%20en%20Day%20Spa" target="_blank" rel="noopener"><span class="t-lg">Reservar cita</span><span class="t-sm">Reservar</span></a>
+    <a class="btn btn-a" href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20una%20cita%20en%20Day%20Spa" target="_blank" rel="noopener">Reservar</a>
   </div>
 </header>
 
 <main id="top">
 
+<!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">Miraflores · Lima</div>
-    <h1>Un salón donde sales <em class="i">como querías verte</em>.</h1>
-    <p class="lead">Cabello, uñas, pestañas y faciales en el corazón de Miraflores. Más de 500 clientas nos han calificado con 4.8 estrellas en Google. Abierto los siete días.</p>
-    <div class="cta-row">
-      <a class="btn btn-a" href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20una%20cita%20en%20Day%20Spa" target="_blank" rel="noopener">Reservar por WhatsApp</a>
-      <a class="btn btn-b" href="tel:+51982062683">Llamar 982 062 683</a>
+    <div class="hero-grid">
+      <div>
+        <p class="label">Miraflores · Lima</p>
+        <h1>Un salón donde sales <em class="i">como querías verte</em>.</h1>
+        <p class="lead">Cuidarte y consentirte es nuestro secreto para verte más bella. Cabello, uñas, cejas, faciales y masajes en el corazón de Miraflores, los siete días de la semana.</p>
+        <div class="cta-row">
+          <a class="btn btn-a" href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20una%20cita%20en%20Day%20Spa" target="_blank" rel="noopener">Reservar por WhatsApp</a>
+          <a class="btn btn-b" href="tel:+51982062683">982 062 683</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <figure><img src="foto-color.jpg" alt="Clienta en Day Spa durante una aplicación de mechas y balayage" fetchpriority="high" width="736" height="1104"></figure>
+        <div class="stamp">
+          <div><div class="n">4.8</div><div class="s">★★★★★</div></div>
+          <div class="t">542 reseñas en Google</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="strip" style="padding-block:0">
+<!-- ═══ CONFIANZA ═══ -->
+<section class="trust">
   <div class="wrap">
-    <div class="st"><div class="v">4.8 <span class="stars">★★★★★</span></div><div class="k">Más de 500 reseñas en Google</div></div>
-    <div class="st"><div class="v">7 días</div><div class="k">Lun a sáb 9–21 h · Dom 10–20 h</div></div>
-    <div class="st"><div class="v">Miraflores</div><div class="k">Av. Benavides 477, junto a Vivanda</div></div>
-    <div class="st"><div class="v">English spoken</div><div class="k">Atendemos también en inglés</div></div>
+    <div class="tr"><div class="v">4.8 <span class="s">★★★★★</span></div><div class="k">542 reseñas en Google</div></div>
+    <div class="tr"><div class="v">17,2 mil</div><div class="k">Nos siguen en Instagram</div></div>
+    <div class="tr"><div class="v">7 días</div><div class="k">Lun a sáb 9–21 h · Dom 10–20 h</div></div>
+    <div class="tr"><div class="v">Miraflores</div><div class="k">Av. Benavides 477, junto a Vivanda</div></div>
   </div>
 </section>
 
+<!-- ═══ SERVICIOS ═══ -->
 <section id="servicios">
   <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow">Servicios</div>
+    <div class="head rv">
+      <p class="label">Servicios</p>
       <h2>Todo en un mismo lugar, en una sola visita.</h2>
-      <p>Puedes reservar un solo servicio o combinar varios el mismo día. Coordínalo por WhatsApp y te armamos el horario.</p>
+      <p>Puedes reservar un solo servicio o combinar varios el mismo día. Coordínalo por WhatsApp y te ordenamos el horario.</p>
     </div>
+
     <div class="svc rv">
-      <div class="sv"><div class="n">01</div><h3>Cabello</h3><p>Corte, lavado y peinado. Nuestras clientas destacan especialmente los cortes de Pierina.</p></div>
-      <div class="sv"><div class="n">02</div><h3>Color y balayage</h3><p>Balayage, mechas y color. Trabajamos el tono buscando que crezca bonito, no que te obligue a volver cada mes.</p></div>
-      <div class="sv"><div class="n">03</div><h3>Manicure y pedicure</h3><p>Con esmaltes OPI. Manos y pies cuidados, prolijos y que duran.</p></div>
-      <div class="sv"><div class="n">04</div><h3>Diseño de uñas</h3><p>Diseños pintados a mano. Nuestras clientas cuentan que les preguntan si son stickers — no lo son.</p></div>
-      <div class="sv"><div class="n">05</div><h3>Extensiones de pestañas</h3><p>Mirada definida sin maquillaje diario. Aplicación cuidadosa, pelo por pelo.</p></div>
-      <div class="sv"><div class="n">06</div><h3>Depilación y faciales</h3><p>Cejas, rostro y cuerpo, además de tratamientos faciales para dejar la piel descansada.</p></div>
+      <div class="sv"><span class="n">i</span><h3>Cabello</h3><p>Corte, lavado, peinado y tratamientos de reconstrucción. Trabajamos con línea profesional Kérastase.</p></div>
+      <div class="sv"><span class="n">ii</span><h3>Color y balayage</h3><p>Balayage, mechas, rubios y cambios de tono. Buscamos un color que crezca bonito, no que te obligue a volver cada mes.</p></div>
+      <div class="sv"><span class="n">iii</span><h3>Alisado y nanoplastía</h3><p>Nanoplastía y tratamientos reductores de frizz. Cabello manejable y con brillo, sin perder movimiento.</p></div>
+      <div class="sv"><span class="n">iv</span><h3>Manicure y pedicure</h3><p>Nuestro servicio más pedido y el mejor calificado, con esmaltes OPI. Manos y pies prolijos, con acabado parejo.</p></div>
+      <div class="sv"><span class="n">v</span><h3>Diseño de uñas</h3><p>Diseños pintados a mano, uno por uno. Nuestras clientas cuentan que les preguntan si son stickers — no lo son.</p></div>
+      <div class="sv"><span class="n">vi</span><h3>Extensiones de pestañas</h3><p>Mirada definida sin maquillaje diario. Aplicación cuidadosa, pelo por pelo.</p></div>
+      <div class="sv"><span class="n">vii</span><h3>Cejas y microblading</h3><p>Diseño de cejas, microblading y micropigmentación. Cejas definidas con aspecto abundante y natural.</p></div>
+      <div class="sv"><span class="n">viii</span><h3>Faciales</h3><p>Limpieza profunda y tratamientos con aparatología para dejar la piel descansada y luminosa.</p></div>
+      <div class="sv"><span class="n">ix</span><h3>Masajes y depilación</h3><p>Masajes relajantes y descontracturantes, y depilación con cera de rostro y cuerpo.</p></div>
+    </div>
+
+    <div class="tones rv">
+      <p class="label">Los tonos que más nos piden</p>
+      <div class="tone-row">
+        <div class="tone"><i style="background:#E4CDBF"></i><span>Nude</span></div>
+        <div class="tone"><i style="background:#EBD3D2"></i><span>Rosa palo</span></div>
+        <div class="tone"><i style="background:#F6F1EC"></i><span>Francesita</span></div>
+        <div class="tone"><i style="background:#C9556A"></i><span>Frambuesa</span></div>
+        <div class="tone"><i style="background:#C0202B"></i><span>Rojo clásico</span></div>
+        <div class="tone"><i style="background:#7A2233"></i><span>Burdeos</span></div>
+        <div class="tone"><i style="background:#6E4638"></i><span>Chocolate</span></div>
+        <div class="tone"><i style="background:#2B2A2E"></i><span>Negro</span></div>
+      </div>
+    </div>
+
+    <div class="feat rv">
+      <figure class="feat-img"><img src="foto-unas.jpg" alt="Manicure en tono nude con acabado degradado, forma almendra" loading="lazy" width="736" height="1308"></figure>
+      <div>
+        <p class="label">Servicio estrella</p>
+        <h3>Rubber Base Manicure</h3>
+        <p>Una base flexible que se mueve con tu uña natural, en vez de pelearse con ella. Pensada para uñas débiles, delgadas o quebradizas: arma una superficie pareja y resistente que evita que el esmalte se levante o se astille, y deja crecer la uña más fuerte visita tras visita.</p>
+        <ul class="feat-l">
+          <li>Fortalece la uña natural</li>
+          <li>Fórmula flexible y resistente</li>
+          <li>Reduce quiebres y levantamientos</li>
+          <li>Acabado parejo y brillo que dura</li>
+          <li>Va con nude, francesita o color</li>
+        </ul>
+        <a class="btn btn-a" href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20un%20Rubber%20Base%20Manicure%20en%20Day%20Spa" target="_blank" rel="noopener">Reservar rubber base</a>
+      </div>
+    </div>
+
+    <div class="feat feat-rev rv">
+      <figure class="feat-img"><img src="foto-nanoplastia.jpg" alt="Cabello antes y después de una nanoplastía: de frizz a liso con brillo" loading="lazy" width="736" height="1104"></figure>
+      <div>
+        <p class="label">Antes y después</p>
+        <h3>Nanoplastía</h3>
+        <p>El tratamiento para cuando el frizz ya no se controla con secadora. Sella la fibra del cabello y baja el volumen sin dejártelo tabla: sigue teniendo movimiento, solo que ahora se peina solo. El brillo dura meses y el crecimiento no marca una línea dura.</p>
+        <ul class="feat-l">
+          <li>Reduce el frizz y el volumen</li>
+          <li>Conserva el movimiento natural</li>
+          <li>Brillo y suavidad que duran</li>
+          <li>Cabello manejable todos los días</li>
+          <li>Ideal antes de un evento o viaje</li>
+        </ul>
+        <a class="btn btn-a" href="https://wa.me/51982062683?text=Hola,%20quiero%20información%20sobre%20la%20nanoplastía%20en%20Day%20Spa" target="_blank" rel="noopener">Consultar por nanoplastía</a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="band" id="porque">
+<!-- ═══ MOMENTO ═══ -->
+<section class="quiet">
+  <div class="wrap rv">
+    <div class="mark">&#9829;</div>
+    <blockquote>Cuidarte y consentirte es nuestro secreto para verte más bella.</blockquote>
+    <cite>Day Spa · Miraflores desde el primer día</cite>
+  </div>
+</section>
+
+<!-- ═══ GALERÍA ═══ -->
+<section id="trabajo" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow">Por qué nosotras</div>
-      <h2>Cuatro razones para sentarte en nuestra silla.</h2>
+    <div class="head rv">
+      <p class="label">Nuestro trabajo</p>
+      <h2>Así se ve una visita a Day Spa.</h2>
+      <p>Cada servicio se trabaja con calma, producto profesional y una sola persona dedicada a ti.</p>
+    </div>
+    <div class="gal rv">
+      <figure><img src="foto-diseno-unas.jpg" alt="Diseño de uñas pintado a mano con detalles metalizados" loading="lazy" width="736" height="1104"><figcaption>Diseño de uñas</figcaption></figure>
+      <figure><img src="foto-cabello.jpg" alt="Corte de cabello con peine y tijera" loading="lazy" width="736" height="1103"><figcaption>Corte y peinado</figcaption></figure>
+      <figure><img src="foto-pedicure.jpg" alt="Pedicure con esmaltado rojo y aceite de cutícula" loading="lazy" width="736" height="920"><figcaption>Pedicure</figcaption></figure>
+      <figure><img src="foto-pestanas.jpg" alt="Aplicación de extensiones de pestañas pelo por pelo" loading="lazy" width="736" height="1104"><figcaption>Pestañas</figcaption></figure>
+      <figure><img src="foto-cejas.jpg" alt="Diseño y perfilado de cejas con pinza y cepillo" loading="lazy" width="736" height="1104"><figcaption>Diseño de cejas</figcaption></figure>
+      <figure><img src="foto-microblading.jpg" alt="Sesión de microblading con marcado previo de la ceja" loading="lazy" width="736" height="1104"><figcaption>Microblading</figcaption></figure>
+      <figure><img src="foto-depilacion.jpg" alt="Depilación de cejas con cera" loading="lazy" width="736" height="981"><figcaption>Depilación con cera</figcaption></figure>
+      <figure><img src="foto-facial.jpg" alt="Tratamiento facial con masaje y mascarilla" loading="lazy" width="736" height="1104"><figcaption>Faciales</figcaption></figure>
+      <figure><img src="foto-masajes.jpg" alt="Masaje descontracturante de espalda" loading="lazy" width="736" height="1308"><figcaption>Masajes</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NOVIAS ═══ -->
+<section id="novias">
+  <div class="wrap">
+    <div class="bridal rv">
+      <figure><img src="foto-novias.jpg" alt="Novia con peinado recogido, tocado de perlas y maquillaje en tonos durazno" loading="lazy" width="736" height="1104"></figure>
+      <div>
+        <p class="label">Novias</p>
+        <h2>El día que más te van a mirar.</h2>
+        <p>Armamos el paquete a tu medida, para ti y para tus damas: maquillaje, peinado, uñas y la piel lista para la fecha. Escríbenos con el día de la boda y lo coordinamos con tiempo — las mejores horas se llenan primero.</p>
+        <ul class="chips">
+          <li>Maquillaje</li>
+          <li>Peinado</li>
+          <li>Uñas</li>
+          <li>Faciales previos</li>
+          <li>Paquete para damas</li>
+        </ul>
+        <a class="btn btn-a" href="https://wa.me/51982062683?text=Hola,%20me%20caso%20y%20quiero%20consultar%20por%20el%20paquete%20de%20novia%20en%20Day%20Spa" target="_blank" rel="noopener">Consultar por mi boda</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ POR QUÉ ═══ -->
+<section class="dark" id="porque">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="label">Por qué nosotras</p>
+      <h2>Seis razones para sentarte en nuestra silla.</h2>
     </div>
     <div class="why rv">
-      <div class="wh"><div class="num">i</div><h3>4.8 estrellas, más de 500 veces</h3><p>No es una opinión nuestra: es el promedio de cientos de clientas que ya pasaron por acá y volvieron a contarlo.</p></div>
-      <div class="wh"><div class="num">ii</div><h3>Abrimos los siete días</h3><p>De lunes a sábado hasta las 9 de la noche y domingos hasta las 8. Para que quepa en tu semana, no al revés.</p></div>
-      <div class="wh"><div class="num">iii</div><h3>We speak English</h3><p>Buena parte de nuestras clientas son visitantes en Miraflores. Te atendemos en inglés sin que sea un problema.</p></div>
-      <div class="wh"><div class="num">iv</div><h3>Te hacemos espacio</h3><p>Si te desocupaste de improviso, escríbenos igual. Muchas de nuestras mejores reseñas empezaron con un "¿tendrán ahorita?".</p></div>
+      <div class="wh"><span class="num">i</span><h3>4.8 estrellas, 542 veces</h3><p>No es una opinión nuestra: es el promedio de 542 clientas que ya pasaron por acá y volvieron a contarlo en Google.</p></div>
+      <div class="wh"><span class="num">ii</span><h3>Manos con nombre propio</h3><p>Nuestras clientas no escriben "el salón": escriben Attenats, escriben Erika. Vuelven por la persona que las atendió.</p></div>
+      <div class="wh"><span class="num">iii</span><h3>17,2 mil personas nos siguen</h3><p>En Instagram publicamos el trabajo real del día a día. Puedes ver antes y después antes de decidir.</p></div>
+      <div class="wh"><span class="num">iv</span><h3>Te hacemos espacio</h3><p>Si te desocupaste de improviso, escríbenos igual. Muchas de nuestras mejores reseñas empezaron con un "¿tendrán ahorita?".</p></div>
+      <div class="wh"><span class="num">v</span><h3>Un espacio para todas y todos</h3><p>Salón amigable con la comunidad LGBTQ+. Acá te atienden bien, punto.</p></div>
+      <div class="wh"><span class="num">vi</span><h3>Dirigido por mujeres</h3><p>Un negocio de mujeres emprendedoras, en Miraflores, abierto los siete días de la semana.</p></div>
     </div>
   </div>
 </section>
 
-<section class="alt" id="opiniones">
+<!-- ═══ OPINIONES ═══ -->
+<section id="opiniones">
   <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow">Opiniones</div>
+    <div class="head rv">
+      <p class="label">Opiniones</p>
       <h2>Lo que dicen nuestras clientas.</h2>
       <p>Reseñas reales publicadas en Google, tal como las escribieron.</p>
     </div>
-    <div class="rating rv">
-      <div class="score">4.8</div>
-      <div><div class="stars">★★★★★</div><div class="meta">Más de 500 reseñas en Google</div></div>
+
+    <div class="rev-lead rv">
+      <div class="score">4.8<span class="s">★★★★★</span></div>
+      <div>
+        <blockquote>“Quedé encantada con el servicio recibido. Mis uñas en rubber quedaron preciosas. Mucha paciencia y dedicación por parte de Erika. ¡Volveré pronto!”</blockquote>
+        <div class="who">Alejandra Gonzales — Google</div>
+      </div>
     </div>
-    <div class="reviews rv">
-      <div class="rev"><div class="stars">★★★★★</div><q>They squeezed me in last minute and did an amazing job!</q><div class="who">Taryn K. — Google</div></div>
-      <div class="rev"><div class="stars">★★★★★</div><q>She painted the design onto my nails and people thought they were stickers.</q><div class="who">Kimberly C. — Google</div></div>
+
+    <div class="revs rv" style="margin-top:0">
+      <div class="rv-i"><span class="s">★★★★★</span><q>Es una excelente profesional: detallista, perfeccionista, amable y muy talentosa. Se nota el cuidado y la dedicación que pone en cada detalle. Mis uñas quedaron hermosas.</q><div class="who">Vane Vond</div></div>
+      <div class="rv-i"><span class="s">★★★★★</span><q>Muy buen servicio de Attenats, me dejó las manos lindas. ¡Súper recomendado!</q><div class="who">Maricary D'Angelo</div></div>
+      <div class="rv-i"><span class="s">★★★★★</span><q>They squeezed me in last minute and did an amazing job!</q><div class="who">Taryn K.</div></div>
     </div>
   </div>
 </section>
 
-<section class="band" id="ubicacion">
+<!-- ═══ VISÍTANOS ═══ -->
+<section id="visitanos">
   <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow">Visítanos</div>
+    <div class="head rv">
+      <p class="label">Visítanos</p>
       <h2>En el corazón de Miraflores.</h2>
       <p>Av. Alfredo Benavides 477, sótano 101 — al lado de Vivanda. Escríbenos antes de venir y coordinamos tu horario.</p>
     </div>
-    <div class="split">
+    <div class="place">
       <div class="rv">
-        <div class="info-list">
-          <div class="info-row"><div class="k">Dirección</div><div class="v">Av. Alfredo Benavides 477, sótano 101<br>Miraflores 15074, Lima</div></div>
-          <div class="info-row"><div class="k">Referencia</div><div class="v">Al costado de Vivanda</div></div>
-          <div class="info-row"><div class="k">Teléfono</div><div class="v"><a href="tel:+51982062683">982 062 683</a></div></div>
-          <div class="info-row"><div class="k">WhatsApp</div><div class="v"><a href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20una%20cita%20en%20Day%20Spa" target="_blank" rel="noopener">Escribir ahora</a></div></div>
-          <div class="info-row"><div class="k">Redes</div><div class="v"><a href="https://www.instagram.com/dayspamirafloress/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/DaySpaMirafloress/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.tiktok.com/@dayspamirafloress" target="_blank" rel="noopener">TikTok</a></div></div>
+        <div class="rows">
+          <div class="row"><div class="k">Dirección</div><div class="v">Av. Alfredo Benavides 477, sótano 101<br>Miraflores 15074, Lima</div></div>
+          <div class="row"><div class="k">Referencia</div><div class="v">Sótano 1, al costado de Vivanda</div></div>
+          <div class="row"><div class="k">Teléfono</div><div class="v"><a href="tel:+51982062683">982 062 683</a></div></div>
+          <div class="row"><div class="k">WhatsApp</div><div class="v"><a href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20una%20cita%20en%20Day%20Spa" target="_blank" rel="noopener">Escribir ahora</a></div></div>
+          <div class="row"><div class="k">Instagram</div><div class="v"><a href="https://www.instagram.com/dayspamirafloress/" target="_blank" rel="noopener">@dayspamirafloress</a> — 17,2 mil seguidores</div></div>
+          <div class="row"><div class="k">Atendemos</div><div class="v">Espacio amigable con la comunidad LGBTQ+ · Negocio dirigido por mujeres</div></div>
         </div>
-        <a class="btn btn-w" style="margin-top:24px" href="https://www.google.com/maps/search/?api=1&query=Day+Spa+Miraflores+Av.+Alfredo+Benavides+477" target="_blank" rel="noopener">Cómo llegar</a>
+        <div class="cta-row">
+          <a class="btn btn-b" href="https://www.google.com/maps/search/?api=1&query=Day+Spa+Miraflores+Av.+Alfredo+Benavides+477" target="_blank" rel="noopener">Cómo llegar</a>
+        </div>
       </div>
       <div class="rv">
         <table class="hours">
-          <tr><td>Lunes</td><td>9:00 – 21:00</td></tr>
-          <tr><td>Martes</td><td>9:00 – 21:00</td></tr>
-          <tr><td>Miércoles</td><td>9:00 – 21:00</td></tr>
-          <tr><td>Jueves</td><td>9:00 – 21:00</td></tr>
-          <tr><td>Viernes</td><td>9:00 – 21:00</td></tr>
-          <tr><td>Sábado</td><td>9:00 – 21:00</td></tr>
-          <tr><td>Domingo</td><td>10:00 – 20:00</td></tr>
+          <tr><td>Lunes</td><td>9:00 — 21:00</td></tr>
+          <tr><td>Martes</td><td>9:00 — 21:00</td></tr>
+          <tr><td>Miércoles</td><td>9:00 — 21:00</td></tr>
+          <tr><td>Jueves</td><td>9:00 — 21:00</td></tr>
+          <tr><td>Viernes</td><td>9:00 — 21:00</td></tr>
+          <tr><td>Sábado</td><td>9:00 — 21:00</td></tr>
+          <tr><td>Domingo</td><td>10:00 — 20:00</td></tr>
         </table>
       </div>
     </div>
   </div>
 </section>
 
-<section id="faq">
-  <div class="wrap" style="max-width:880px">
-    <div class="sec-head rv">
-      <div class="eyebrow">Preguntas frecuentes</div>
+<!-- ═══ FAQ ═══ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap" style="max-width:920px">
+    <div class="head rv">
+      <p class="label">Preguntas frecuentes</p>
       <h2>Antes de venir.</h2>
     </div>
     <div class="rv">
       <details><summary>¿Necesito reservar o puedo llegar nomás?</summary><p>Puedes venir sin cita y muchas veces te hacemos espacio. Pero si tienes una hora fija en mente, escríbenos por WhatsApp y te la separamos.</p></details>
       <details><summary>¿Cuánto cuesta cada servicio?</summary><p>Escríbenos por WhatsApp contándonos qué te quieres hacer y te pasamos el precio exacto, porque varía según el largo del cabello y el tipo de trabajo.</p></details>
-      <details><summary>Do you speak English?</summary><p>Yes. Many of our clients are visitors staying in Miraflores, so you can book and be attended in English. Just message us on WhatsApp.</p></details>
       <details><summary>¿Puedo hacerme varias cosas el mismo día?</summary><p>Sí, es lo más común. Dinos todo lo que quieres y armamos el orden para que salgas lista en una sola visita.</p></details>
-      <details><summary>¿Dónde están exactamente?</summary><p>Av. Alfredo Benavides 477, sótano 101, al costado de Vivanda en Miraflores. Estamos en el sótano, así que si no nos ves desde la avenida, baja nomás.</p></details>
+      <details><summary>¿Atienden novias?</summary><p>Sí. Armamos paquetes para la novia y sus damas: peinado, maquillaje, uñas y piel. Escríbenos con la fecha de la boda y lo coordinamos con tiempo.</p></details>
+      <details><summary>¿Qué hacen por el cabello además del corte?</summary><p>Color, balayage, mechas, rubios, nanoplastía y tratamientos de reconstrucción con línea profesional Kérastase. Si no sabes qué le conviene a tu pelo, mándanos una foto por WhatsApp y te orientamos.</p></details>
+      <details><summary>Do you speak English?</summary><p>Yes. Many of our clients are visitors staying in Miraflores, so you can book and be attended in English. Just message us on WhatsApp.</p></details>
+      <details><summary>¿Dónde están exactamente?</summary><p>Av. Alfredo Benavides 477, sótano 101 (S-1), al costado de Vivanda en Miraflores. Estamos en el sótano, así que si no nos ves desde la avenida, baja nomás.</p></details>
     </div>
   </div>
 </section>
 
-<section class="close">
-  <div class="wrap">
-    <div class="rv">
-      <div class="eyebrow">Reserva tu cita</div>
-      <h2>¿Nos vemos esta semana?</h2>
-      <p>Escríbenos por WhatsApp qué te quieres hacer y te decimos qué horarios tenemos libres.</p>
-      <div class="cta-row">
-        <a class="btn btn-a" href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20una%20cita%20en%20Day%20Spa" target="_blank" rel="noopener">Reservar por WhatsApp</a>
-        <a class="btn btn-o" href="tel:+51982062683">Llamar 982 062 683</a>
-      </div>
+<!-- ═══ CIERRE ═══ -->
+<section class="dark close">
+  <div class="wrap rv">
+    <p class="label">Reserva tu cita</p>
+    <h2>¿Nos vemos esta semana?</h2>
+    <p>Escríbenos por WhatsApp qué te quieres hacer y te decimos qué horarios tenemos libres.</p>
+    <div class="cta-row">
+      <a class="btn btn-c" href="https://wa.me/51982062683?text=Hola,%20quiero%20reservar%20una%20cita%20en%20Day%20Spa" target="_blank" rel="noopener">Reservar por WhatsApp</a>
+      <a class="btn btn-d" href="tel:+51982062683">982 062 683</a>
     </div>
   </div>
 </section>
@@ -346,12 +637,12 @@ footer{background:var(--ink-2);color:rgba(247,242,236,.6);padding-block:32px;fon
 </main>
 
 <footer>
-  <div class="wrap foot-in">
+  <div class="wrap foot">
     <span>© <span id="y">2026</span> Day Spa — Salón de Belleza</span>
     <a href="https://www.google.com/maps/search/?api=1&query=Day+Spa+Miraflores+Av.+Alfredo+Benavides+477" target="_blank" rel="noopener">Av. Benavides 477, Miraflores</a>
     <a href="tel:+51982062683">982 062 683</a>
     <a href="https://www.instagram.com/dayspamirafloress/" target="_blank" rel="noopener">@dayspamirafloress</a>
-    <span class="right">Lima, Perú</span>
+    <span class="right">RUC 20604307733 · Lima, Perú</span>
   </div>
 </footer>
 
@@ -359,11 +650,61 @@ footer{background:var(--ink-2);color:rgba(247,242,236,.6);padding-block:32px;fon
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35zM12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01c-1.52 0-3.02-.41-4.32-1.18l-.31-.18-3.21.84.86-3.13-.2-.32a8.21 8.21 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24z"/></svg>
 </a>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BeautySalon",
+  "name": "Day Spa — Salón de Belleza",
+  "description": "Salón de belleza en Miraflores: cabello, color, nanoplastía, manicure y pedicure, diseño de uñas, extensiones de pestañas, cejas y microblading, faciales, masajes y depilación.",
+  "image": "foto-color.jpg",
+  "telephone": "+51982062683",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Alfredo Benavides 477, sótano 101",
+    "addressLocality": "Miraflores",
+    "addressRegion": "Lima",
+    "postalCode": "15074",
+    "addressCountry": "PE"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": -12.1247, "longitude": -77.0246 },
+  "sameAs": ["https://www.instagram.com/dayspamirafloress/"],
+  "priceRange": "$$",
+  "currenciesAccepted": "PEN",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "09:00", "closes": "21:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:00", "closes": "20:00" }
+  ]
+}
+</script>
+
 <script>
-document.getElementById('y').textContent=new Date().getFullYear();
-const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-const wa=document.querySelector('.wa');
-const toggleWa=()=>wa.classList.toggle('show',scrollY>window.innerHeight*.55);
-toggleWa();addEventListener('scroll',toggleWa,{passive:true});
+document.getElementById('y').textContent = new Date().getFullYear();
+
+/* reveal escalonado */
+const io = new IntersectionObserver((es) => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: .1, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+/* nav: hairline solo al hacer scroll */
+const nav = document.querySelector('.nav');
+const wa = document.querySelector('.wa');
+const onScroll = () => {
+  nav.classList.toggle('stuck', scrollY > 12);
+  wa.classList.toggle('show', scrollY > innerHeight * .5);
+};
+onScroll();
+addEventListener('scroll', onScroll, { passive: true });
+
+/* resalta el día de hoy en la tabla de horarios */
+(() => {
+  const rows = document.querySelectorAll('.hours tr');
+  const i = (new Date().getDay() + 6) % 7; // lunes = 0
+  if (rows[i]) rows[i].classList.add('now');
+})();
+
+/* si una foto falta, se oculta en vez de mostrar el ícono roto */
+document.querySelectorAll('.gal img, .feat-img img, .bridal img, .hero-art img').forEach(img => {
+  img.addEventListener('error', () => { const f = img.closest('figure'); if (f) f.remove(); });
+});
 </script>
