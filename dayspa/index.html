@@ -161,20 +161,20 @@ em.i{font-style:italic;font-weight:300}
 .hero-art figure{margin:0;overflow:hidden;background:var(--paper-2)}
 .hero-art img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 66%}
 .stamp{
-  position:absolute;left:-1px;bottom:-1px;background:var(--paper);
-  padding:20px 26px 18px;display:flex;align-items:baseline;gap:14px;
+  display:flex;align-items:center;gap:15px;
+  margin-top:16px;padding-top:15px;border-top:1px solid var(--line);
 }
-.stamp .n{font-family:var(--f-dis);font-size:28px;line-height:1;font-weight:400}
-.stamp .s{color:var(--red);font-size:12px;letter-spacing:.16em;line-height:1}
-.stamp .t{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mute);line-height:1.5;max-width:11ch}
+.stamp .n{font-family:var(--f-dis);font-size:27px;line-height:1;font-weight:400}
+.stamp .s{color:var(--red);font-size:11px;letter-spacing:.15em;line-height:1;margin-top:6px}
+.stamp .t{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mute);line-height:1.5}
 @media(max-width:780px){
   .hero-grid{grid-template-columns:1fr;gap:30px}
   .hero-art{order:-1;max-width:340px;margin-inline:0}
 }
 @media(max-width:560px){
   .hero-art{max-width:100%}
-  .stamp{padding:15px 19px 14px;gap:11px}
-  .stamp .n{font-size:27px}
+  .stamp{gap:13px}
+  .stamp .n{font-size:25px}
 }
 
 /* ── franja de confianza ────────────────────────────────── */
