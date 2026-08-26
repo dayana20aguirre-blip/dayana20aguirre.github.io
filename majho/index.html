@@ -154,6 +154,7 @@ input,select,textarea{font:inherit;color:inherit}
 .chip.escrita{background:var(--ok-soft);color:var(--ok)}
 .chip.plain{background:var(--surface-2);color:var(--muted)}
 .chip.premio{background:var(--ink);color:var(--ground)}
+.chip.callada{background:var(--lost-soft);color:var(--lost);font-style:italic}
 .pts{border-top:1px solid var(--line-soft);padding-top:10px;display:flex;flex-direction:column;gap:6px}
 .pts .l{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted)}
 .pts .l b{font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums}
@@ -161,7 +162,9 @@ input,select,textarea{font:inherit;color:inherit}
 .hist{border-top:1px solid var(--line-soft);padding-top:11px;display:flex;flex-direction:column;gap:7px}
 .hist .cab{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
 .hist .cab b{font-size:14px;font-variant-numeric:tabular-nums}
-.hist .fila{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:baseline;font-size:12.5px;color:var(--muted)}
+.hist .fila{display:grid;grid-template-columns:auto 1fr auto auto;gap:9px;align-items:baseline;font-size:12.5px;color:var(--muted)}
+.hist .fila .bo{color:var(--muted);font-size:16px;line-height:1;padding:0 2px;opacity:.45}
+.hist .fila .bo:hover{opacity:1;color:var(--accent)}
 .hist .fila .fe{font-family:"IBM Plex Mono",monospace;font-size:11px;white-space:nowrap}
 .hist .fila .se{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hist .fila .mo{font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -557,7 +560,7 @@ function cargar(){
     var raw = localStorage.getItem(KEY);
     if(raw){ var p = JSON.parse(raw); if(p && p.clientas){ S = p; S.rescates = S.rescates || []; S.campHist = S.campHist || []; S.camp = S.camp || null;
         S.canjes = S.canjes || []; S.puntos = S.puntos || {activo:false, meta:500, premio:"S/ 50 de descuento"};
-        S.clientas.forEach(function(c){ c.pts = c.pts || 0; c.ptsTotal = c.ptsTotal || 0; c.hist = c.hist || []; }); } }
+        S.clientas.forEach(function(c){ c.pts = c.pts || 0; c.ptsTotal = c.ptsTotal || 0; c.hist = c.hist || []; c.nm = c.nm === true; }); } }
   }catch(e){}
   S.clientas.forEach(function(c){ var n = parseInt(c.id,10); if(n >= seq) seq = n+1; });
 }
@@ -596,6 +599,7 @@ function estadoClienta(c){
   if(vistos.length && vistos.every(function(e){ return e === "perdida"; })) return "perdida";
   return "aldia";
 }
+function noMolestar(c){ return c.nm === true; }
 function premioListo(c){ return S.puntos.activo && (c.pts || 0) >= S.puntos.meta; }
 function faltan(c){ return Math.max(0, S.puntos.meta - (c.pts || 0)); }
 
@@ -607,6 +611,7 @@ function pendientes(){
   // nadie le escribe dos veces el mismo día a la misma persona.
   var out = [];
   S.clientas.forEach(function(c){
+    if(noMolestar(c)) return;                       // pidió que no le escriban
     var svs = c.svcs.filter(function(sv){ return estado(sv) === "vencida" && !escritaReciente(sv); });
     if(!svs.length) return;
     svs.sort(function(a,b){ return prioridad(b) - prioridad(a); });
@@ -808,7 +813,8 @@ function pintarClientas(){
       '<div class="hd" style="cursor:pointer">' +
         '<div class="who"><b>' + esc(c.n) + '</b><i>' + c.svcs.length + (c.svcs.length===1?' servicio':' servicios') +
         (c.tel ? ' · ' + esc(telBonito(c.tel)) : '') + '</i></div>' +
-        (premioListo(c) ? '<span class="chip premio">🎁 Premio</span>' : chip(e)) +
+        (noMolestar(c) ? '<span class="chip callada">No escribirle</span>'
+          : premioListo(c) ? '<span class="chip premio">🎁 Premio</span>' : chip(e)) +
       '</div>'
     );
     hd.addEventListener("click", function(){ abierta = (abierta === c.id) ? null : c.id; pintarClientas(); });
@@ -882,15 +888,20 @@ function pintarClientas(){
           '<div class="hist">' +
             '<div class="cab"><span class="eyebrow">Historial</span>' +
             '<b>' + h.length + (h.length === 1 ? ' visita · ' : ' visitas · ') + soles(gastado) + '</b></div>' +
-            muestra.map(function(x){
+            muestra.map(function(x, k){
               return '<div class="fila"><span class="fe">' + bonito(x.f) + '</span>' +
                      '<span class="se">' + esc(x.s) + '</span>' +
-                     '<span class="mo">' + soles(x.t || 0) + '</span></div>';
+                     '<span class="mo">' + soles(x.t || 0) + '</span>' +
+                     '<button class="bo" type="button" data-borra="' + k + '" ' +
+                     'aria-label="Borrar esta visita" title="Borrar esta visita">×</button></div>';
             }).join("") +
             (h.length > 6 ? '<button class="mas" type="button" data-a="mas">' +
               (verTodo ? 'Ver menos' : 'Ver las ' + h.length + ' visitas') + '</button>' : '') +
           '</div>'
         );
+        Array.prototype.forEach.call(bloque.querySelectorAll("[data-borra]"), function(b){
+          b.addEventListener("click", function(){ confirmarBorrarVisita(c, muestra[+b.dataset.borra]); });
+        });
         var bm = bloque.querySelector('[data-a="mas"]');
         if(bm) bm.addEventListener("click", function(){
           abiertaHist = verTodo ? null : c.id; pintarClientas();
@@ -911,6 +922,21 @@ function pintarClientas(){
         extra.addEventListener("click", function(){ formPuntosClienta(c); });
         card.appendChild(extra);
       }
+      var nm = el('<button class="btn line sm" type="button" style="width:100%">' +
+        (noMolestar(c) ? '✓ Volver a escribirle' : 'No escribirle más') + '</button>');
+      nm.addEventListener("click", function(){
+        if(noMolestar(c)){ c.nm = false; guardar(); pintar(); aviso("Vuelve a la lista"); return; }
+        abrir('<h3>¿No escribirle más a ' + esc(String(c.n).split(" ")[0]) + '?</h3>' +
+          '<p class="field hint">Se queda en tu lista de clientas con su historial, pero no vuelve a salir ' +
+          'en la lista de hoy ni en las promos. Úsalo cuando alguien te pida que no la contactes.</p>' +
+          '<button class="btn" type="button" id="nm-si">Sí, no escribirle</button>' +
+          '<button class="btn line" type="button" id="nm-no">Cancelar</button>');
+        document.getElementById("nm-no").addEventListener("click", cerrar);
+        document.getElementById("nm-si").addEventListener("click", function(){
+          c.nm = true; guardar(); cerrar(); pintar(); aviso("No se le vuelve a escribir");
+        });
+      });
+      card.appendChild(nm);
       acts.querySelector('[data-a="svc"]').addEventListener("click", function(){ formServicio(c, -1); });
       acts.querySelector('[data-a="ed"]').addEventListener("click", function(){ formClienta(c); });
       acts.querySelector('[data-a="bo"]').addEventListener("click", function(){ confirmarBorrar(c); });
@@ -929,8 +955,9 @@ function pintarResumen(){
     vRes.appendChild(el('<div class="empty"><b>Sin datos todavía</b>Cuando agregues clientas aquí verás cuánta plata está en riesgo y cuánta recuperaste.</div>'));
     return;
   }
-  var venc = [], perd = [], fuga = {};
+  var venc = [], perd = [], fuga = {}, calladas = 0;
   S.clientas.forEach(function(c){
+    if(noMolestar(c)){ calladas++; return; }
     c.svcs.forEach(function(sv){
       var e = estado(sv);
       if(e === "vencida"){ venc.push(sv); fuga[META[sv.s] ? META[sv.s].g : "Otros"] = (fuga[META[sv.s] ? META[sv.s].g : "Otros"] || 0) + sv.t; }
@@ -996,7 +1023,8 @@ function pintarResumen(){
   }
   wrap.appendChild(el(
     '<div class="stat"><div class="k">Base de clientas</div><div class="v">' + S.clientas.length + '</div>' +
-    '<div class="n">registradas · ' + S.clientas.reduce(function(a,c){ return a + c.svcs.length; }, 0) + ' servicios en seguimiento</div></div>'
+    '<div class="n">registradas · ' + S.clientas.reduce(function(a,c){ return a + c.svcs.length; }, 0) + ' servicios en seguimiento' +
+    (calladas ? ' · ' + calladas + ' sin escribirle' : '') + '</div></div>'
   ));
   vRes.appendChild(wrap);
 }
@@ -1160,6 +1188,38 @@ function formServicio(c, i){
   });
 }
 
+function confirmarBorrarVisita(c, v){
+  abrir(
+    '<h3>¿Borrar esta visita?</h3>' +
+    '<div class="prev">' + bonito(v.f) + ' · ' + esc(v.s) + ' · ' + soles(v.t || 0) + '</div>' +
+    '<p class="field hint">Úsalo si le diste a «Vino hoy» por error. Se le devuelven los puntos ' +
+    'y, si era su última visita de ese servicio, la fecha vuelve a la anterior.</p>' +
+    '<button class="btn" type="button" id="bv-si">Sí, borrarla</button>' +
+    '<button class="btn line" type="button" id="bv-no">Cancelar</button>'
+  );
+  document.getElementById("bv-no").addEventListener("click", cerrar);
+  document.getElementById("bv-si").addEventListener("click", function(){
+    var i = c.hist.indexOf(v);
+    if(i < 0){ cerrar(); return; }
+    c.hist.splice(i, 1);
+
+    // devolver los puntos
+    if(S.puntos.activo){
+      c.pts = Math.max(0, (c.pts || 0) - (v.t || 0));
+      c.ptsTotal = Math.max(0, (c.ptsTotal || 0) - (v.t || 0));
+    }
+
+    // si era la última visita de ese servicio, la fecha retrocede a la anterior
+    var sv = c.svcs.filter(function(x){ return x.s === v.s; })[0];
+    if(sv && sv.u === v.f){
+      var previas = c.hist.filter(function(x){ return x.s === v.s; })
+                          .map(function(x){ return x.f; }).sort();
+      if(previas.length) sv.u = previas[previas.length - 1];
+    }
+    guardar(); cerrar(); pintar(); aviso("Visita borrada");
+  });
+}
+
 function confirmarBorrar(c){
   abrir(
     '<h3>¿Borrar a ' + esc(c.n) + '?</h3>' +
@@ -1241,7 +1301,7 @@ function formAjustes(){
         if(!p || !Array.isArray(p.clientas)) throw new Error("formato");
         S = {v:1, clientas:p.clientas, rescates:p.rescates || [], camp:p.camp || null, campHist:p.campHist || [],
              canjes:p.canjes || [], puntos:p.puntos || {activo:false, meta:500, premio:"S/ 50 de descuento"}};
-        S.clientas.forEach(function(c){ c.pts = c.pts || 0; c.ptsTotal = c.ptsTotal || 0; c.hist = c.hist || []; });
+        S.clientas.forEach(function(c){ c.pts = c.pts || 0; c.ptsTotal = c.ptsTotal || 0; c.hist = c.hist || []; c.nm = c.nm === true; });
         seq = 1; S.clientas.forEach(function(c){ var n = parseInt(c.id,10); if(n >= seq) seq = n+1; });
         guardar(); cerrar(); pintar(); aviso("Respaldo restaurado · " + S.clientas.length + " clientas");
       }catch(e){ aviso("Ese archivo no es un respaldo válido"); }
@@ -1412,6 +1472,7 @@ function diasSinVenir(c, g){
 }
 
 function enSegmento(c){
+  if(noMolestar(c)) return false;                   // pidió que no le escriban
   var d = diasSinVenir(c, seg.g);
   if(d === null) return false;                       // no se hace nada de ese grupo
   if(seg.s === "d30" && d < 30) return false;
