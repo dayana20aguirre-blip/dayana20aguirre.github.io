@@ -415,6 +415,22 @@ var SALON = {
   ]]
 ],
 
+  /* Cómo se le nombra a cada servicio dentro del recordatorio.
+     Si un servicio no está aquí, el mensaje dice "ya te toca tu cita". */
+  frases: {
+    "Uñas acrílicas":"ya te toca retoque de uñas","Polygel":"ya te toca retoque de uñas",
+    "Softgel":"ya te toca retoque de uñas","Uñas rubber":"ya te toca retoque de uñas",
+    "Semipermanente":"tu esmaltado ya debe estar creciendo","Baño de acrílico":"ya te toca retoque",
+    "Manicure":"ya toca tu manicure","Pedicure":"ya toca tu pedicure",
+    "Corte":"ya toca refrescar tu corte","Color y retoque de raíz":"ya se te debe estar viendo la raíz",
+    "Mechas / balayage":"ya toca retocar tus mechas","Tratamiento capilar":"ya toca renovar tu tratamiento",
+    "Planchado / keratina":"ya toca renovar tu planchado","Cepillado":"¿te hago tu cepillado esta semana?",
+    "Depilación de cejas":"ya toca retocar tus cejas","Diseño de cejas":"ya toca retocar tus cejas",
+    "Laminado de cejas":"tu laminado ya está por bajar","Lifting de pestañas":"tu lifting ya está por caer",
+    "Extensiones de pestañas":"tus pestañas ya piden retoque",
+    "Limpieza facial":"ya toca tu limpieza facial","Depilación":"ya toca tu depilación","Maquillaje":"te escribo por si tienes algún evento"
+  },
+
   /* Mensajes de promo. {nombre} se reemplaza con el nombre de cada clienta. */
   plantillas: [
     ["Promo del mes",
@@ -503,19 +519,7 @@ var CAT = SALON.servicios;
 var META = {};   // servicio -> {g:grupo, c:ciclo, t:precio}
 CAT.forEach(function(gr){ gr[1].forEach(function(it){ META[it[0]] = {g:gr[0], c:it[1], t:it[2]}; }); });
 
-var FRASE = {
-  "Uñas acrílicas":"ya te toca retoque de uñas","Polygel":"ya te toca retoque de uñas",
-  "Softgel":"ya te toca retoque de uñas","Uñas rubber":"ya te toca retoque de uñas",
-  "Semipermanente":"tu esmaltado ya debe estar creciendo","Baño de acrílico":"ya te toca retoque",
-  "Manicure":"ya toca tu manicure","Pedicure":"ya toca tu pedicure",
-  "Corte":"ya toca refrescar tu corte","Color y retoque de raíz":"ya se te debe estar viendo la raíz",
-  "Mechas / balayage":"ya toca retocar tus mechas","Tratamiento capilar":"ya toca renovar tu tratamiento",
-  "Planchado / keratina":"ya toca renovar tu planchado","Cepillado":"¿te hago tu cepillado esta semana?",
-  "Depilación de cejas":"ya toca retocar tus cejas","Diseño de cejas":"ya toca retocar tus cejas",
-  "Laminado de cejas":"tu laminado ya está por bajar","Lifting de pestañas":"tu lifting ya está por caer",
-  "Extensiones de pestañas":"tus pestañas ya piden retoque",
-  "Limpieza facial":"ya toca tu limpieza facial","Depilación":"ya toca tu depilación","Maquillaje":"te escribo por si tienes algún evento"
-};
+var FRASE = SALON.frases || {};
 
 /* ============ fechas ============ */
 function pad(n){ return (n<10?"0":"") + n; }
