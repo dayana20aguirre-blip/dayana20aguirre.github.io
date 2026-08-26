@@ -583,7 +583,10 @@ function pintarHoy(){
       'Ninguna clienta está atrasada. La lista se arma sola cuando a alguien le toque volver.</div>'
     ));
   }
-  pend.forEach(function(p){
+  // Nadie escribe 300 mensajes en un día: una lista así de larga se abandona.
+  // Mostramos las más urgentes y decimos claramente cuántas quedan.
+  var sobran = Math.max(0, pend.length - TOPE_HOY);
+  pend.slice(0, TOPE_HOY).forEach(function(p){
     var det = (premioListo(p.c) ? '<span class="chip premio">🎁 Premio listo</span>' : '') +
       p.svs.map(function(sv){
         var a = atraso(sv);
@@ -605,6 +608,14 @@ function pintarHoy(){
     card.querySelector("button").addEventListener("click", function(){ formMensaje(p.c, p.svs); });
     wrap.appendChild(card);
   });
+
+  if(sobran){
+    wrap.appendChild(el(
+      '<div class="empty" style="padding:18px 16px;font-size:13.5px">' +
+      'Quedan <b>' + sobran + '</b> clientas atrasadas más.<br>' +
+      'Escríbeles mañana — la lista se reordena sola y siempre te pone arriba a las que más vale la pena.</div>'
+    ));
+  }
 
   if(hechas.length){
     wrap.appendChild(el('<div class="eyebrow" style="margin-top:10px">Escritas hoy · ' + hechas.length + '</div>'));
@@ -1204,6 +1215,7 @@ function formPrograma(){
    hay "envío masivo automático": hay una COLA que abre un chat a la vez y frena
    a los 25 por día. Es más lento y es lo único que no le cuesta el número. */
 var TOPE_DIA = 25;
+var TOPE_HOY = 30;   // cuántas clientas mostrar en "Hoy" como máximo (ver pintarHoy)
 var DESCANSO_PROMO = 14;   // días mínimos entre una promo y la siguiente a la misma clienta
 
 var PLANTILLAS = SALON.plantillas;
@@ -1495,7 +1507,9 @@ function pintar(){
   if(tab === "hoy"){
     titulo.textContent = "Hoy";
     nota.textContent = !S.clientas.length ? "Empecemos por tus clientas."
-      : pend.length ? pend.length + (pend.length===1 ? " clienta por escribir · " : " clientas por escribir · ") + soles(monto) + " en juego"
+      : pend.length ? (pend.length > TOPE_HOY
+            ? "Las " + TOPE_HOY + " más urgentes de " + pend.length + " · " + soles(monto) + " en juego"
+            : pend.length + (pend.length===1 ? " clienta por escribir · " : " clientas por escribir · ") + soles(monto) + " en juego")
       : "Ninguna clienta atrasada. Todo al día.";
   } else if(tab === "clientas"){
     titulo.textContent = "Clientas";
