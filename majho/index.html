@@ -158,6 +158,14 @@ input,select,textarea{font:inherit;color:inherit}
 .pts .l{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--muted)}
 .pts .l b{font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums}
 .pts.listo .progreso span{background:var(--ink)}
+.hist{border-top:1px solid var(--line-soft);padding-top:11px;display:flex;flex-direction:column;gap:7px}
+.hist .cab{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.hist .cab b{font-size:14px;font-variant-numeric:tabular-nums}
+.hist .fila{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:baseline;font-size:12.5px;color:var(--muted)}
+.hist .fila .fe{font-family:"IBM Plex Mono",monospace;font-size:11px;white-space:nowrap}
+.hist .fila .se{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hist .fila .mo{font-variant-numeric:tabular-nums;white-space:nowrap}
+.hist .mas{font-size:12.5px;color:var(--muted);text-align:center;padding-top:2px}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border-radius:11px;
   background:var(--accent);color:var(--on-accent);font-weight:700;font-size:14px;transition:filter .15s ease;
@@ -549,7 +557,7 @@ function cargar(){
     var raw = localStorage.getItem(KEY);
     if(raw){ var p = JSON.parse(raw); if(p && p.clientas){ S = p; S.rescates = S.rescates || []; S.campHist = S.campHist || []; S.camp = S.camp || null;
         S.canjes = S.canjes || []; S.puntos = S.puntos || {activo:false, meta:500, premio:"S/ 50 de descuento"};
-        S.clientas.forEach(function(c){ c.pts = c.pts || 0; c.ptsTotal = c.ptsTotal || 0; }); } }
+        S.clientas.forEach(function(c){ c.pts = c.pts || 0; c.ptsTotal = c.ptsTotal || 0; c.hist = c.hist || []; }); } }
   }catch(e){}
   S.clientas.forEach(function(c){ var n = parseInt(c.id,10); if(n >= seq) seq = n+1; });
 }
@@ -744,7 +752,7 @@ function pintarHoy(){
 
 /* ============ vista CLIENTAS ============ */
 var vCli = document.getElementById("v-clientas");
-var filtro = "todas", busca = "", abierta = null;
+var filtro = "todas", busca = "", abierta = null, abiertaHist = null;
 
 function pintarClientas(){
   vCli.innerHTML = "";
@@ -865,6 +873,31 @@ function pintarClientas(){
         card.appendChild(barra);
       }
 
+      var h = (c.hist || []).slice().sort(function(a,b){ return a.f < b.f ? 1 : -1; });
+      if(h.length){
+        var gastado = h.reduce(function(a,x){ return a + (x.t || 0); }, 0);
+        var verTodo = abiertaHist === c.id;
+        var muestra = verTodo ? h : h.slice(0, 6);
+        var bloque = el(
+          '<div class="hist">' +
+            '<div class="cab"><span class="eyebrow">Historial</span>' +
+            '<b>' + h.length + (h.length === 1 ? ' visita · ' : ' visitas · ') + soles(gastado) + '</b></div>' +
+            muestra.map(function(x){
+              return '<div class="fila"><span class="fe">' + bonito(x.f) + '</span>' +
+                     '<span class="se">' + esc(x.s) + '</span>' +
+                     '<span class="mo">' + soles(x.t || 0) + '</span></div>';
+            }).join("") +
+            (h.length > 6 ? '<button class="mas" type="button" data-a="mas">' +
+              (verTodo ? 'Ver menos' : 'Ver las ' + h.length + ' visitas') + '</button>' : '') +
+          '</div>'
+        );
+        var bm = bloque.querySelector('[data-a="mas"]');
+        if(bm) bm.addEventListener("click", function(){
+          abiertaHist = verTodo ? null : c.id; pintarClientas();
+        });
+        card.appendChild(bloque);
+      }
+
       if(c.nota) card.appendChild(el('<p style="font-size:13px;color:var(--muted)">' + esc(c.nota) + '</p>'));
       var acts = el(
         '<div class="pair">' +
@@ -977,6 +1010,10 @@ function registrarVisita(c, i){
   }
   sv.u = HOY; sv.w = null;
 
+  c.hist = c.hist || [];
+  c.hist.push({f:HOY, s:sv.s, t:sv.t});
+  if(c.hist.length > 200) c.hist = c.hist.slice(-200);   // tope sano, son años de visitas
+
   var listoAntes = premioListo(c);
   if(S.puntos.activo){
     c.pts = (c.pts || 0) + sv.t;
@@ -1071,8 +1108,10 @@ function formClienta(c){
       var u = document.getElementById("f-u").value || HOY;
       if(u > HOY){ err.textContent = "La última visita no puede ser en el futuro."; err.classList.add("on"); return; }
       var p = parseFloat(document.getElementById("f-p").value);
+      var precio = isNaN(p) ? (META[s]?META[s].t:0) : p;
       S.clientas.push({id:nuevoId(), n:n, tel:tel, nota:nota, pts:0, ptsTotal:0, canjes:[],
-        svcs:[{s:s, c:META[s] ? META[s].c : 30, u:u, t:isNaN(p) ? (META[s]?META[s].t:0) : p, w:null}]});
+        hist:[{f:u, s:s, t:precio}],
+        svcs:[{s:s, c:META[s] ? META[s].c : 30, u:u, t:precio, w:null}]});
       aviso(n.split(" ")[0] + " agregada");
     } else {
       c.n = n; c.tel = tel; c.nota = nota;
@@ -1115,6 +1154,7 @@ function formServicio(c, i){
     if(esNuevo){
       if(c.svcs.some(function(x){ return x.s === s; })){ err.textContent = "Esta clienta ya tiene ese servicio."; err.classList.add("on"); return; }
       c.svcs.push({s:s, c:ci, u:u, t:p, w:null});
+      c.hist = c.hist || []; c.hist.push({f:u, s:s, t:p});
     } else { sv.s = s; sv.c = ci; sv.u = u; sv.t = p; }
     guardar(); cerrar(); pintar(); aviso("Servicio guardado");
   });
@@ -1201,7 +1241,7 @@ function formAjustes(){
         if(!p || !Array.isArray(p.clientas)) throw new Error("formato");
         S = {v:1, clientas:p.clientas, rescates:p.rescates || [], camp:p.camp || null, campHist:p.campHist || [],
              canjes:p.canjes || [], puntos:p.puntos || {activo:false, meta:500, premio:"S/ 50 de descuento"}};
-        S.clientas.forEach(function(c){ c.pts = c.pts || 0; c.ptsTotal = c.ptsTotal || 0; });
+        S.clientas.forEach(function(c){ c.pts = c.pts || 0; c.ptsTotal = c.ptsTotal || 0; c.hist = c.hist || []; });
         seq = 1; S.clientas.forEach(function(c){ var n = parseInt(c.id,10); if(n >= seq) seq = n+1; });
         guardar(); cerrar(); pintar(); aviso("Respaldo restaurado · " + S.clientas.length + " clientas");
       }catch(e){ aviso("Ese archivo no es un respaldo válido"); }
@@ -1248,8 +1288,17 @@ function cargarEjemplos(){
       var d = Math.round(m.c * FACTOR[i % FACTOR.length]) + j * 3;
       svcs.push({s:nom, c:m.c, u:masDias(HOY, -d), t:m.t, w:null});
     }
+    // historial inventado hacia atrás, para que la demostración muestre visitas previas
+    var hist = [];
+    svcs.forEach(function(sv){
+      var cuantas = 2 + (i % 4);
+      for(var k = cuantas; k >= 0; k--){
+        hist.push({f: masDias(sv.u, -k * sv.c), s: sv.s, t: sv.t});
+      }
+    });
+    hist.sort(function(a,b){ return a.f < b.f ? -1 : 1; });
     S.clientas.push({id:nuevoId(), n:nombre, tel:"98" + (7111222 + i * 111111),
-      nota:"", pts:PTS[i % PTS.length], ptsTotal:PTS[i % PTS.length], canjes:[], svcs:svcs});
+      nota:"", pts:PTS[i % PTS.length], ptsTotal:PTS[i % PTS.length], canjes:[], hist:hist, svcs:svcs});
   });
   S.puntos.activo = true;   // para que el ejemplo muestre el programa funcionando
   guardar(); pintar(); aviso(NOMS.length + " clientas de ejemplo cargadas");
