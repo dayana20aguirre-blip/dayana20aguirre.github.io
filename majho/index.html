@@ -116,7 +116,8 @@ input,select,textarea{font:inherit;color:inherit}
 .logo span{font-family:"Bodoni Moda",Georgia,serif;font-weight:700;font-size:18px;color:var(--ink);line-height:1;
   letter-spacing:-.13em;padding-left:.11em}
 .brand{line-height:1.15;min-width:0}
-.brand b{display:block;font-family:"Bodoni Moda",Georgia,serif;font-weight:600;font-size:17.5px;letter-spacing:.01em}
+.brand b{display:block;font-family:"Bodoni Moda",Georgia,serif;font-weight:600;font-size:17.5px;
+  letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .brand small{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--muted);margin-top:1px}
 .gear{margin-left:auto;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:var(--muted);flex:none}
 .gear:hover{background:var(--surface-2);color:var(--ink)}
@@ -230,7 +231,8 @@ input,select,textarea{font:inherit;color:inherit}
 .splash.ir{opacity:0;pointer-events:none}
 .sp-tex{position:absolute;inset:0;width:100%;height:100%;color:var(--ink);opacity:.055;pointer-events:none}
 .sp-block,.sp-dir{position:relative;z-index:1}
-.sp-block{display:flex;flex-direction:column;align-items:center;transform:translateY(-7%)}
+.sp-block{display:flex;flex-direction:column;align-items:center;transform:translateY(-7%);
+  padding:0 26px;max-width:100%}
 .sp-mark{
   width:clamp(92px,26vw,152px);aspect-ratio:1;border-radius:50%;
   border:2px solid var(--ink);display:grid;place-items:center;
@@ -242,14 +244,15 @@ input,select,textarea{font:inherit;color:inherit}
 .sp-rule{width:62px;height:2px;background:var(--accent);margin:clamp(22px,5.4vw,34px) 0}
 .sp-name{
   font-family:"Bodoni Moda",Georgia,serif;font-weight:600;color:var(--ink);
-  font-size:clamp(27px,7.6vw,44px);letter-spacing:.055em;text-transform:uppercase;line-height:1;
+  font-size:clamp(24px,7vw,44px);letter-spacing:.05em;text-transform:uppercase;
+  line-height:1.12;text-align:center;text-wrap:balance;overflow-wrap:break-word;max-width:100%;
 }
 .sp-sub{
   font-family:"Figtree",Arial,sans-serif;font-weight:500;color:var(--muted);
   font-size:clamp(11px,2.9vw,14px);letter-spacing:.26em;text-transform:uppercase;margin-top:14px;
 }
 .sp-dir{
-  position:absolute;bottom:9%;left:0;right:0;text-align:center;
+  position:absolute;bottom:9%;left:0;right:0;text-align:center;padding:0 24px;
   font-family:"Bodoni Moda",Georgia,serif;color:var(--muted);font-size:13.5px;letter-spacing:.02em;
 }
 

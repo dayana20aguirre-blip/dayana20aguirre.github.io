@@ -1,5 +1,5 @@
 /* Majho Salón — funciona sin internet una vez abierta la primera vez. */
-var CACHE = "majho-v4";
+var CACHE = "majho-v5";
 var SHELL = ["./", "./index.html", "./manifest.webmanifest",
              "./icon-192.png", "./icon-512.png", "./icon-512-maskable.png",
              "./apple-touch-icon.png", "./favicon.png"];
