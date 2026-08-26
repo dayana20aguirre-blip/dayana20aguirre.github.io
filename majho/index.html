@@ -21,8 +21,8 @@
 
 <style>
 /* ══════════════════════════════════════════════════════════════
-   COLORES DEL SALÓN — los 4 de abajo son los que se cambian.
-   El resto se deriva de ellos y casi nunca hay que tocarlo.
+   COLORES DEL NEGOCIO — solo se cambian los cinco primeros.
+   Todo lo demás se calcula a partir de ellos.
    El bloque gemelo para modo oscuro está más abajo.
    ══════════════════════════════════════════════════════════════ */
 :root{
@@ -31,24 +31,66 @@
   --accent:#D93B78;        /* acento: botones y lo urgente */
   --accent-soft:#FCE4EE;   /* acento suave: fondos de etiquetas */
 
-  --surface:#FFFFFF;--surface-2:#F9EAF0;--line:#EFDCE5;--line-soft:#F5E8EE;
-  --ink-2:#544A4F;--muted:#8B7B83;
-  --on-accent:#FFFFFF;--accent-ink:#B02660;
-  --ok:#227A5C;--ok-soft:#E3F2EC;--warn:#9E6A12;--warn-soft:#FAF0DC;--lost:#8E8189;--lost-soft:#F1EAEE;
+  --on-accent:#FFFFFF;     /* texto encima del acento */
+
+  /* De aquí abajo todo se calcula solo a partir de los de arriba.
+     El primer valor de cada línea es el respaldo para navegadores viejos
+     que no entienden color-mix: son grises neutros que quedan bien con
+     cualquier paleta. */
+  --surface:#FFFFFF;   --surface:color-mix(in srgb, #fff 72%, var(--ground));
+  --surface-2:#F0EEEC; --surface-2:color-mix(in srgb, var(--ink) 6%, var(--ground));
+  --line:#E2DEDA;      --line:color-mix(in srgb, var(--ink) 13%, var(--ground));
+  --line-soft:#EDEAE7; --line-soft:color-mix(in srgb, var(--ink) 7%, var(--ground));
+  --ink-2:#4F4A46;     --ink-2:color-mix(in srgb, var(--ink) 76%, var(--ground));
+  --muted:#87817C;     --muted:color-mix(in srgb, var(--ink) 52%, var(--ground));
+  --accent-ink:#B02660;--accent-ink:color-mix(in srgb, var(--accent) 82%, var(--ink));
+  --ok:#227A5C;--warn:#9E6A12;
+  --ok-soft:#E3F2EC;   --ok-soft:color-mix(in srgb, var(--ok) 12%, var(--ground));
+  --warn-soft:#FAF0DC; --warn-soft:color-mix(in srgb, var(--warn) 14%, var(--ground));
+  --lost:#8E8189;      --lost:color-mix(in srgb, var(--ink) 48%, var(--ground));
+  --lost-soft:#F1EAEE; --lost-soft:color-mix(in srgb, var(--ink) 7%, var(--ground));
   --shadow:0 1px 2px rgba(26,21,24,.05),0 10px 28px -14px rgba(26,21,24,.22);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --ground:#131015;--surface:#1D181C;--surface-2:#292127;--line:#372C33;--line-soft:#2C242A;
-  --ink:#F8F0F4;--ink-2:#CDBFC7;--muted:#A0919A;
-  --accent:#FF7BAC;--on-accent:#1A1015;--accent-soft:#3B1F2C;--accent-ink:#FFA4C6;
-  --ok:#5CC79C;--ok-soft:#12332A;--warn:#DDA855;--warn-soft:#32270F;--lost:#8B7F87;--lost-soft:#272029;
+  --ground:#131015;
+  --ink:#F8F0F4;
+  --accent:#FF7BAC;
+  --accent-soft:#3B1F2C;
+  --on-accent:#1A1015;
+
+  --surface:#1D181C;   --surface:color-mix(in srgb, var(--ink) 7%, var(--ground));
+  --surface-2:#292127; --surface-2:color-mix(in srgb, var(--ink) 12%, var(--ground));
+  --line:#372C33;      --line:color-mix(in srgb, var(--ink) 18%, var(--ground));
+  --line-soft:#2C242A; --line-soft:color-mix(in srgb, var(--ink) 11%, var(--ground));
+  --ink-2:#CDBFC7;     --ink-2:color-mix(in srgb, var(--ink) 78%, var(--ground));
+  --muted:#A0919A;     --muted:color-mix(in srgb, var(--ink) 58%, var(--ground));
+  --accent-ink:#FFA4C6;--accent-ink:color-mix(in srgb, var(--accent) 72%, var(--ink));
+  --ok:#5CC79C;--warn:#DDA855;
+  --ok-soft:#12332A;   --ok-soft:color-mix(in srgb, var(--ok) 16%, var(--ground));
+  --warn-soft:#32270F; --warn-soft:color-mix(in srgb, var(--warn) 16%, var(--ground));
+  --lost:#8B7F87;      --lost:color-mix(in srgb, var(--ink) 52%, var(--ground));
+  --lost-soft:#272029; --lost-soft:color-mix(in srgb, var(--ink) 10%, var(--ground));
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
 }}
 :root[data-theme="dark"]{
-  --ground:#131015;--surface:#1D181C;--surface-2:#292127;--line:#372C33;--line-soft:#2C242A;
-  --ink:#F8F0F4;--ink-2:#CDBFC7;--muted:#A0919A;
-  --accent:#FF7BAC;--on-accent:#1A1015;--accent-soft:#3B1F2C;--accent-ink:#FFA4C6;
-  --ok:#5CC79C;--ok-soft:#12332A;--warn:#DDA855;--warn-soft:#32270F;--lost:#8B7F87;--lost-soft:#272029;
+  --ground:#131015;
+  --ink:#F8F0F4;
+  --accent:#FF7BAC;
+  --accent-soft:#3B1F2C;
+  --on-accent:#1A1015;
+
+  --surface:#1D181C;   --surface:color-mix(in srgb, var(--ink) 7%, var(--ground));
+  --surface-2:#292127; --surface-2:color-mix(in srgb, var(--ink) 12%, var(--ground));
+  --line:#372C33;      --line:color-mix(in srgb, var(--ink) 18%, var(--ground));
+  --line-soft:#2C242A; --line-soft:color-mix(in srgb, var(--ink) 11%, var(--ground));
+  --ink-2:#CDBFC7;     --ink-2:color-mix(in srgb, var(--ink) 78%, var(--ground));
+  --muted:#A0919A;     --muted:color-mix(in srgb, var(--ink) 58%, var(--ground));
+  --accent-ink:#FFA4C6;--accent-ink:color-mix(in srgb, var(--accent) 72%, var(--ink));
+  --ok:#5CC79C;--warn:#DDA855;
+  --ok-soft:#12332A;   --ok-soft:color-mix(in srgb, var(--ok) 16%, var(--ground));
+  --warn-soft:#32270F; --warn-soft:color-mix(in srgb, var(--warn) 16%, var(--ground));
+  --lost:#8B7F87;      --lost:color-mix(in srgb, var(--ink) 52%, var(--ground));
+  --lost-soft:#272029; --lost-soft:color-mix(in srgb, var(--ink) 10%, var(--ground));
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
 }
 
@@ -349,6 +391,10 @@ var SALON = {
   direccion: "Los Tiamos 126 · Camacho, La Molina",
   horario:   "de lunes a sábado de 10am a 8pm",
 
+  /* "f" = clientas (salón, spa, estética) · "m" = clientes (barbería, veterinaria…)
+     Cambia solo esta letra y toda la app se reescribe sola. */
+  genero: "f",
+
   /* Cada servicio: [nombre, cada cuántos días vuelve, precio]. Ciclo 0 = sin ciclo fijo. */
   servicios: [
 
@@ -394,6 +440,65 @@ var SALON = {
   document.title = "Vuelve " + SALON.nombre.split(" ")[0];
 })();
 
+/* Toda la app está escrita en femenino ("clienta", "vencida", "Nueva clienta").
+   Si el negocio es de rubro masculino, este traductor reescribe los textos al vuelo.
+   Ojo: NO se toca "sola" ni "la app" — eso se refiere a la aplicación, no al cliente. */
+var GEN = (function(){
+  if(SALON.genero !== "m") return function(t){ return t; };
+  var R = [
+    /* frases primero, para que el artículo salga bien */
+    ["una clienta","un cliente"], ["Una clienta","Un cliente"],
+    ["la clienta","el cliente"],  ["La clienta","El cliente"],
+    ["las clientas","los clientes"], ["Las clientas","Los clientes"],
+    ["esta clienta","este cliente"], ["Esta clienta","Este cliente"],
+    ["ninguna clienta","ningún cliente"], ["Ninguna clienta","Ningún cliente"],
+    ["Nueva clienta","Nuevo cliente"], ["nueva clienta","nuevo cliente"],
+    ["Solo las perdidas","Solo los perdidos"],
+    ["Solo las que sí vienen","Solo los que sí vienen"],
+    ["primera clienta","primer cliente"],
+    ["cuántas clientas","cuántos clientes"],
+    ["todas las clientas","todos los clientes"],
+    ["Todas las clientas","Todos los clientes"],
+    ["clientas registradas","clientes registrados"],
+    ["clienta registrada","cliente registrado"],
+    ["clientas atrasadas","clientes atrasados"],
+    ["clienta está atrasada","cliente está atrasado"],
+    ["clientas volvieron","clientes volvieron"], ["clienta volvió","cliente volvió"],
+    ["clienta borrada","cliente borrado"], ["Clienta borrada","Cliente borrado"],
+    ["clienta agregada","cliente agregado"],
+    /* palabras sueltas */
+    ["clientas","clientes"], ["Clientas","Clientes"],
+    ["clienta","cliente"],   ["Clienta","Cliente"],
+    ["Vencidas","Vencidos"], ["vencidas","vencidos"],
+    ["Vencida","Vencido"],   ["vencida","vencido"],
+    ["Perdidas","Perdidos"], ["perdidas","perdidos"],
+    ["Perdida","Perdido"],   ["perdida","perdido"],
+    ["atrasadas","atrasados"], ["atrasada","atrasado"],
+    ["Escritas","Escritos"], ["escritas","escritos"],
+    ["Escrita","Escrito"],   ["escrita","escrito"],
+    ["saltadas","saltados"], ["saltada","saltado"],
+    ["revisadas","revisados"],
+    ["registradas","registrados"],   /* ojo: solo plural — "Visita registrada" NO se toca */
+    ["cargadas","cargados"], ["borradas","borrados"], ["listas","listos"],
+    ["Todas","Todos"],
+    ["Marcada","Marcado"], ["agregada","agregado"]
+  ];
+  var re = R.map(function(p){ return [new RegExp(p[0].replace(/[.*+?^${}()|[\]\\]/g,"\\$&"), "g"), p[1]]; });
+  return function(t){
+    if(typeof t !== "string") return t;
+    for(var i=0;i<re.length;i++) t = t.replace(re[i][0], re[i][1]);
+    return t;
+  };
+})();
+
+/* la etiqueta de la pestaña vive en el HTML, no pasa por el() */
+(function(){
+  var b = document.querySelector('.tabbar button[data-tab="clientas"]');
+  if(b && b.lastChild && b.lastChild.nodeType === 3) b.lastChild.nodeValue = "\n      " + GEN("Clientas") + "\n    ";
+  var f = document.getElementById("fab");
+  if(f && f.lastChild && f.lastChild.nodeType === 3) f.lastChild.nodeValue = "\n  " + GEN("Nueva clienta") + "\n";
+})();
+
 var CAT = SALON.servicios;
 var META = {};   // servicio -> {g:grupo, c:ciclo, t:precio}
 CAT.forEach(function(gr){ gr[1].forEach(function(it){ META[it[0]] = {g:gr[0], c:it[1], t:it[2]}; }); });
@@ -425,7 +530,7 @@ function bonito(s){
 }
 function soles(n){ return "S/ " + Math.round(n).toLocaleString("es-PE"); }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function el(h){ var d = document.createElement("div"); d.innerHTML = h.trim(); return d.firstChild; }
+function el(h){ var d = document.createElement("div"); d.innerHTML = GEN(h).trim(); return d.firstChild; }
 
 /* ============ estado ============ */
 var KEY = "majho_vuelve_v1";
@@ -541,11 +646,11 @@ function waHref(c, txt){
 /* ============ chrome ============ */
 var toast = document.getElementById("toast"), tt = null;
 function aviso(txt){
-  toast.textContent = txt; toast.classList.add("on");
+  toast.textContent = GEN(txt); toast.classList.add("on");
   clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove("on"); }, 2200);
 }
 var scrim = document.getElementById("scrim"), modal = document.getElementById("modal");
-function abrir(html){ modal.innerHTML = html; scrim.classList.add("on"); modal.scrollTop = 0; }
+function abrir(html){ modal.innerHTML = GEN(html); scrim.classList.add("on"); modal.scrollTop = 0; }
 function cerrar(){ scrim.classList.remove("on"); modal.innerHTML = ""; }
 scrim.addEventListener("click", function(e){ if(e.target === scrim) cerrar(); });
 document.addEventListener("keydown", function(e){ if(e.key === "Escape") cerrar(); });
@@ -1033,7 +1138,7 @@ function formAjustes(){
     '<h3>Ajustes y respaldo</h3>' +
     '<p class="field hint">Tus clientas se guardan en este equipo, no en internet. ' +
     'Si abres la app en el celular y en la computadora, cada una lleva su propia lista: ' +
-    'usa siempre el mismo equipo para registrar, y el respaldo para pasarlas al otro.</p>' +
+    'usa siempre el mismo equipo para registrar, y el respaldo si necesitas cambiar de equipo.</p>' +
     (yaInstalada() ? '' :
       promptInstal ? '<button class="btn line" type="button" id="a-inst">Instalar la app en este equipo</button>' :
       esIOS() ? '<p class="field hint" style="background:var(--surface-2);border-radius:10px;padding:10px 12px;line-height:1.5">' +
@@ -1113,25 +1218,34 @@ function formAjustes(){
 document.getElementById("btn-ajustes").addEventListener("click", formAjustes);
 
 function cargarEjemplos(){
-  var E = [
-    ["Rosa Quispe","987111222",[["Uñas acrílicas",34],["Depilación de cejas",30]], 540],
-    ["Milagros Chávez","987333444",[["Uñas rubber",29]], 270],
-    ["Katherine Ramos","987555666",[["Extensiones de pestañas",27],["Manicure",12]], 390],
-    ["Andrea Salazar","987777888",[["Color y retoque de raíz",62],["Corte",70]], 610],
-    ["Fiorella Ríos","987999000",[["Laminado de cejas",58]], 180],
-    ["Jazmín Huamán","986121314",[["Pedicure",38],["Semipermanente",10]], 320],
-    ["Gabriela Núñez","986151617",[["Lifting de pestañas",12]], 90],
-    ["Carmen Loayza","986181920",[["Uñas acrílicas",145]], 425]
-  ];
-  E.forEach(function(e){
-    S.clientas.push({id:nuevoId(), n:e[0], tel:e[1], nota:"", pts:e[3], ptsTotal:e[3], canjes:[],
-      svcs:e[2].map(function(x){
-        var m = META[x[0]];
-        return {s:x[0], c:m.c, u:masDias(HOY, -x[1]), t:m.t, w:null};
-      })});
+  // Los ejemplos se arman con los servicios que tenga configurado ESTE negocio,
+  // no con una lista fija. Así la demostración funciona en cualquier rubro.
+  var todos = [];
+  CAT.forEach(function(gr){ gr[1].forEach(function(it){ if(it[1]) todos.push(it[0]); }); });
+  if(!todos.length){ aviso("Configura primero los servicios"); return; }
+
+  var NOMS = SALON.genero === "m"
+    ? ["Luis Ramos","Carlos Chávez","Diego Salazar","Andrés Ríos","Manuel Huamán","Jorge Núñez","Piero Loayza","Renzo Quispe"]
+    : ["Rosa Quispe","Milagros Chávez","Katherine Ramos","Andrea Salazar","Fiorella Ríos","Jazmín Huamán","Gabriela Núñez","Carmen Loayza"];
+  // días desde la última visita, como múltiplo del ciclo: unos al día, otros vencidos, uno perdido
+  var FACTOR = [1.6, 1.4, 1.3, 1.25, 1.2, 1.15, 0.3, 6];
+  var PTS    = [540, 270, 390, 610, 180, 320,  90, 425];
+
+  NOMS.forEach(function(nombre, i){
+    var cuantos = 1 + (i % 2);            // 1 o 2 servicios
+    var svcs = [];
+    for(var j = 0; j < cuantos; j++){
+      var nom = todos[(i + j * 3) % todos.length];
+      if(svcs.some(function(x){ return x.s === nom; })) continue;
+      var m = META[nom];
+      var d = Math.round(m.c * FACTOR[i % FACTOR.length]) + j * 3;
+      svcs.push({s:nom, c:m.c, u:masDias(HOY, -d), t:m.t, w:null});
+    }
+    S.clientas.push({id:nuevoId(), n:nombre, tel:"98" + (7111222 + i * 111111),
+      nota:"", pts:PTS[i % PTS.length], ptsTotal:PTS[i % PTS.length], canjes:[], svcs:svcs});
   });
   S.puntos.activo = true;   // para que el ejemplo muestre el programa funcionando
-  guardar(); pintar(); aviso("8 clientas de ejemplo cargadas");
+  guardar(); pintar(); aviso(NOMS.length + " clientas de ejemplo cargadas");
 }
 
 
@@ -1181,7 +1295,7 @@ function formPrograma(){
   abrir(
     '<h3>Programa de puntos</h3>' +
     '<p class="field hint">Cada sol que gasta la clienta suma un punto, y se suma solo cuando ' +
-    'registras su visita. Al llegar a la meta, la app te avisa y ella pasa al frente de la lista de hoy.</p>' +
+    'registras su visita. Al llegar a la meta, la app te avisa y pasa al frente de la lista de hoy.</p>' +
     '<label class="field" style="flex-direction:row;align-items:center;gap:10px;cursor:pointer">' +
       '<input id="pg-on" type="checkbox" style="width:20px;height:20px;flex:none;accent-color:var(--accent)"' +
       (p.activo ? " checked" : "") + '>' +
@@ -1189,7 +1303,7 @@ function formPrograma(){
     '</label>' +
     '<div class="field"><label>Meta de puntos</label>' +
       '<input id="pg-meta" type="number" min="50" step="50" value="' + p.meta + '">' +
-      '<span class="hint">Con S/ 500 y un ticket promedio de S/ 90, la clienta llega en unas 6 visitas.</span></div>' +
+      '<span class="hint">Con S/ 500 y un ticket promedio de S/ 90, se llega en unas 6 visitas.</span></div>' +
     '<div class="field"><label>Qué gana</label>' +
       '<input id="pg-premio" type="text" value="' + esc(p.premio) + '" placeholder="Ej. Manicure gratis">' +
       '<span class="hint">Que valga entre el 5% y el 10% de la meta. Más que eso te come el margen.</span></div>' +
@@ -1220,7 +1334,8 @@ var DESCANSO_PROMO = 14;   // días mínimos entre una promo y la siguiente a la
 
 var PLANTILLAS = SALON.plantillas;
 
-var GRUPOS = ["Todos", "Uñas", "Cabello", "Cejas y pestañas", "Rostro y más"];
+// los grupos salen del catálogo del negocio, no de una lista fija
+var GRUPOS = ["Todos"].concat(CAT.map(function(gr){ return gr[0]; }));
 var SITUS_BASE = [
   ["todas",    "Todas"],
   ["d30",      "No viene hace 30+ días"],
@@ -1305,7 +1420,7 @@ function pintarPromos(){
   vPro.appendChild(el(
     '<div class="aviso" style="margin-bottom:16px">' +
     '<b>Se envían de a uno, no todos de golpe.</b> WhatsApp bloquea los números que disparan ' +
-    'decenas de mensajes seguidos, y ese número es el del salón. Vuelve te abre un chat a la vez ' +
+    'decenas de mensajes seguidos, y ese número es el tuyo. Vuelve te abre un chat a la vez ' +
     'y te frena a los ' + TOPE_DIA + ' por día.</div>'
   ));
 
@@ -1431,7 +1546,7 @@ function abrirCola(){
   if(S.camp.hoy >= TOPE_DIA){
     abrir('<h3>Ya van ' + TOPE_DIA + ' hoy</h3>' +
       '<p class="field hint">Mejor sigue mañana. Mandar decenas de mensajes el mismo día es lo que hace ' +
-      'que WhatsApp bloquee el número del salón, y recuperarlo es un dolor de cabeza. ' +
+      'que WhatsApp bloquee tu número, y recuperarlo es un dolor de cabeza. ' +
       'Quedan <b>' + quedan.length + '</b> en la cola, te esperan.</p>' +
       '<button class="btn" type="button" id="q-ok">Seguir mañana</button>' +
       '<button class="btn line" type="button" id="q-igual">Continuar igual</button>');
@@ -1506,19 +1621,19 @@ function pintar(){
 
   if(tab === "hoy"){
     titulo.textContent = "Hoy";
-    nota.textContent = !S.clientas.length ? "Empecemos por tus clientas."
+    nota.textContent = GEN(!S.clientas.length ? "Empecemos por tus clientas."
       : pend.length ? (pend.length > TOPE_HOY
             ? "Las " + TOPE_HOY + " más urgentes de " + pend.length + " · " + soles(monto) + " en juego"
             : pend.length + (pend.length===1 ? " clienta por escribir · " : " clientas por escribir · ") + soles(monto) + " en juego")
-      : "Ninguna clienta atrasada. Todo al día.";
+      : "Ninguna clienta atrasada. Todo al día.");
   } else if(tab === "clientas"){
-    titulo.textContent = "Clientas";
-    nota.textContent = S.clientas.length + (S.clientas.length===1 ? " clienta registrada" : " clientas registradas");
+    titulo.textContent = GEN("Clientas");
+    nota.textContent = GEN(S.clientas.length + (S.clientas.length===1 ? " clienta registrada" : " clientas registradas"));
   } else if(tab === "promos"){
     titulo.textContent = "Promos";
     var enCurso = S.camp ? (S.camp.cola.length - S.camp.enviados.length - S.camp.saltados.length) : 0;
-    nota.textContent = enCurso ? "Campaña en curso · " + enCurso + " por enviar"
-                               : "Escríbele a un grupo de clientas a la vez.";
+    nota.textContent = GEN(enCurso ? "Campaña en curso · " + enCurso + " por enviar"
+                               : "Escríbele a un grupo de clientas a la vez.");
   } else {
     titulo.textContent = "Resumen";
     nota.textContent = bonito(HOY);
