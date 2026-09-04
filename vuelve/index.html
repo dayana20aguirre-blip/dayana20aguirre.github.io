@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Vuelve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Karla:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --ground:#F7F5F9;--surface:#FFFFFF;--surface-2:#F2EFF5;
+  --line:#E4DFEA;--line-soft:#EEEAF2;
+  --ink:#241C2B;--ink-2:#4A4055;--muted:#7D7488;
+  --accent:#B4306A;--on-accent:#FFFFFF;--accent-ink:#8E2453;--accent-soft:#FBEDF3;
+  --ok:#2E7D5B;--ok-soft:#E7F3ED;
+  --warn:#A9711A;--warn-soft:#FAF0DF;
+  --lost:#8B8296;--lost-soft:#F0EDF3;
+  --shadow:0 1px 2px rgba(36,28,43,.05), 0 12px 32px -12px rgba(36,28,43,.16);
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#15111A;--surface:#1E1826;--surface-2:#282031;
+    --line:#352B41;--line-soft:#2C2436;
+    --ink:#F3EFF6;--ink-2:#C8BFD2;--muted:#9F94AC;
+    --accent:#E86FA0;--on-accent:#1A1220;--accent-ink:#F09BBE;--accent-soft:#3A1F2C;
+    --ok:#5EC79A;--ok-soft:#16332A;--warn:#D9A24A;--warn-soft:#33280F;
+    --lost:#877E93;--lost-soft:#272031;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#15111A;--surface:#1E1826;--surface-2:#282031;
+  --line:#352B41;--line-soft:#2C2436;
+  --ink:#F3EFF6;--ink-2:#C8BFD2;--muted:#9F94AC;
+  --accent:#E86FA0;--on-accent:#1A1220;--accent-ink:#F09BBE;--accent-soft:#3A1F2C;
+  --ok:#5EC79A;--ok-soft:#16332A;--warn:#D9A24A;--warn-soft:#33280F;
+  --lost:#877E93;--lost-soft:#272031;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--ground);color:var(--ink);
+  font-family:"Karla","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  min-height:100dvh;
+}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque","Karla",sans-serif;font-weight:600;letter-spacing:-.015em}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,select{font:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+.screen-wrap{display:none;flex-direction:column;min-height:100dvh}
+.screen-wrap.on{display:flex}
+
+/* ===== AUTH ===== */
+.auth{display:flex;align-items:center;justify-content:center;padding:24px}
+.auth-box{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:36px 28px;width:100%;max-width:380px;box-shadow:var(--shadow)}
+.auth-box .mark{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:32px;letter-spacing:-.03em;text-align:center}
+.auth-box .mark i{font-style:normal;color:var(--accent)}
+.auth-box p{text-align:center;color:var(--muted);font-size:14px;margin-top:6px}
+.auth-box h3{text-align:center;margin-top:24px;font-size:18px}
+.field{display:flex;flex-direction:column;gap:4px;margin-top:16px}
+.field label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.field input,.field select{
+  padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--surface-2);color:var(--ink);font-size:15px;
+}
+.field input:focus,.field select:focus{border-color:var(--accent);outline:none}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  width:100%;padding:12px;border-radius:12px;
+  background:var(--accent);color:var(--on-accent);font-weight:700;font-size:15px;
+  margin-top:20px;transition:filter .15s;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:var(--surface-2);color:var(--ink);font-weight:600;margin-top:10px}
+.btn.sm{padding:9px 12px;font-size:13.5px;border-radius:10px;margin-top:0}
+.btn.danger{background:#dc3545}
+.auth-toggle{text-align:center;margin-top:16px;font-size:14px;color:var(--muted)}
+.auth-toggle a{color:var(--accent);font-weight:600;cursor:pointer;text-decoration:none}
+.error-msg{background:#fce4ec;color:#b71c1c;padding:10px;border-radius:8px;font-size:13px;margin-top:12px;display:none}
+.success-msg{background:var(--ok-soft);color:var(--ok);padding:10px;border-radius:8px;font-size:13px;margin-top:12px;display:none}
+
+/* ===== APP ===== */
+.topbar{
+  background:var(--surface);border-bottom:1px solid var(--line);
+  padding:16px 20px 12px;flex:none;
+  display:flex;align-items:baseline;justify-content:space-between;
+}
+.topbar .mark{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:22px;letter-spacing:-.03em}
+.topbar .mark i{font-style:normal;color:var(--accent)}
+.topbar .salon-name{font-size:13px;color:var(--muted)}
+.logout-btn{font-size:12px;color:var(--muted);text-decoration:underline;cursor:pointer}
+
+.appbar{padding:14px 20px 10px;flex:none}
+.appbar h2{font-size:21px;letter-spacing:-.02em}
+.appbar .sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+
+.content{flex:1;overflow-y:auto;overscroll-behavior:contain}
+.view{display:none;flex-direction:column;gap:10px;padding:14px 16px 20px}
+.view.on{display:flex}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 13px;display:flex;flex-direction:column;gap:9px}
+.row-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.name{font-weight:700;font-size:15px;letter-spacing:-.01em;line-height:1.2}
+.svc{font-size:12.5px;color:var(--muted);margin-top:1px}
+.amt{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:15px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:5px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:999px;font-weight:500}
+.chip::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.chip.vencida{background:var(--accent-soft);color:var(--accent-ink)}
+.chip.porvencer{background:var(--warn-soft);color:var(--warn)}
+.chip.aldia{background:var(--ok-soft);color:var(--ok)}
+.chip.perdida{background:var(--lost-soft);color:var(--lost)}
+.chip.escrita{background:var(--ok-soft);color:var(--ok)}
+.stripe{border-left:3px solid var(--accent);padding-left:11px}
+.done{opacity:.55}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:28px 16px;border:1px dashed var(--line);border-radius:14px}
+
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.stat .k{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:30px;line-height:1.1;margin-top:5px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stat .n{font-size:12.5px;color:var(--muted);margin-top:3px}
+.stat.hi .v{color:var(--accent)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bars{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+.bar-row{display:grid;grid-template-columns:76px 1fr auto;gap:9px;align-items:center;font-size:12px}
+.bar-track{height:7px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:var(--accent);border-radius:4px}
+.bar-amt{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.filters{display:flex;gap:6px;flex-wrap:wrap;flex:none;padding:8px 16px 0}
+.filters[hidden]{display:none}
+.filters button{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;padding:5px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+
+.tabbar{
+  flex:none;display:grid;grid-template-columns:repeat(3,1fr);
+  background:var(--surface);border-top:1px solid var(--line);
+  padding:7px 6px calc(12px + env(safe-area-inset-bottom));
+}
+.tabbar button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.01em;border-radius:10px}
+.tabbar button svg{width:19px;height:19px;stroke-width:1.7}
+.tabbar button[aria-selected="true"]{color:var(--accent)}
+.tabbar .badge{position:absolute;transform:translate(13px,-4px);background:var(--accent);color:var(--on-accent);font-family:"IBM Plex Mono",monospace;font-size:9px;font-weight:600;min-width:15px;height:15px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+
+.fab{
+  position:fixed;bottom:calc(72px + env(safe-area-inset-bottom));right:16px;
+  width:52px;height:52px;border-radius:50%;
+  background:var(--accent);color:var(--on-accent);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(180,48,106,.4);font-size:28px;font-weight:300;z-index:10;
+}
+
+/* modal */
+.modal-bg{position:fixed;inset:0;background:rgba(20,14,26,.5);display:none;align-items:flex-end;justify-content:center;z-index:30}
+.modal-bg.on{display:flex}
+.modal{background:var(--surface);width:100%;max-width:420px;border-radius:20px 20px 0 0;padding:20px;max-height:85dvh;overflow-y:auto}
+.modal h3{font-size:18px;margin-bottom:4px}
+
+/* sheet (WhatsApp) */
+.sheet-bg{position:fixed;inset:0;background:rgba(20,14,26,.5);display:none;align-items:flex-end;justify-content:center;z-index:30}
+.sheet-bg.on{display:flex}
+.sheet{background:var(--surface);width:100%;max-width:420px;border-radius:20px 20px 0 0;padding:18px 16px 20px;display:flex;flex-direction:column;gap:12px}
+.sheet h3{font-size:16px}
+.msg{background:var(--ok-soft);border:1px solid var(--line-soft);border-radius:12px;padding:11px 12px;font-size:13.5px;line-height:1.5;white-space:pre-wrap}
+.sheet .fine{font-size:11.5px;color:var(--muted)}
+
+.loading{text-align:center;padding:40px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- ===== SCREEN: AUTH ===== -->
+<div class="screen-wrap on" id="scr-auth">
+  <div class="auth" style="flex:1">
+    <div class="auth-box">
+      <div class="mark">Vuelve<i>.</i></div>
+      <p>Recupera los clientes que dejaron de volver</p>
+
+      <div id="auth-login">
+        <h3>Inicia sesion</h3>
+        <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="tu@email.com"></div>
+        <div class="field"><label>Contrasena</label><input type="password" id="login-pass" placeholder="Tu contrasena"></div>
+        <div class="error-msg" id="login-error"></div>
+        <button class="btn" id="login-btn" type="button">Entrar</button>
+        <div class="auth-toggle">No tienes cuenta? <a id="show-register">Registrate</a></div>
+      </div>
+
+      <div id="auth-register" style="display:none">
+        <h3>Crea tu cuenta</h3>
+        <div class="field"><label>Email</label><input type="email" id="reg-email" placeholder="tu@email.com"></div>
+        <div class="field"><label>Contrasena</label><input type="password" id="reg-pass" placeholder="Minimo 6 caracteres"></div>
+        <div class="error-msg" id="reg-error"></div>
+        <div class="success-msg" id="reg-success"></div>
+        <button class="btn" id="reg-btn" type="button">Crear cuenta</button>
+        <div class="auth-toggle">Ya tienes cuenta? <a id="show-login">Inicia sesion</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: SETUP ===== -->
+<div class="screen-wrap" id="scr-setup">
+  <div class="auth" style="flex:1">
+    <div class="auth-box">
+      <div class="mark">Vuelve<i>.</i></div>
+      <h3 style="margin-top:20px">Configura tu negocio</h3>
+      <p>Solo necesitas el nombre y tipo para empezar</p>
+      <div class="field"><label>Tipo de negocio</label>
+        <select id="setup-rubro">
+          <option value="salon">Salon de belleza</option>
+          <option value="barberia">Barberia</option>
+          <option value="gym">Gym / Entrenamiento</option>
+          <option value="dentista">Dentista / Odontologia</option>
+          <option value="veterinaria">Veterinaria</option>
+          <option value="fisioterapia">Fisioterapia / Rehabilitacion</option>
+          <option value="spa">Spa / Bienestar</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="field"><label>Nombre del negocio</label><input type="text" id="setup-nombre" placeholder="Ej: Salon Aura, Gym Power..."></div>
+      <div class="field"><label>Telefono (WhatsApp)</label><input type="tel" id="setup-tel" placeholder="+51 999 999 999"></div>
+      <div class="error-msg" id="setup-error"></div>
+      <button class="btn" id="setup-btn" type="button">Comenzar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: ADMIN ===== -->
+<div class="screen-wrap" id="scr-admin">
+  <div class="topbar">
+    <div>
+      <div class="mark">Vuelve<i>.</i></div>
+      <div class="salon-name">Panel de administracion</div>
+    </div>
+    <button class="logout-btn" id="admin-logout">Salir</button>
+  </div>
+  <div class="appbar">
+    <h2>Negocios registrados</h2>
+    <div class="sub" id="admin-sub">Cargando...</div>
+  </div>
+  <div class="content">
+    <div class="view on" id="admin-list" style="display:flex"></div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: APP ===== -->
+<div class="screen-wrap" id="scr-app">
+  <div class="topbar">
+    <div>
+      <div class="mark">Vuelve<i>.</i></div>
+      <div class="salon-name" id="app-salon"></div>
+    </div>
+    <button class="logout-btn" id="back-admin" style="display:none">← Panel</button>
+    <button class="logout-btn" id="logout-btn">Salir</button>
+  </div>
+
+  <div class="appbar">
+    <h2 id="app-title">Hoy</h2>
+    <div class="sub" id="app-sub">Cargando...</div>
+  </div>
+
+  <div class="filters" id="filters" hidden>
+    <button type="button" data-f="todas" aria-pressed="true">Todas</button>
+    <button type="button" data-f="vencida" aria-pressed="false">Vencidas</button>
+    <button type="button" data-f="porvencer" aria-pressed="false">Por vencer</button>
+    <button type="button" data-f="aldia" aria-pressed="false">Al dia</button>
+    <button type="button" data-f="perdida" aria-pressed="false">Perdidas</button>
+  </div>
+
+  <div class="content">
+    <div class="view on" id="v-hoy"></div>
+    <div class="view" id="v-clientas"></div>
+    <div class="view" id="v-resumen"></div>
+  </div>
+
+  <nav class="tabbar" role="tablist">
+    <button type="button" role="tab" data-tab="hoy" aria-selected="true">
+      <span style="position:relative;display:block">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 1 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span class="badge" id="badge">0</span>
+      </span>
+      Hoy
+    </button>
+    <button type="button" role="tab" data-tab="clientas" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
+      Clientes
+    </button>
+    <button type="button" role="tab" data-tab="resumen" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
+      Resumen
+    </button>
+  </nav>
+
+  <button class="fab" id="fab-add" title="Agregar cliente">+</button>
+</div>
+
+<!-- ===== MODAL: AGREGAR CLIENTA ===== -->
+<div class="modal-bg" id="modal-add">
+  <div class="modal">
+    <h3>Nuevo cliente</h3>
+    <div class="field"><label>Nombre completo</label><input type="text" id="add-nombre"></div>
+    <div class="field"><label>Telefono</label><input type="tel" id="add-tel"></div>
+    <div class="field"><label>Servicio principal</label><input type="text" id="add-servicio" placeholder="Ej: Corte, Consulta, Sesion..."></div>
+    <div class="field"><label>Categoria</label>
+      <select id="add-grupo"></select>
+    </div>
+    <div class="field"><label>Vuelve cada (dias)</label><input type="number" id="add-ciclo" value="21"></div>
+    <div class="field"><label>Ticket promedio (S/)</label><input type="number" id="add-ticket" value="70"></div>
+    <div class="field"><label>Ultima visita</label><input type="date" id="add-ultima"></div>
+    <div class="error-msg" id="add-error"></div>
+    <button class="btn" id="add-save" type="button">Guardar cliente</button>
+    <button class="btn ghost" id="add-cancel" type="button">Cancelar</button>
+  </div>
+</div>
+
+<!-- ===== SHEET: WHATSAPP ===== -->
+<div class="sheet-bg" id="sheet-bg">
+  <div class="sheet">
+    <h3>Mensaje para <span id="sheet-name"></span></h3>
+    <div class="msg" id="sheet-msg"></div>
+    <p class="fine">Se abre WhatsApp con el mensaje ya escrito.</p>
+    <a class="btn" id="sheet-send" target="_blank" style="text-decoration:none">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.3A10 10 0 1 0 12 2z"/></svg>
+      Abrir WhatsApp
+    </a>
+    <button class="btn ghost" id="sheet-close" type="button">Cerrar</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var SUPABASE_URL = "https://ncfcpbkeabolvodjyggh.supabase.co";
+var SUPABASE_KEY = "sb_publishable_4062t_iB1h0Vle6LUXgb8Q_bhoeGxcq";
+
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+var RUBROS = {
+  salon: {
+    label: "Salon de belleza",
+    categorias: ["Unas","Pestanas","Cejas","Color","Cabello","Facial","Pedicure","Depilacion","Otro"],
+    mensajes: {"Unas":"ya te toca retoque de unas","Pestanas":"tus pestanas ya piden retoque","Cejas":"ya toca retocar tus cejas","Color":"ya se te debe estar viendo la raiz","Cabello":"ya toca renovar tu tratamiento","Pedicure":"ya toca tu pedicure","Facial":"ya toca tu limpieza facial","Depilacion":"ya toca tu depilacion"},
+    ciclo: 21, ticket: 70,
+    color: {accent:"#B4306A",ink:"#8E2453",soft:"#FBEDF3",dark:"#E86FA0",darkInk:"#F09BBE",darkSoft:"#3A1F2C",fab:"rgba(180,48,106,.4)"}
+  },
+  barberia: {
+    label: "Barberia",
+    categorias: ["Corte","Barba","Corte + Barba","Color","Cejas","Facial","Otro"],
+    mensajes: {"Corte":"ya te toca tu corte","Barba":"ya toca arreglar la barba","Corte + Barba":"ya te toca corte y barba","Color":"ya toca retocar el color","Cejas":"ya toca retocar tus cejas","Facial":"ya toca tu limpieza facial"},
+    ciclo: 21, ticket: 40,
+    color: {accent:"#A0762C",ink:"#7A5A1E",soft:"#FAF3E6",dark:"#D4A54A",darkInk:"#E0BC6E",darkSoft:"#332A14",fab:"rgba(160,118,44,.4)"}
+  },
+  gym: {
+    label: "Gym / Entrenamiento",
+    categorias: ["Musculacion","Funcional","CrossFit","Yoga","Pilates","Cardio","Personal","Otro"],
+    mensajes: {"Musculacion":"ya toca volver a entrenar","Funcional":"ya toca tu sesion funcional","CrossFit":"ya toca tu WOD","Yoga":"ya toca tu clase de yoga","Pilates":"ya toca tu sesion de pilates","Cardio":"ya toca tu sesion de cardio","Personal":"ya toca tu entrenamiento personal"},
+    ciclo: 3, ticket: 150,
+    color: {accent:"#C0392B",ink:"#962D22",soft:"#FCEAE8",dark:"#E86050",darkInk:"#F0908A",darkSoft:"#3A1A16",fab:"rgba(192,57,43,.4)"}
+  },
+  dentista: {
+    label: "Dentista / Odontologia",
+    categorias: ["Limpieza","Ortodoncia","Blanqueamiento","Endodoncia","Control","Curacion","Otro"],
+    mensajes: {"Limpieza":"ya toca tu limpieza dental","Ortodoncia":"ya toca tu control de ortodoncia","Blanqueamiento":"ya toca tu sesion de blanqueamiento","Control":"ya toca tu control dental","Curacion":"ya toca tu cita dental"},
+    ciclo: 180, ticket: 150,
+    color: {accent:"#0E8A7E",ink:"#0A6E64",soft:"#E4F5F3",dark:"#3BBFB2",darkInk:"#6DD8CE",darkSoft:"#0F2E2B",fab:"rgba(14,138,126,.4)"}
+  },
+  veterinaria: {
+    label: "Veterinaria",
+    categorias: ["Consulta","Vacuna","Bano","Desparasitacion","Cirugia","Control","Otro"],
+    mensajes: {"Consulta":"ya toca la consulta de tu mascota","Vacuna":"ya toca la vacuna de tu mascota","Bano":"ya toca el bano de tu mascota","Desparasitacion":"ya toca desparasitar a tu mascota","Control":"ya toca el control de tu mascota"},
+    ciclo: 30, ticket: 80,
+    color: {accent:"#2E7D32",ink:"#1B5E20",soft:"#E8F5E9",dark:"#66BB6A",darkInk:"#90D094",darkSoft:"#1A331B",fab:"rgba(46,125,50,.4)"}
+  },
+  fisioterapia: {
+    label: "Fisioterapia / Rehabilitacion",
+    categorias: ["Rehabilitacion","Masaje","Electroterapia","Evaluacion","Deportiva","Otro"],
+    mensajes: {"Rehabilitacion":"ya toca tu sesion de rehabilitacion","Masaje":"ya toca tu sesion de masaje","Electroterapia":"ya toca tu sesion de electroterapia","Evaluacion":"ya toca tu evaluacion","Deportiva":"ya toca tu sesion de fisioterapia deportiva"},
+    ciclo: 7, ticket: 80,
+    color: {accent:"#2872A4",ink:"#1C5A84",soft:"#E3F0F9",dark:"#5BA0D0",darkInk:"#8AC0E4",darkSoft:"#152A3A",fab:"rgba(40,114,164,.4)"}
+  },
+  spa: {
+    label: "Spa / Bienestar",
+    categorias: ["Masaje","Facial","Corporal","Exfoliacion","Aromaterapia","Otro"],
+    mensajes: {"Masaje":"ya toca tu masaje","Facial":"ya toca tu tratamiento facial","Corporal":"ya toca tu tratamiento corporal","Exfoliacion":"ya toca tu exfoliacion","Aromaterapia":"ya toca tu sesion de aromaterapia"},
+    ciclo: 30, ticket: 120,
+    color: {accent:"#7B4FA0",ink:"#5E3B7E",soft:"#F2ECF8",dark:"#A87ED4",darkInk:"#C4A8E4",darkSoft:"#2A1C38",fab:"rgba(123,79,160,.4)"}
+  },
+  otro: {
+    label: "Otro",
+    categorias: ["Servicio A","Servicio B","Servicio C","Otro"],
+    mensajes: {},
+    ciclo: 30, ticket: 50,
+    color: {accent:"#5C6B7A",ink:"#44525F",soft:"#ECF0F3",dark:"#8A9BAC",darkInk:"#ADBDCC",darkSoft:"#1E262E",fab:"rgba(92,107,122,.4)"}
+  }
+};
+
+var ADMIN_EMAIL = "dayana20aguirre@gmail.com";
+var esAdmin = false;
+
+var SALON = null;
+var DATA = [];
+var tab = "hoy";
+var filtro = "todas";
+var abierta = null;
+var escritasHoy = {};
+
+function show(id){
+  document.querySelectorAll(".screen-wrap").forEach(function(s){ s.classList.remove("on"); });
+  document.getElementById(id).classList.add("on");
+}
+
+function showError(id, msg){
+  var el = document.getElementById(id);
+  el.textContent = msg; el.style.display = "block";
+  setTimeout(function(){ el.style.display = "none"; }, 5000);
+}
+
+function showSuccess(id, msg){
+  var el = document.getElementById(id);
+  el.textContent = msg; el.style.display = "block";
+}
+
+// ===== AUTH =====
+document.getElementById("show-register").addEventListener("click", function(){
+  document.getElementById("auth-login").style.display = "none";
+  document.getElementById("auth-register").style.display = "block";
+});
+document.getElementById("show-login").addEventListener("click", function(){
+  document.getElementById("auth-register").style.display = "none";
+  document.getElementById("auth-login").style.display = "block";
+});
+
+document.getElementById("login-btn").addEventListener("click", async function(){
+  var email = document.getElementById("login-email").value.trim();
+  var pass = document.getElementById("login-pass").value;
+  if(!email || !pass) return showError("login-error", "Completa email y contrasena");
+  this.disabled = true; this.textContent = "Entrando...";
+  var res = await sb.auth.signInWithPassword({email: email, password: pass});
+  this.disabled = false; this.textContent = "Entrar";
+  if(res.error) return showError("login-error", res.error.message);
+  iniciarApp();
+});
+
+document.getElementById("reg-btn").addEventListener("click", async function(){
+  var email = document.getElementById("reg-email").value.trim();
+  var pass = document.getElementById("reg-pass").value;
+  if(!email || !pass) return showError("reg-error", "Completa email y contrasena");
+  if(pass.length < 6) return showError("reg-error", "La contrasena debe tener al menos 6 caracteres");
+  this.disabled = true; this.textContent = "Creando...";
+  var res = await sb.auth.signUp({email: email, password: pass});
+  this.disabled = false; this.textContent = "Crear cuenta";
+  if(res.error) return showError("reg-error", res.error.message);
+  if(res.data.user && !res.data.session){
+    showSuccess("reg-success", "Cuenta creada. Revisa tu email para confirmar y luego inicia sesion.");
+  } else {
+    iniciarApp();
+  }
+});
+
+document.getElementById("logout-btn").addEventListener("click", async function(){
+  await sb.auth.signOut();
+  SALON = null; DATA = [];
+  show("scr-auth");
+});
+
+// ===== SETUP =====
+document.getElementById("setup-btn").addEventListener("click", async function(){
+  var nombre = document.getElementById("setup-nombre").value.trim();
+  var tel = document.getElementById("setup-tel").value.trim();
+  var rubro = document.getElementById("setup-rubro").value;
+  if(!nombre) return showError("setup-error", "Pon el nombre de tu negocio");
+  this.disabled = true;
+  var user = (await sb.auth.getUser()).data.user;
+  var res = await sb.from("salones").insert({owner_id: user.id, nombre: nombre, telefono: tel, rubro: rubro}).select().single();
+  this.disabled = false;
+  if(res.error) return showError("setup-error", res.error.message);
+  entrarNegocio(res.data);
+});
+
+function rubroActual(){ return RUBROS[(SALON && SALON.rubro) || "salon"] || RUBROS.salon; }
+
+function aplicarColores(){
+  var r = rubroActual();
+  if(!r.color) return;
+  var c = r.color;
+  var root = document.documentElement;
+  root.style.setProperty("--accent", c.accent);
+  root.style.setProperty("--accent-ink", c.ink);
+  root.style.setProperty("--accent-soft", c.soft);
+  var isDark = window.matchMedia("(prefers-color-scheme:dark)").matches;
+  var theme = root.getAttribute("data-theme");
+  if(theme === "dark" || (isDark && theme !== "light")){
+    root.style.setProperty("--accent", c.dark);
+    root.style.setProperty("--accent-ink", c.darkInk);
+    root.style.setProperty("--accent-soft", c.darkSoft);
+  }
+  document.querySelector(".fab").style.boxShadow = "0 4px 16px " + c.fab;
+}
+
+function cargarCategorias(){
+  var sel = document.getElementById("add-grupo");
+  sel.innerHTML = "";
+  rubroActual().categorias.forEach(function(cat){
+    var o = document.createElement("option");
+    o.value = cat; o.textContent = cat;
+    sel.appendChild(o);
+  });
+  var cicloDefault = rubroActual().ciclo || 21;
+  var ticketDefault = rubroActual().ticket || 50;
+  document.getElementById("add-ciclo").value = cicloDefault;
+  document.getElementById("add-ticket").value = ticketDefault;
+}
+
+// ===== INIT =====
+async function iniciarApp(){
+  var user = (await sb.auth.getUser()).data.user;
+  if(!user){ show("scr-auth"); return; }
+  esAdmin = (user.email === ADMIN_EMAIL);
+
+  if(esAdmin){
+    show("scr-admin");
+    cargarPanelAdmin();
+    return;
+  }
+
+  var res = await sb.from("salones").select("*").eq("owner_id", user.id).limit(1);
+  if(res.error || !res.data.length){
+    show("scr-setup");
+    return;
+  }
+  entrarNegocio(res.data[0]);
+}
+
+function entrarNegocio(salon){
+  SALON = salon;
+  document.getElementById("app-salon").textContent = SALON.nombre;
+  document.getElementById("back-admin").style.display = esAdmin ? "inline" : "none";
+  show("scr-app");
+  aplicarColores();
+  cargarCategorias();
+  cargarClientas();
+}
+
+async function cargarPanelAdmin(){
+  var res = await sb.from("salones").select("*").order("created_at",{ascending:false});
+  var list = document.getElementById("admin-list");
+  list.innerHTML = "";
+  if(res.error || !res.data.length){
+    list.innerHTML = '<div class="empty">No hay negocios registrados aun.</div>';
+    document.getElementById("admin-sub").textContent = "0 negocios";
+    return;
+  }
+  document.getElementById("admin-sub").textContent = res.data.length + " negocios registrados";
+  res.data.forEach(function(s){
+    var r = RUBROS[s.rubro] || RUBROS.otro;
+    var card = el(
+      '<article class="card" style="cursor:pointer">'+
+        '<div class="row-head"><div><div class="name">'+esc(s.nombre)+'</div><div class="svc">'+r.label+'</div></div>'+
+        '<span class="chip aldia" style="background:'+r.color.soft+';color:'+r.color.ink+'"><span style="display:none"></span>'+esc(s.rubro)+'</span></div>'+
+        '<div class="meta"><span>Tel: '+(s.telefono||"sin tel")+'</span></div>'+
+      '</article>'
+    );
+    card.addEventListener("click", function(){ entrarNegocio(s); });
+    list.appendChild(card);
+  });
+}
+
+document.getElementById("back-admin").addEventListener("click", function(){
+  show("scr-admin");
+  cargarPanelAdmin();
+});
+
+document.getElementById("admin-logout").addEventListener("click", async function(){
+  await sb.auth.signOut();
+  SALON = null; DATA = []; esAdmin = false;
+  show("scr-auth");
+});
+
+async function cargarClientas(){
+  var res = await sb.from("clientas").select("*").eq("salon_id", SALON.id);
+  if(res.error){ console.error(res.error); return; }
+  DATA = res.data.map(function(c){
+    var dias = 0;
+    if(c.ultima_visita){
+      var hoy = new Date(); hoy.setHours(0,0,0,0);
+      var uv = new Date(c.ultima_visita + "T00:00:00");
+      dias = Math.round((hoy - uv) / 86400000);
+    }
+    return {
+      id: c.id, n: c.nombre, tel: c.telefono || "",
+      s: c.servicio || "Sin servicio", g: c.grupo || "Otro",
+      ciclo: c.ciclo_dias || 30, dias: dias, t: parseFloat(c.ticket) || 0,
+      escrita: !!escritasHoy[c.id]
+    };
+  });
+  renderAll();
+}
+
+// ===== RENDER =====
+function atraso(c){ return c.dias - c.ciclo; }
+function estado(c){
+  if(c.dias === 0 && !c.s) return "aldia";
+  var a = atraso(c);
+  if(a > 45) return "perdida";
+  if(a > 0) return "vencida";
+  if(a >= -4) return "porvencer";
+  return "aldia";
+}
+var ETIQUETA = {vencida:"Vencida",porvencer:"Por vencer",aldia:"Al dia",perdida:"Perdida",escrita:"Escrita hoy"};
+function prioridad(c){ return c.t * (1 - Math.min(atraso(c),60)/60); }
+function soles(n){ return "S/ " + n.toLocaleString("es-PE"); }
+function chipHTML(e){ return '<span class="chip '+e+'">'+ETIQUETA[e]+'</span>'; }
+function el(html){ var d=document.createElement("div"); d.innerHTML=html.trim(); return d.firstChild; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function mensaje(c){
+  var negocio = SALON ? SALON.nombre : "Tu negocio";
+  var r = rubroActual();
+  var por = (r.mensajes && r.mensajes[c.g]) || "ya te toca tu cita";
+  var nom = c.n.split(" ")[0];
+  return "Hola " + nom + ", te saluda " + negocio + "\n\n" +
+         "Tu ultima visita fue hace " + c.dias + " dias (" + c.s.toLowerCase() + ") y " + por + ".\n\n" +
+         "Tengo espacio esta semana. Cual horario te queda mejor?";
+}
+
+function renderAll(){
+  renderHoy(); renderClientas(); renderResumen(); actualizarCabecera();
+}
+
+function renderHoy(){
+  var v = document.getElementById("v-hoy");
+  v.innerHTML = "";
+  if(!DATA.length){
+    v.appendChild(el('<div class="empty">Agrega tu primer cliente con el boton + de abajo.</div>'));
+    return;
+  }
+  var pend = DATA.filter(function(c){ return estado(c)==="vencida" && !c.escrita; })
+                 .sort(function(a,b){ return prioridad(b)-prioridad(a); });
+  var hechas = DATA.filter(function(c){ return c.escrita; });
+
+  if(!pend.length && !hechas.length){
+    v.appendChild(el('<div class="empty">Ningun cliente vencido hoy. Buen trabajo!</div>'));
+  }
+  pend.forEach(function(c){
+    var card = el(
+      '<article class="card stripe">'+
+        '<div class="row-head"><div><div class="name">'+esc(c.n)+'</div><div class="svc">'+esc(c.s)+'</div></div><div class="amt">'+soles(c.t)+'</div></div>'+
+        '<div class="meta">'+chipHTML("vencida")+'<span class="mono">'+atraso(c)+' dias de atraso</span><span>hace '+c.dias+'</span></div>'+
+        '<button class="btn sm" type="button"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.3A10 10 0 1 0 12 2z"/></svg> Escribir por WhatsApp</button>'+
+      '</article>'
+    );
+    card.querySelector("button").addEventListener("click", function(){ abrirSheet(c); });
+    v.appendChild(card);
+  });
+
+  if(hechas.length){
+    v.appendChild(el('<div class="eyebrow" style="margin-top:8px">Escritas hoy: '+hechas.length+'</div>'));
+    hechas.forEach(function(c){
+      v.appendChild(el(
+        '<article class="card done"><div class="row-head"><div><div class="name">'+esc(c.n)+'</div><div class="svc">'+esc(c.s)+'</div></div><div class="amt">'+soles(c.t)+'</div></div><div class="meta">'+chipHTML("escrita")+'</div></article>'
+      ));
+    });
+  }
+}
+
+function renderClientas(){
+  var v = document.getElementById("v-clientas");
+  v.innerHTML = "";
+  if(!DATA.length){
+    v.appendChild(el('<div class="empty">Agrega clientes con el boton +</div>'));
+    return;
+  }
+  var lista = DATA.slice().sort(function(a,b){ return atraso(b)-atraso(a); });
+  if(filtro !== "todas") lista = lista.filter(function(c){ return estado(c)===filtro; });
+
+  if(!lista.length){
+    v.appendChild(el('<div class="empty">Ningun cliente en este estado.</div>'));
+  }
+  lista.forEach(function(c){
+    var e = estado(c);
+    var falta = -atraso(c);
+    var detalle = "";
+    if(abierta === c.id){
+      detalle =
+        '<div class="meta" style="flex-direction:column;align-items:flex-start;gap:3px;border-top:1px solid var(--line-soft);padding-top:9px">'+
+          '<span>Vuelve cada <b class="mono">'+c.ciclo+'</b> dias | ticket '+soles(c.t)+'</span>'+
+          '<span>Ultima visita hace <b class="mono">'+c.dias+'</b> dias</span>'+
+          '<span>'+(falta>0?'Le toca en <b class="mono">'+falta+'</b> dias':'Debio volver hace <b class="mono">'+(-falta)+'</b> dias')+'</span>'+
+        '</div>'+
+        '<button class="btn ghost sm" type="button" data-reg="1">Registrar visita de hoy</button>'+
+        '<button class="btn danger sm" type="button" data-del="1" style="margin-top:4px">Eliminar cliente</button>';
+    }
+    var card = el(
+      '<article class="card">'+
+        '<div class="row-head"><div><div class="name">'+esc(c.n)+'</div><div class="svc">'+esc(c.s)+'</div></div>'+chipHTML(e)+'</div>'+
+        '<div class="meta"><span class="mono">'+(falta>0?"en "+falta+" dias":(-falta)+" dias de atraso")+'</span><span>cada '+c.ciclo+' dias</span></div>'+
+        detalle+
+      '</article>'
+    );
+    card.addEventListener("click", function(ev){
+      if(ev.target.closest("[data-reg]") || ev.target.closest("[data-del]")) return;
+      abierta = (abierta===c.id)?null:c.id;
+      renderClientas();
+    });
+    var reg = card.querySelector("[data-reg]");
+    if(reg) reg.addEventListener("click", async function(){
+      var hoy = new Date().toISOString().slice(0,10);
+      await sb.from("clientas").update({ultima_visita:hoy}).eq("id",c.id);
+      await sb.from("visitas").insert({salon_id:SALON.id,clienta_id:c.id,fecha:hoy,servicio:c.s,monto:c.t});
+      abierta=null;
+      cargarClientas();
+    });
+    var del = card.querySelector("[data-del]");
+    if(del) del.addEventListener("click", async function(){
+      if(!confirm("Eliminar a "+c.n+"?")) return;
+      await sb.from("clientas").delete().eq("id",c.id);
+      abierta=null;
+      cargarClientas();
+    });
+    v.appendChild(card);
+  });
+}
+
+function renderResumen(){
+  var v = document.getElementById("v-resumen");
+  v.innerHTML = "";
+  if(!DATA.length){
+    v.appendChild(el('<div class="empty">Agrega clientes para ver el resumen.</div>'));
+    return;
+  }
+  var venc = DATA.filter(function(c){return estado(c)==="vencida";});
+  var perd = DATA.filter(function(c){return estado(c)==="perdida";});
+  var enRiesgo = venc.reduce(function(a,c){return a+c.t;},0);
+  var perdido = perd.reduce(function(a,c){return a+c.t;},0);
+
+  var fuga={};
+  venc.concat(perd).forEach(function(c){fuga[c.g]=(fuga[c.g]||0)+c.t;});
+  var pares=Object.keys(fuga).map(function(k){return[k,fuga[k]];}).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+  var max=pares.length?pares[0][1]:1;
+  var barras=pares.map(function(p){
+    return '<div class="bar-row"><span>'+esc(p[0])+'</span><span class="bar-track"><span class="bar-fill" style="width:'+Math.round(p[1]/max*100)+'%"></span></span><span class="bar-amt">'+soles(p[1])+'</span></div>';
+  }).join("");
+
+  v.appendChild(el('<div class="stat hi"><div class="k">En riesgo</div><div class="v">'+soles(enRiesgo)+'</div><div class="n">'+venc.length+' clientes que ya debieron volver</div></div>'));
+  v.appendChild(el('<div class="duo"><div class="stat"><div class="k">Total clientes</div><div class="v" style="font-size:24px">'+DATA.length+'</div><div class="n">Registrados en tu negocio</div></div><div class="stat"><div class="k">Ya perdidos</div><div class="v" style="font-size:24px">'+soles(perdido)+'</div><div class="n">'+perd.length+' con mas de 45 dias</div></div></div>'));
+  if(barras){
+    v.appendChild(el('<div class="stat"><div class="k">Por donde se fuga</div><div class="bars">'+barras+'</div></div>'));
+  }
+}
+
+function actualizarCabecera(){
+  var pend=DATA.filter(function(c){return estado(c)==="vencida"&&!c.escrita;});
+  var monto=pend.reduce(function(a,c){return a+c.t;},0);
+  var badge=document.getElementById("badge");
+  badge.textContent=pend.length;
+  badge.style.display=pend.length?"flex":"none";
+  var titulo=document.getElementById("app-title");
+  var sub=document.getElementById("app-sub");
+  if(tab==="hoy"){
+    titulo.textContent="Hoy";
+    sub.textContent=pend.length?pend.length+" clientes por escribir | "+soles(monto)+" en juego":"Nada pendiente. Buen trabajo!";
+  }else if(tab==="clientas"){
+    titulo.textContent="Clientes";
+    sub.textContent=DATA.length+" registrados en "+SALON.nombre;
+  }else{
+    titulo.textContent="Resumen";
+    sub.textContent=SALON.nombre;
+  }
+}
+
+// ===== TABS =====
+document.querySelector(".tabbar").addEventListener("click",function(ev){
+  var b=ev.target.closest("button[data-tab]");
+  if(!b) return;
+  tab=b.dataset.tab;
+  this.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-selected",String(x===b));});
+  ["hoy","clientas","resumen"].forEach(function(t){
+    document.getElementById("v-"+t).classList.toggle("on",t===tab);
+  });
+  document.getElementById("filters").hidden=(tab!=="clientas");
+  if(tab==="resumen") renderResumen();
+  if(tab==="clientas") renderClientas();
+  actualizarCabecera();
+});
+
+document.getElementById("filters").addEventListener("click",function(ev){
+  var b=ev.target.closest("button[data-f]");
+  if(!b) return;
+  filtro=b.dataset.f; abierta=null;
+  this.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",String(x===b));});
+  renderClientas();
+});
+
+// ===== ADD CLIENT =====
+document.getElementById("fab-add").addEventListener("click",function(){
+  document.getElementById("modal-add").classList.add("on");
+  document.getElementById("add-ultima").value=new Date().toISOString().slice(0,10);
+});
+document.getElementById("add-cancel").addEventListener("click",function(){
+  document.getElementById("modal-add").classList.remove("on");
+});
+document.getElementById("modal-add").addEventListener("click",function(ev){
+  if(ev.target===this) this.classList.remove("on");
+});
+
+document.getElementById("add-save").addEventListener("click",async function(){
+  var nombre=document.getElementById("add-nombre").value.trim();
+  if(!nombre) return showError("add-error","Pon el nombre del cliente");
+  this.disabled=true;
+  var res=await sb.from("clientas").insert({
+    salon_id:SALON.id,
+    nombre:nombre,
+    telefono:document.getElementById("add-tel").value.trim(),
+    servicio:document.getElementById("add-servicio").value.trim(),
+    grupo:document.getElementById("add-grupo").value,
+    ciclo_dias:parseInt(document.getElementById("add-ciclo").value)||21,
+    ticket:parseFloat(document.getElementById("add-ticket").value)||0,
+    ultima_visita:document.getElementById("add-ultima").value||null
+  });
+  this.disabled=false;
+  if(res.error) return showError("add-error",res.error.message);
+  document.getElementById("modal-add").classList.remove("on");
+  document.getElementById("add-nombre").value="";
+  document.getElementById("add-tel").value="";
+  document.getElementById("add-servicio").value="";
+  cargarClientas();
+});
+
+// ===== SHEET =====
+var sheetActual=null;
+function abrirSheet(c){
+  sheetActual=c;
+  document.getElementById("sheet-name").textContent=c.n.split(" ")[0];
+  var msg=mensaje(c);
+  document.getElementById("sheet-msg").textContent=msg;
+  var tel=(c.tel||"").replace(/[^0-9]/g,"");
+  if(!tel && SALON.telefono) tel=SALON.telefono.replace(/[^0-9]/g,"");
+  document.getElementById("sheet-send").href="https://wa.me/"+tel+"?text="+encodeURIComponent(msg);
+  document.getElementById("sheet-bg").classList.add("on");
+}
+document.getElementById("sheet-close").addEventListener("click",function(){
+  document.getElementById("sheet-bg").classList.remove("on");
+  if(sheetActual){sheetActual.escrita=true;escritasHoy[sheetActual.id]=true;}
+  sheetActual=null;
+  renderHoy();actualizarCabecera();
+});
+document.getElementById("sheet-bg").addEventListener("click",function(ev){
+  if(ev.target===this){this.classList.remove("on");sheetActual=null;}
+});
+
+// ===== BOOT =====
+(async function(){
+  var session = (await sb.auth.getSession()).data.session;
+  if(session) iniciarApp();
+  else show("scr-auth");
+})();
+
+})();
+</script>
+</body>
+</html>
