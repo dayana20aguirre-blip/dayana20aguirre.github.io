@@ -227,6 +227,27 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;pad
 .volver{font-size:11.5px;color:var(--ink-3);text-decoration:underline;flex:none}
 .solo-lectura{background:var(--warn-wash);color:var(--warn);font-size:11px;font-weight:700;
   text-align:center;padding:6px;letter-spacing:.04em}
+/* ── estado de cobro en el panel ─────────────────── */
+.neg{position:relative}
+.neg .cab{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.pillc{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:100px;white-space:nowrap;flex:none}
+.pillc.prueba{background:var(--surf-3);color:var(--ink-2)}
+.pillc.activo{background:var(--ok-wash);color:var(--ok)}
+.pillc.pronto{background:var(--warn-wash);color:var(--warn)}
+.pillc.vencido{background:var(--bad-wash);color:var(--bad)}
+.neg .vence{font-size:11.5px;margin-top:7px;font-weight:600}
+.neg .vence.mal{color:var(--bad)}
+.neg .vence.ojo{color:var(--warn)}
+.neg .vence.bien{color:var(--ink-3)}
+.acciones{display:flex;gap:7px;margin-top:11px}
+.acciones button{flex:1;font-size:12.5px;font-weight:700;padding:9px;border-radius:10px}
+.abrir{background:var(--surf-3);color:var(--ink-2)}
+.cobrar{background:#1DA851;color:#fff}
+.resumen{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 4px}
+.rs{background:var(--surf-2);border:1px solid var(--rule);border-radius:12px;padding:11px 10px;text-align:center}
+.rs .n{font-weight:800;font-size:19px;line-height:1}
+.rs .l{font-size:9.5px;font-weight:600;color:var(--ink-3);margin-top:5px}
+.rs.v .n{color:var(--bad)} .rs.p .n{color:var(--warn)} .rs.a .n{color:var(--ok)}
 .salir{font-size:11.5px;color:var(--ink-3);text-decoration:underline;flex:none}
 .campo{margin-bottom:13px}
 .campo label{display:block;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
@@ -382,6 +403,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;pad
   <div class="gate panel" id="gate-admin">
     <div class="panel-head"><div class="marca">Taller</div><button class="volver" onclick="salir()">Salir</button></div>
     <div class="baja" style="text-align:left" id="admin-sub">Cargando…</div>
+    <div class="resumen" id="resumen"></div>
     <div class="negs" id="admin-lista"></div>
   </div>
 
@@ -574,19 +596,85 @@ window.salir=async function(){ await sb.auth.signOut(); location.reload(); };
 
 /* ── administrador ─────────────────── */
 var ADMIN_EMAIL="dayana20aguirre@gmail.com";
+var PANEL=[];
 var esAdmin=false, RUBROS_L={"vidrio":"Vidrio y aluminio", "metalica":"Carpintería metálica", "marmol":"Marmolería y granito", "muebles":"Muebles a medida", "tapiceria":"Tapicería", "otro":"Otro"};
+
+/* ── cobro ─────────────────── */
+function hoyD(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
+function dDias(f){ if(!f) return null; var p=String(f).slice(0,10).split("-");
+  return Math.round((new Date(+p[0],+p[1]-1,+p[2]) - hoyD())/86400000); }
+function estadoCobro(n){
+  var d=dDias(n.paga_hasta);
+  if(d===null) return {k:"prueba", t:"En prueba", cls:"bien", txt:"Sin fecha de cobro"};
+  if(d<0)      return {k:"vencido",t:"Vencido",  cls:"mal", txt:"Venció hace "+(-d)+(d===-1?" día":" días")};
+  if(d<=7)     return {k:"pronto", t:"Por vencer",cls:"ojo", txt:(d===0?"Vence hoy":"Vence en "+d+(d===1?" día":" días"))};
+  return {k:"activo", t:"Al día", cls:"bien", txt:"Vence en "+d+" días"};
+}
+var ORDEN={vencido:0, pronto:1, prueba:2, activo:3};
+
+window.marcarPagado=async function(id){
+  var n=null; PANEL.forEach(function(x){ if(x.id===id) n=x; });
+  if(!n) return;
+  var base = dDias(n.paga_hasta)>0 ? new Date(String(n.paga_hasta).slice(0,10)+"T12:00:00") : new Date();
+  base.setMonth(base.getMonth()+1);
+  var f=base.getFullYear()+"-"+String(base.getMonth()+1).padStart(2,"0")+"-"+String(base.getDate()).padStart(2,"0");
+  var r=await sb.from("taller_negocios").update({paga_hasta:f}).eq("id",id);
+  if(r.error){ toast("No se pudo actualizar: "+r.error.message); return; }
+  closeSheet(); cargarPanel();
+  toast(n.nombre+" · pagado hasta el "+base.getDate()+"/"+(base.getMonth()+1));
+};
+
+window.cobrarA=function(id){
+  var n=null; PANEL.forEach(function(x){ if(x.id===id) n=x; });
+  if(!n) return;
+  var e=estadoCobro(n);
+  var msg="Hola! Te escribo por la app de Taller.\n\n"+
+    (e.k==="vencido" ? "La mensualidad venció hace "+(-dDias(n.paga_hasta))+" días."
+                     : "La mensualidad vence "+(dDias(n.paga_hasta)===0?"hoy":"en "+dDias(n.paga_hasta)+" días")+".")+
+    (n.plan? " Son "+n.plan+"." : "")+"\n\n¿Te va bien que la renovemos esta semana?";
+  openSheet('<h3>'+esc(n.nombre)+'</h3><div class="ss">'+e.txt+(n.plan? " · "+esc(n.plan):"")+'</div>'+
+    '<div class="msgbox" style="margin-top:16px"><div class="msglab">Mensaje</div>'+esc(msg)+'</div>'+
+    (n.telefono ? '<button class="btn wa" onclick="window.open(\'https://wa.me/\'+\''+String(n.telefono||"").replace(/[^0-9]/g,'')+'\'+\'?text=\'+encodeURIComponent('+JSON.stringify(msg)+'),\'_blank\')">Escribirle por WhatsApp</button>'
+                : '<p class="nota">Este negocio no tiene teléfono guardado.</p>')+
+    '<button class="btn primary" onclick="marcarPagado(&quot;'+id+'&quot;)">Marcar pagado · +1 mes</button>'+
+    '<button class="btn ghost" onclick="closeSheet()">Cerrar</button>');
+};
 
 async function cargarPanel(){
   var r=await sb.from("taller_negocios").select("*").order("created_at",{ascending:false});
   var L=$("admin-lista");
   if(r.error){ $("admin-sub").textContent="No se pudo cargar: "+r.error.message; return; }
-  var d=r.data||[];
-  $("admin-sub").textContent = d.length ? (d.length+(d.length===1?" negocio registrado":" negocios registrados")) : "Todavía no hay negocios registrados.";
-  L.innerHTML=d.map(function(n){
-    return '<button class="neg" onclick="entrarComoAdmin(&quot;'+n.id+'&quot;)">'+
-      '<div class="nm">'+esc(n.nombre)+'</div>'+
-      '<div class="rb">'+(RUBROS_L[n.rubro]||n.rubro||"—")+'</div>'+
-      '<div class="tl">'+(n.telefono||"sin teléfono")+'</div></button>';
+  PANEL = r.data||[];
+  var cnt={vencido:0,pronto:0,prueba:0,activo:0};
+  PANEL.forEach(function(n){ cnt[estadoCobro(n).k]++; });
+  $("resumen").innerHTML =
+    '<div class="rs v"><div class="n">'+cnt.vencido+'</div><div class="l">VENCIDOS</div></div>'+
+    '<div class="rs p"><div class="n">'+cnt.pronto+'</div><div class="l">POR VENCER</div></div>'+
+    '<div class="rs a"><div class="n">'+(cnt.activo+cnt.prueba)+'</div><div class="l">AL DÍA</div></div>';
+  $("admin-sub").textContent = PANEL.length
+    ? (PANEL.length+(PANEL.length===1?" negocio registrado":" negocios registrados"))
+    : "Todavía no hay negocios registrados.";
+  PANEL.slice().sort(function(a,b){
+    var ea=estadoCobro(a), eb=estadoCobro(b);
+    if(ORDEN[ea.k]!==ORDEN[eb.k]) return ORDEN[ea.k]-ORDEN[eb.k];
+    return (dDias(a.paga_hasta)||0)-(dDias(b.paga_hasta)||0);
+  });
+  L.innerHTML = PANEL.slice().sort(function(a,b){
+    var ea=estadoCobro(a), eb=estadoCobro(b);
+    if(ORDEN[ea.k]!==ORDEN[eb.k]) return ORDEN[ea.k]-ORDEN[eb.k];
+    return (dDias(a.paga_hasta)||0)-(dDias(b.paga_hasta)||0);
+  }).map(function(n){
+    var e=estadoCobro(n);
+    return '<div class="neg">'+
+      '<div class="cab"><span class="nm">'+esc(n.nombre)+'</span>'+
+      '<span class="pillc '+e.k+'">'+e.t+'</span></div>'+
+      '<div class="rb">'+(RUBROS_L[n.rubro]||n.rubro||"—")+(n.plan? " · "+esc(n.plan):"")+'</div>'+
+      '<div class="vence '+e.cls+'">'+e.txt+'</div>'+
+      '<div class="tl">'+(n.telefono||"sin teléfono")+'</div>'+
+      '<div class="acciones">'+
+        '<button class="abrir" onclick="entrarComoAdmin(&quot;'+n.id+'&quot;)">Ver sus datos</button>'+
+        '<button class="cobrar" onclick="cobrarA(&quot;'+n.id+'&quot;)">Cobrar</button>'+
+      '</div></div>';
   }).join("");
 }
 
