@@ -309,7 +309,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;pad
     <div class="campo"><label>Contraseña</label><input id="a_pass" type="password" autocomplete="current-password" placeholder="Tu contraseña"></div>
     <p class="err" id="a_err"></p>
     <button class="btn primary" id="a_btn" onclick="acceder()">Entrar</button>
-    <p class="alt">¿No tienes cuenta? <button onclick="modoRegistro()">Regístrate</button></p>
+    <p class="alt">¿No tienes cuenta? <button onclick="modoRegistro()">Regístrate</button></p>\n    <p class="alt" style="margin-top:10px">¿Solo quieres verla? <button onclick="verDemo()">Ver demostración</button></p>
   </div>
 
   <div class="gate" id="gate-setup">
@@ -366,6 +366,60 @@ var $=function(x){return document.getElementById(x);};
 function cop(n){return "$"+Math.round(Math.abs(n)).toLocaleString("es-CO");}
 function suma(a){return a.reduce(function(x,m){return x+m.monto;},0);}
 function de(tipo,dia){return mov.filter(function(m){return m.tipo===tipo && (dia===undefined||m.dia===dia);});}
+
+/* ── demostración (no toca la base de datos) ─────────────────── */
+var DEMO=false, _sid=0;
+function sembrar(){
+  var out=[];
+  // los 7 dias del ejemplo se corren para que el ultimo sea HOY:
+  // asi la pantalla de Hoy nunca abre vacia al mostrarla.
+  function M(dia,tipo,monto,nota,medio){
+    var d=Math.max(1, HOY-(7-dia));
+    out.push({id:"d"+(++_sid), dia:d, tipo:tipo, monto:monto, nota:nota, medio:medio});
+  }
+  /* día 1 */
+  M(1,"venta",180000,"Cemento · Arena","Efectivo"); M(1,"venta",95000,"Pintura","Nequi");
+  M(1,"venta",145000,"Tubería PVC · Pegante","Efectivo"); M(1,"venta",100000,"Herramienta","Tarjeta");
+  M(1,"gasto",750000,"Arriendo","Bancolombia");
+  /* día 2 */
+  M(2,"venta",240000,"Cemento","Efectivo"); M(2,"venta",180000,"Eléctricos · Cable","Nequi");
+  M(2,"venta",165000,"Tornillería · Herramienta","Efectivo"); M(2,"venta",95000,"Grifería","Efectivo");
+  M(2,"compra",1200000,"Cemento y varilla · Distribuidora Ferrecentro","Bancolombia");
+  /* día 3 */
+  M(3,"venta",120000,"Pintura · Brochas","Efectivo"); M(3,"venta",85000,"Tornillería","Daviplata");
+  M(3,"venta",205000,"Cemento · Varilla","Efectivo");
+  M(3,"gasto",180000,"Servicios","Bancolombia");
+  /* día 4 */
+  M(4,"venta",310000,"Cemento · Varilla · Alambre","Nequi"); M(4,"venta",175000,"Tubería PVC","Efectivo");
+  M(4,"venta",140000,"Eléctricos","Efectivo"); M(4,"venta",120000,"Cerradura · Herramienta","Tarjeta");
+  /* día 5 */
+  M(5,"venta",420000,"Cemento · Arena · Varilla","Efectivo"); M(5,"venta",230000,"Pintura","Nequi");
+  M(5,"venta",145000,"Tubería PVC · Grifería","Efectivo"); M(5,"venta",95000,"Tornillería","Daviplata");
+  M(5,"compra",850000,"Arena y cemento · Cementos y Agregados","Efectivo");
+  M(5,"gasto",580000,"Sueldo ayudante","Efectivo");
+  /* día 6 */
+  M(6,"venta",180000,"Cemento","Efectivo"); M(6,"venta",140000,"Eléctricos · Cable","Nequi");
+  M(6,"gasto",95000,"Transporte","Efectivo");
+  /* día 7 · hoy */
+  M(7,"venta",95000,"Pintura","Efectivo"); M(7,"venta",60000,"Tornillería","Nequi");
+  M(7,"venta",85000,"Tubería PVC","Efectivo"); M(7,"venta",45000,"Herramienta","Daviplata");
+  M(7,"venta",70000,"Cemento","Efectivo"); M(7,"venta",30000,"Eléctricos","Efectivo");
+  return out;
+}
+window.verDemo=function(){
+  DEMO=true;
+  NEGOCIO={id:"demo", nombre:"Ferretería La 14"};
+  _sid=0; mov=sembrar();
+  gate(null);
+  $("negNombre").textContent=NEGOCIO.nombre;
+  var av=$("soloLectura");
+  av.textContent="DEMOSTRACIÓN · puedes tocar todo, no se guarda nada";
+  av.style.display="block";
+  var b=document.querySelector(".salir");
+  if(b){ b.textContent="Salir"; b.setAttribute("onclick","location.reload()"); }
+  pintar();
+  toast("Estás en la demostración");
+};
 
 /* ── Supabase ─────────────────── */
 var SUPABASE_URL = "https://ncfcpbkeabolvodjyggh.supabase.co";
@@ -646,6 +700,13 @@ window.guardar=async function(tipo){
   var monto=parseInt(($("n_monto").value||"").replace(/[^0-9]/g,""),10);
   if(!monto || monto<=0){ $("n_err").classList.add("on"); $("n_monto").focus(); return; }
   var nota=($("n_nota").value||"").trim() || (tipo==="venta"?"Venta de mostrador":tipo==="compra"?"Mercancía":"Gasto");
+  if(DEMO){
+    mov.push({id:"d"+(++_sid), dia:HOY, tipo:tipo, monto:monto, nota:nota, medio:medioSel});
+    closeSheet(); pintar(); go("hoy");
+    toast(tipo==="venta" ? "Venta de "+cop(monto)+" anotada"
+        : tipo==="compra" ? "Mercancía por "+cop(monto)+" anotada"
+        : "Gasto de "+cop(monto)+" anotado");
+    return; }
   var r=await sb.from("caja_movimientos").insert({negocio_id:NEGOCIO.id, tipo:tipo,
         monto:monto, nota:nota, medio:medioSel, fecha:hoyISO()}).select().single();
   if(r.error){ $("n_err").textContent="No se pudo guardar: "+r.error.message; $("n_err").classList.add("on"); return; }
@@ -668,6 +729,7 @@ window.ver=function(i){
 };
 
 window.borrar=async function(i){
+  if(DEMO){ mov=mov.filter(function(m){return m.id!==i;}); closeSheet(); pintar(); toast("Movimiento borrado"); return; }
   var r=await sb.from("caja_movimientos").delete().eq("id",i);
   if(r.error){ toast("No se pudo borrar"); return; }
   mov=mov.filter(function(m){return m.id!==i;});

@@ -357,6 +357,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;pad
     <p class="err" id="a_err"></p>
     <button class="btn primary" id="a_btn" onclick="acceder()">Entrar</button>
     <p class="alt">¿No tienes cuenta? <button onclick="modoRegistro()">Regístrate</button></p>
+    <p class="alt" style="margin-top:10px">¿Solo quieres verla? <button onclick="verDemo()">Ver demostración</button></p>
   </div>
 
   <div class="gate" id="gate-setup">
@@ -412,6 +413,87 @@ function pct(p){return p.total?Math.round(abonado(p)/p.total*100):0;}
 function iniciales(n){var s=n.replace(/^(Sra?\.|Sr\.)\s*/,"").trim().split(/\s+/);return ((s[0]||"")[0]||"")+((s[1]||"")[0]||"");}
 function pedidosDe(c){return pedidos.filter(function(p){return p.cliId===c.id;});}
 function debeCliente(c){return pedidosDe(c).reduce(function(a,p){return a+(p.est==="fabricacion"||p.est==="instalado"?saldo(p):0);},0);}
+
+var SEED_CLIENTES=[
+ {id:1,n:"Sra. Luz Marina Osorio",tel:"310 555 2233",dir:"Cra 12 # 8-45, Pereira",tipo:"Particular",
+  nota:"Paga puntual. Prefiere que la llamen en la tarde."},
+ {id:2,n:"Constructora Vélez Hermanos",tel:"314 208 4471",dir:"Av. 30 de Agosto # 42-18",tipo:"Constructora",
+  nota:"Manejan varias obras al tiempo. Piden orden de compra antes de empezar."},
+ {id:3,n:"Edificio Portal del Café",tel:"320 118 0239",dir:"Cra 14 # 22-60",tipo:"Administración",
+  nota:"Habla don Hernán, el administrador. Pagan por transferencia, nunca en efectivo."},
+ {id:4,n:"Sr. Jhon Fredy Ospina",tel:"316 774 1105",dir:"Barrio Álamos, Mz C casa 14",tipo:"Particular",
+  nota:"Se le pasó la cotización y no ha respondido. Volver a llamar."},
+ {id:5,n:"Sra. Gloria Cardona",tel:"301 556 2187",dir:"Cra 9 # 31-22",tipo:"Particular",
+  nota:"Está comparando precios con otro taller. Ojo con el plazo."},
+ {id:6,n:"Hotel La Colina",tel:"312 830 1450",dir:"Km 4 vía Armenia",tipo:"Empresa",
+  nota:"Van a remodelar los demás baños el otro año. Cliente para cuidar."},
+ {id:7,n:"Clínica San Rafael",tel:"313 447 0028",dir:"Cra 7 # 18-30",tipo:"Empresa",
+  nota:"Pagan a 30 días y hay que insistir. Pedir siempre el 50% adelantado."},
+ {id:8,n:"Sr. Álvaro Betancur",tel:"318 001 3387",dir:"Barrio Pinares",tipo:"Particular",
+  nota:"Pagó todo de contado sin pedir descuento."}
+];
+
+var SEED_PEDIDOS=[
+ {id:1,num:"P-241",cliId:1,tipo:"División de baño",med:"1.60 × 1.90 m",
+  mat:"Templado 8 mm · perfil inox 304",total:1250000,
+  abonos:[{m:625000,f:"2 de sep",via:"Nequi"}],
+  est:"fabricacion",entregaEn:4,medidoPor:"Don Jairo",medidoEl:"2 de sep",rec:false},
+ {id:2,num:"P-238",cliId:2,tipo:"Pasamanos de escalera",med:"12.40 m lineales · 9 parantes",
+  mat:"Inox 304 · tubo 2\" · vidrio 10 mm",total:4340000,
+  abonos:[{m:1500000,f:"28 de ago",via:"Bancolombia"},{m:670000,f:"3 de sep",via:"Bancolombia"}],
+  est:"fabricacion",entregaEn:7,medidoPor:"Don Jairo",medidoEl:"29 de ago",rec:false},
+ {id:3,num:"P-236",cliId:3,tipo:"Fachada de vidrio",med:"28.00 m²",
+  mat:"Templado 10 mm · estructura inox 316",total:14700000,
+  abonos:[{m:7350000,f:"26 de ago",via:"Bancolombia"}],
+  est:"fabricacion",entregaEn:12,medidoPor:"Marcela",medidoEl:"26 de ago",rec:false},
+
+ {id:4,num:"P-243",cliId:4,tipo:"Puerta de ducha corrediza",med:"1.20 × 2.00 m",
+  mat:"Templado 8 mm",total:1650000,abonos:[],
+  est:"cotizado",cotizadaHace:4,medidoPor:"Don Jairo",medidoEl:"3 de sep",rec:false},
+ {id:5,num:"P-240",cliId:5,tipo:"Baranda de terraza",med:"8.50 m lineales",
+  mat:"Inox 316 · vidrio 10 mm",total:6120000,abonos:[],
+  est:"cotizado",cotizadaHace:9,medidoPor:"Marcela",medidoEl:"28 de ago",rec:false},
+
+ {id:6,num:"P-229",cliId:6,tipo:"Divisiones de baño · 2 unidades",med:"1.50 × 1.90 m c/u",
+  mat:"Templado 8 mm",total:2300000,
+  abonos:[{m:1150000,f:"11 de ago",via:"Nequi"}],
+  est:"instalado",diasSaldo:18,medidoPor:"Don Jairo",medidoEl:"11 de ago",rec:false},
+ {id:7,num:"P-234",cliId:7,tipo:"Pasamanos de rampa",med:"6.20 m lineales · 5 parantes",
+  mat:"Inox 304 · tubo 1½\"",total:2170000,
+  abonos:[{m:1085000,f:"20 de ago",via:"Bancolombia"}],
+  est:"instalado",diasSaldo:6,medidoPor:"Don Jairo",medidoEl:"20 de ago",rec:false},
+
+ {id:8,num:"P-225",cliId:8,tipo:"Mampara de ingreso",med:"2.40 × 2.60 m",
+  mat:"Templado 10 mm · inox 304",total:4680000,
+  abonos:[{m:2340000,f:"2 de ago",via:"Efectivo"},{m:2340000,f:"19 de ago",via:"Efectivo"}],
+  est:"cobrado",medidoPor:"Marcela",medidoEl:"2 de ago",rec:false},
+ {id:9,num:"P-198",cliId:6,tipo:"Espejos con marco inox · 4 unidades",med:"0.80 × 1.10 m c/u",
+  mat:"Espejo 4 mm · marco inox 304",total:1480000,
+  abonos:[{m:740000,f:"12 de jun",via:"Nequi"},{m:740000,f:"3 de jul",via:"Nequi"}],
+  est:"cobrado",medidoPor:"Don Jairo",medidoEl:"10 de jun",rec:false},
+ {id:10,num:"P-205",cliId:1,tipo:"Pasamanos de escalera interior",med:"4.20 m lineales · 4 parantes",
+  mat:"Inox 304 · tubo 1½\"",total:2240000,
+  abonos:[{m:1120000,f:"1 de jul",via:"Nequi"},{m:1120000,f:"22 de jul",via:"Nequi"}],
+  est:"cobrado",medidoPor:"Don Jairo",medidoEl:"28 de jun",rec:false}
+];
+
+/* ── demostración (no toca la base de datos) ─────────────────── */
+var DEMO=false;
+window.verDemo=function(){
+  DEMO=true;
+  NEGOCIO={id:"demo", nombre:"Aceros y Cristales La 14"};
+  clientes=JSON.parse(JSON.stringify(SEED_CLIENTES));
+  pedidos =JSON.parse(JSON.stringify(SEED_PEDIDOS));
+  gate(null);
+  $("negNombre").textContent=NEGOCIO.nombre;
+  var av=$("soloLectura");
+  av.textContent="DEMOSTRACIÓN · puedes tocar todo, no se guarda nada";
+  av.style.display="block";
+  var b=document.querySelector(".salir");
+  if(b){ b.textContent="Salir"; b.setAttribute("onclick","location.reload()"); }
+  pintar();
+  toast("Estás en la demostración");
+};
 
 /* ── Supabase ─────────────────── */
 var SUPABASE_URL = "https://ncfcpbkeabolvodjyggh.supabase.co";
@@ -720,6 +802,9 @@ window.nuevoCliente=function(){
 window.guardarCliente=async function(){
   var nom=($("f_nom").value||"").trim();
   if(!nom){ $("f_err").textContent="Escribe al menos el nombre del cliente."; $("f_err").classList.add("on"); $("f_nom").focus(); return; }
+  if(DEMO){ clientes.push({id:"d"+Date.now(),n:nom,tel:($("f_tel").value||"").trim()||"sin teléfono",
+      dir:($("f_dir").value||"").trim()||"sin dirección",tipo:nuevoTipo,nota:($("f_nota").value||"").trim()});
+    closeSheet(); pintar(); go("cli"); toast(nom+" · cliente guardado"); return; }
   var r=await sb.from("taller_clientes").insert({
     negocio_id:NEGOCIO.id, nombre:nom,
     telefono:($("f_tel").value||"").trim()||null,
@@ -766,6 +851,12 @@ window.guardarPedido=async function(){
   var tipo=($("g_tipo").value||"").trim(), med=($("g_med").value||"").trim(),
       total=parseInt(($("g_total").value||"").replace(/[^0-9]/g,""),10);
   if(!tipo || !med || !total || total<=0){ $("g_err").textContent="Falta el trabajo, la medida o el valor cotizado."; $("g_err").classList.add("on"); return; }
+  if(DEMO){
+    var nd="P-"+(pedidos.reduce(function(a,p){var n=parseInt(String(p.num).split("-")[1],10);return Math.max(a,isNaN(n)?0:n);},240)+1);
+    pedidos.unshift({id:"d"+Date.now(),num:nd,cliId:$("g_cli").value,tipo:tipo,med:med,
+      mat:($("g_mat").value||"").trim()||"sin especificar",total:total,abonos:[],est:"cotizado",
+      cotizadaHace:0,medidoPor:($("g_midio").value||"").trim()||"—",medidoEl:"hoy",rec:false});
+    closeSheet(); pintar(); go("ped"); toast(nd+" · pedido guardado por "+sol(total)); return; }
   var num="P-"+(pedidos.reduce(function(a,p){var n=parseInt(String(p.num).split("-")[1],10);return Math.max(a,isNaN(n)?0:n);},240)+1);
   var r=await sb.from("taller_pedidos").insert({
     negocio_id:NEGOCIO.id, cliente_id:$("g_cli").value, num:num, tipo:tipo, medida:med,
@@ -858,6 +949,11 @@ window.abonar=async function(i,frac){
   var s=saldo(p);
   var monto = frac>=1 ? s : Math.min(Math.round(p.total*frac), s);
   if(monto<=0) return;
+  if(DEMO){
+    p.abonos.push({m:monto,f:"hoy",via:medioSel});
+    if(p.est==="cotizado"){p.est="fabricacion";p.entregaEn=10;}
+    if(saldo(p)<=0 && p.est==="instalado") p.est="cobrado";
+    closeSheet(); pintar(); toast("Abono de "+sol(monto)+" por "+medioSel); return; }
   var ra=await sb.from("taller_abonos").insert({negocio_id:NEGOCIO.id, pedido_id:p.id,
           monto:monto, medio:medioSel, fecha:hoyISO()}).select().single();
   if(ra.error){ toast("No se pudo registrar el abono"); return; }
@@ -872,6 +968,8 @@ window.abonar=async function(i,frac){
 
 window.mover=async function(i){
   var p=findP(i); if(!p) return;
+  if(DEMO){ p.est="instalado"; p.diasSaldo=0; p.rec=false; closeSheet(); pintar();
+    toast("Instalado · falta cobrar "+sol(saldo(p))); return; }
   var r=await sb.from("taller_pedidos").update({estado:"instalado", instalado_el:hoyISO()}).eq("id",p.id);
   if(r.error){ toast("No se pudo actualizar"); return; }
   p.est="instalado"; p.diasSaldo=0; p.rec=false;
