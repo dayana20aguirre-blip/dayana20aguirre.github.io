@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Canon</title>
+<meta name="description" content="Lleva los arriendos de tus inmuebles: quién pagó, quién debe y cuándo puedes subir el canon.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#74305A">
+<link rel="icon" href="favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Canon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --page:#EFECEE;
+  --shell:#FFFFFF;
+  --surf:#FFFFFF;
+  --surf-2:#F5F2F4;
+  --surf-3:#EAE5E8;
+  --ink:#1A161A;
+  --ink-2:#5D555B;
+  --ink-3:#918891;
+  --rule:#E6E0E4;
+  --rule-2:#CEC6CC;
+  --brand:#74305A;
+  --brand-ink:#5E2549;
+  --brand-wash:#F5E6EF;
+  --ok:#2E6B45;
+  --ok-wash:#E0EFE6;
+  --warn:#8A5A06;
+  --warn-wash:#FBEEDA;
+  --bad:#A83228;
+  --bad-wash:#F8E3E0;
+  --on-brand:#FFFFFF;
+  --sh:0 2px 6px rgba(26,22,26,.06), 0 30px 60px -30px rgba(26,22,26,.36);
+  --sh-sheet:0 -8px 44px -14px rgba(26,22,26,.3);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0C0A0C;
+    --shell:#171418;
+    --surf:#171418;
+    --surf-2:#201C21;
+    --surf-3:#2A252B;
+    --ink:#F1EDF0;
+    --ink-2:#A79FA5;
+    --ink-3:#786F76;
+    --rule:#2A252B;
+    --rule-2:#3D373E;
+    --brand:#D896B8;
+    --brand-ink:#E7B0CB;
+    --brand-wash:#2E1926;
+    --ok:#5FC086;
+    --ok-wash:#132A1D;
+    --warn:#E0AA55;
+    --warn-wash:#2F2413;
+    --bad:#E97C6A;
+    --bad-wash:#33191A;
+    --on-brand:#171418;
+    --sh:0 2px 6px rgba(0,0,0,.4), 0 30px 60px -30px rgba(0,0,0,.95);
+    --sh-sheet:0 -8px 44px -14px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --page:#0C0A0C;
+  --shell:#171418;
+  --surf:#171418;
+  --surf-2:#201C21;
+  --surf-3:#2A252B;
+  --ink:#F1EDF0;
+  --ink-2:#A79FA5;
+  --ink-3:#786F76;
+  --rule:#2A252B;
+  --rule-2:#3D373E;
+  --brand:#D896B8;
+  --brand-ink:#E7B0CB;
+  --brand-wash:#2E1926;
+  --ok:#5FC086;
+  --ok-wash:#132A1D;
+  --warn:#E0AA55;
+  --warn-wash:#2F2413;
+  --bad:#E97C6A;
+  --bad-wash:#33191A;
+  --on-brand:#171418;
+  --sh:0 2px 6px rgba(0,0,0,.4), 0 30px 60px -30px rgba(0,0,0,.95);
+  --sh-sheet:0 -8px 44px -14px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--page);color:var(--ink);
+  font-family:"Public Sans",system-ui,-apple-system,sans-serif;
+  font-size:15px;line-height:1.5;
+  display:flex;flex-direction:column;align-items:center;padding:26px 16px 40px;min-height:100vh;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:8px}
+.mono{font-family:"Roboto Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.disp{font-family:"Outfit","Public Sans",sans-serif}
+
+.pagehead{width:100%;max-width:416px;margin-bottom:16px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.wordmark{font-family:"Outfit",sans-serif;font-weight:800;font-size:19px;letter-spacing:-.03em;color:var(--brand)}
+.demotag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--rule-2);border-radius:100px;padding:4px 10px}
+.pagefoot{width:100%;max-width:416px;margin-top:18px;font-size:12.5px;line-height:1.55;color:var(--ink-3)}
+
+.shell{
+  width:100%;max-width:416px;height:min(758px,86vh);min-height:610px;
+  background:var(--shell);border:1px solid var(--rule);border-radius:30px;
+  box-shadow:var(--sh);position:relative;overflow:hidden;display:flex;flex-direction:column;
+}
+.appbar{flex:none;padding:17px 20px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--rule)}
+.appbar .n{font-family:"Outfit",sans-serif;font-weight:800;font-size:17px;letter-spacing:-.03em;color:var(--brand)}
+.mes{font-size:11.5px;font-weight:600;color:var(--ink-2);background:var(--surf-2);border-radius:100px;padding:5px 11px;white-space:nowrap}
+
+.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:18px 20px 22px;-webkit-overflow-scrolling:touch}
+.screen{display:none}
+.screen.on{display:block}
+
+.h{font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin:24px 0 11px}
+.h:first-child{margin-top:0}
+
+/* hero */
+.hero .lab{font-size:12.5px;color:var(--ink-2);font-weight:600}
+.hero .amt{font-family:"Outfit",sans-serif;font-weight:800;font-size:38px;letter-spacing:-.035em;line-height:1.05;margin:5px 0 3px;font-variant-numeric:tabular-nums}
+.hero .of{font-size:13px;color:var(--ink-3);font-weight:500}
+.hero .of b{color:var(--ink-2);font-weight:600}
+.track{height:7px;background:var(--surf-3);border-radius:100px;margin-top:13px;overflow:hidden}
+.track i{display:block;height:100%;background:var(--ok);border-radius:100px;transition:width .45s cubic-bezier(.2,.85,.25,1)}
+@media (prefers-reduced-motion:reduce){.track i{transition:none}}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.stat{background:var(--surf-2);border:1px solid var(--rule);border-radius:13px;padding:11px 10px}
+.stat .n{font-family:"Outfit",sans-serif;font-weight:700;font-size:20px;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:10px;font-weight:600;color:var(--ink-3);margin-top:5px}
+.stat.ok .n{color:var(--ok)} .stat.warn .n{color:var(--warn)} .stat.bad .n{color:var(--bad)}
+
+.alert{margin-top:16px;background:var(--bad-wash);border-radius:15px;padding:15px 17px;display:flex;align-items:center;gap:13px;width:100%;text-align:left;transition:transform .12s ease}
+.alert:active{transform:scale(.985)}
+.alert .t{flex:1;min-width:0}
+.alert .amt{font-family:"Outfit",sans-serif;font-weight:700;font-size:21px;letter-spacing:-.025em;color:var(--bad);font-variant-numeric:tabular-nums;line-height:1.15}
+.alert .d{font-size:12.5px;color:var(--ink-2);margin-top:3px;font-weight:500}
+.alert .go{color:var(--bad);font-size:19px;flex:none;font-weight:600}
+.alert.clear{background:var(--ok-wash)}
+.alert.clear .amt{color:var(--ok)} .alert.clear .go{color:var(--ok)}
+
+/* listas */
+.list{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:15px;overflow:hidden}
+.row{background:var(--surf);padding:13px 14px;display:flex;align-items:center;gap:12px;width:100%;text-align:left;transition:background .12s ease}
+.row:active{background:var(--surf-2)}
+.ic{width:36px;height:36px;border-radius:11px;flex:none;display:grid;place-items:center;font-size:15px;background:var(--surf-2)}
+.ic.ok{background:var(--ok-wash)} .ic.warn{background:var(--warn-wash)} .ic.bad{background:var(--bad-wash)}
+.who{flex:1;min-width:0}
+.who .nm{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who .sub{font-size:11.5px;color:var(--ink-3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.right{flex:none;text-align:right}
+.right .v{font-family:"Roboto Mono",monospace;font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:9.5px;font-weight:700;padding:3px 7px;border-radius:100px;margin-top:4px;white-space:nowrap}
+.pill.ok{background:var(--ok-wash);color:var(--ok)}
+.pill.warn{background:var(--warn-wash);color:var(--warn)}
+.pill.bad{background:var(--bad-wash);color:var(--bad)}
+.pill.sent{background:var(--brand-wash);color:var(--brand-ink)}
+
+.wabtn{flex:none;background:#1DA851;color:#fff;border-radius:10px;padding:8px 11px;font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:5px}
+.wabtn.done{background:var(--surf-2);color:var(--ink-3);border:1px solid var(--rule)}
+.wabtn svg{width:13px;height:13px;flex:none}
+
+/* alertas / ipc */
+.card{background:var(--surf);border:1px solid var(--rule);border-radius:15px;padding:16px 17px;margin-bottom:11px}
+.card.hot{border-color:var(--brand);border-left-width:3px}
+.card .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:3px}
+.card .nm{font-weight:700;font-size:14.5px}
+.card .when{font-family:"Roboto Mono",monospace;font-size:11px;color:var(--brand);font-weight:500;flex:none}
+.card .sub{font-size:12px;color:var(--ink-3);margin-bottom:12px}
+.subida{display:flex;align-items:center;gap:11px;background:var(--surf-2);border-radius:11px;padding:11px 13px}
+.subida .de{font-family:"Roboto Mono",monospace;font-size:12.5px;color:var(--ink-3);text-decoration:line-through}
+.subida .fl{color:var(--ink-3);font-size:13px}
+.subida .a{font-family:"Outfit",sans-serif;font-weight:700;font-size:17px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--ok)}
+.subida .pc{margin-left:auto;font-family:"Roboto Mono",monospace;font-size:11px;color:var(--ok);background:var(--ok-wash);border-radius:100px;padding:3px 8px;flex:none}
+.legal{font-size:11.5px;color:var(--ink-3);line-height:1.5;margin-top:10px}
+.legal b{color:var(--ink-2);font-weight:600}
+.card.nota{background:var(--warn-wash);border-color:transparent}
+.card.nota .nm{color:var(--warn)}
+.card.nota .legal{color:var(--ink-2)}
+
+.anual{background:var(--brand-wash);border-radius:15px;padding:16px 17px;margin-top:6px}
+.anual .l{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand-ink)}
+.anual .v{font-family:"Outfit",sans-serif;font-weight:800;font-size:26px;letter-spacing:-.03em;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.anual .d{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+
+/* tabs */
+.tabs{flex:none;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);background:var(--surf)}
+.tab{padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink-3);transition:color .14s ease}
+.tab .i{width:20px;height:20px}
+.tab .lb{font-size:10.5px;font-weight:600}
+.tab[aria-selected="true"]{color:var(--brand)}
+.tabwrap{position:relative;display:flex;justify-content:center}
+.badge{position:absolute;transform:translate(13px,-5px);background:var(--bad);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:100px;display:grid;place-items:center;padding:0 4px;font-family:"Roboto Mono",monospace}
+
+/* sheet */
+.scrim{position:absolute;inset:0;background:rgba(12,10,12,.46);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:20}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surf);border-radius:22px 22px 0 0;box-shadow:var(--sh-sheet);z-index:21;transform:translateY(102%);transition:transform .28s cubic-bezier(.2,.85,.25,1);max-height:90%;overflow-y:auto}
+.sheet.on{transform:none}
+@media (prefers-reduced-motion:reduce){.sheet,.scrim{transition:none}}
+.grab{width:36px;height:4px;background:var(--rule-2);border-radius:100px;margin:10px auto 0}
+.sin{padding:14px 21px 22px}
+.sin h3{font-family:"Outfit",sans-serif;font-weight:700;font-size:19px;letter-spacing:-.025em;margin:0}
+.sin .ss{font-size:13px;color:var(--ink-3);margin-top:3px}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--rule);font-size:14px}
+.kv:last-of-type{border-bottom:none}
+.kv .k{color:var(--ink-3);font-weight:500}
+.kv .v{font-weight:600;font-family:"Roboto Mono",monospace;font-variant-numeric:tabular-nums;text-align:right}
+.kv .v.bad{color:var(--bad)} .kv .v.ok{color:var(--ok)}
+.btn{width:100%;border-radius:13px;padding:14px;font-weight:700;font-size:14.5px;margin-top:9px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .1s ease}
+.btn:active{transform:scale(.985)}
+.btn.primary{background:var(--brand);color:var(--on-brand)}
+.btn.wa{background:#1DA851;color:#fff}
+.btn.ghost{background:var(--surf-2);color:var(--ink-2);border:1px solid var(--rule)}
+.btn svg{width:16px;height:16px}
+.msgbox{background:var(--surf-2);border:1px solid var(--rule);border-radius:14px;padding:14px 15px;font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:14px 0 4px;white-space:pre-wrap}
+.msglab{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.mrow{display:flex;gap:7px;margin:15px 0 4px;overflow-x:auto;scrollbar-width:none}
+.mrow::-webkit-scrollbar{display:none}
+.mb{flex:none;font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:100px;border:1px solid var(--rule-2);color:var(--ink-2);transition:all .14s ease}
+.mb[aria-pressed="true"]{background:var(--ink);color:var(--page);border-color:var(--ink)}
+
+.toast{position:absolute;left:16px;right:16px;bottom:74px;z-index:30;background:var(--ink);color:var(--page);border-radius:13px;padding:12px 16px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(12px);pointer-events:none;transition:all .25s cubic-bezier(.2,.85,.25,1)}
+.toast.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.toast .d{width:7px;height:7px;border-radius:100px;background:var(--brand);flex:none}
+
+.empty{text-align:center;padding:40px 20px;color:var(--ink-3)}
+.empty .e{font-size:30px;margin-bottom:9px}
+.empty .t{font-family:"Outfit",sans-serif;font-weight:600;font-size:15px;color:var(--ink-2)}
+.empty .s{font-size:13px;margin-top:5px}
+
+@media (max-width:520px){body{padding:14px 12px 28px}.shell{height:min(720px,84vh);border-radius:26px}
+  .who .sub{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.35}
+  .demotag{letter-spacing:.06em}}
+
+/* ── acceso, formularios y panel ─────────────────── */
+.appbar .who2{font-size:11.5px;color:var(--ink-3);margin-top:2px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.appbar .der{text-align:right;flex:none}
+.salir{font-size:11px;color:var(--ink-3);text-decoration:underline;margin-top:3px;display:block;margin-left:auto}
+#soloLectura{display:none;background:var(--warn-wash);color:var(--warn);font-size:11.5px;font-weight:600;
+  text-align:center;padding:7px 12px;border-bottom:1px solid var(--rule)}
+
+.campo{margin-bottom:12px}
+.campo label{display:block;font-size:11.5px;font-weight:700;color:var(--ink-3);margin-bottom:5px;letter-spacing:.02em}
+.campo input,.campo select,.campo textarea{
+  width:100%;background:var(--surf-2);border:1px solid var(--rule-2);border-radius:11px;
+  padding:12px 13px;font-family:inherit;font-size:15px;color:var(--ink);appearance:none}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:transparent}
+.campo input::placeholder,.campo textarea::placeholder{color:var(--ink-3)}
+.campo select{background-image:linear-gradient(45deg,transparent 50%,var(--ink-3) 50%),linear-gradient(135deg,var(--ink-3) 50%,transparent 50%);
+  background-position:calc(100% - 17px) 51%,calc(100% - 12px) 51%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:34px}
+.campo .ay{font-size:11.5px;color:var(--ink-3);margin-top:5px;line-height:1.45}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sec{font-family:"Outfit",sans-serif;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-3);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.nota{font-size:12.5px;color:var(--ink-3);line-height:1.5;margin-top:10px}
+
+.gate{position:absolute;inset:0;z-index:40;background:var(--shell);display:none;
+  flex-direction:column;justify-content:center;padding:30px 24px;overflow-y:auto;border-radius:inherit}
+.gate.on{display:flex}
+.gate .marca{font-family:"Outfit",sans-serif;font-weight:800;font-size:27px;letter-spacing:-.03em;color:var(--brand);text-align:center}
+.gate .baja{font-size:13.5px;color:var(--ink-3);text-align:center;margin-top:6px;line-height:1.5}
+.gate h3{font-family:"Outfit",sans-serif;font-weight:700;font-size:19px;letter-spacing:-.02em;margin:26px 0 14px;text-align:center}
+.gate .err{color:var(--bad);font-size:13px;margin:4px 0 8px;display:none;text-align:center;line-height:1.45}
+.gate .err.on{display:block}
+.gate .alt{text-align:center;font-size:13.5px;color:var(--ink-3);margin-top:16px}
+.gate .alt button{color:var(--brand);font-weight:700;text-decoration:underline}
+.gate.panel{justify-content:flex-start;padding:24px 20px}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px}
+.volver{font-size:11.5px;color:var(--ink-3);text-decoration:underline;flex:none}
+.resumen{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 4px}
+.rs{background:var(--surf-2);border:1px solid var(--rule);border-radius:12px;padding:11px 10px;text-align:center}
+.rs .n{font-family:"Outfit",sans-serif;font-weight:800;font-size:19px;line-height:1}
+.rs.v .n{color:var(--bad)} .rs.p .n{color:var(--warn)} .rs.a .n{color:var(--ok)}
+.rs .l{font-size:9.5px;font-weight:700;color:var(--ink-3);margin-top:5px;letter-spacing:.04em}
+.negs{display:flex;flex-direction:column;gap:9px;margin-top:18px}
+.neg{background:var(--surf-2);border:1px solid var(--rule);border-radius:13px;padding:14px 15px;text-align:left;position:relative}
+.neg .cab{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.neg .nm{font-weight:700;font-size:15px}
+.neg .rb{font-size:12px;color:var(--ink-3);margin-top:3px}
+.neg .tl{font-size:11.5px;color:var(--ink-3);margin-top:6px}
+.neg .vence{font-size:11.5px;margin-top:7px;font-weight:700}
+.neg .vence.mal{color:var(--bad)} .neg .vence.ojo{color:var(--warn)} .neg .vence.bien{color:var(--ink-3)}
+.pillc{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:100px;white-space:nowrap;flex:none}
+.pillc.prueba{background:var(--surf-3);color:var(--ink-2)}
+.pillc.activo{background:var(--ok-wash);color:var(--ok)}
+.pillc.pronto{background:var(--warn-wash);color:var(--warn)}
+.pillc.vencido{background:var(--bad-wash);color:var(--bad)}
+.acciones{display:flex;gap:7px;margin-top:11px}
+.acciones button{flex:1;font-size:12.5px;font-weight:700;padding:9px;border-radius:10px}
+.abrir{background:var(--surf-3);color:var(--ink-2)}
+.cobrar{background:#1DA851;color:#fff}
+
+.fab{position:absolute;right:17px;bottom:78px;z-index:25;width:52px;height:52px;border-radius:50%;
+  background:var(--brand);color:var(--on-brand);display:none;align-items:center;justify-content:center;
+  box-shadow:0 8px 22px -6px rgba(116,48,90,.6);transition:transform .12s ease}
+.fab.on{display:flex}
+.fab:active{transform:scale(.92)}
+.fab svg{width:23px;height:23px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="pagehead">
+  <div class="wordmark">Canon</div>
+  <div class="demotag">En la nube</div>
+</div>
+
+<div class="shell">
+  <div class="appbar">
+    <div>
+      <div class="n">Canon</div>
+      <div class="who2" id="negNombre">—</div>
+    </div>
+    <div class="der">
+      <div class="mes" id="mesLab">—</div>
+      <button class="salir" onclick="salir()">Salir</button>
+    </div>
+  </div>
+  <div id="soloLectura">Estás viendo los datos de un cliente</div>
+
+  <div class="body" id="body">
+
+    <!-- ESTE MES -->
+    <div class="screen on" id="s-mes">
+      <div class="hero">
+        <div class="lab">Recibido este mes</div>
+        <div class="amt disp mono" id="hAmt">—</div>
+        <div class="of">de <b id="hMeta">—</b> esperados</div>
+        <div class="track"><i id="hBar" style="width:0%"></i></div>
+      </div>
+      <div class="stats">
+        <div class="stat ok"><div class="n mono" id="cPag">0</div><div class="l">Pagaron</div></div>
+        <div class="stat warn"><div class="n mono" id="cPen">0</div><div class="l">Por vencer</div></div>
+        <div class="stat bad"><div class="n mono" id="cAtr">0</div><div class="l">Atrasados</div></div>
+      </div>
+      <button class="alert" id="alertBox" onclick="go('props')">
+        <div class="t">
+          <div class="amt mono" id="aAmt">—</div>
+          <div class="d" id="aTxt">—</div>
+        </div>
+        <div class="go">→</div>
+      </button>
+      <p class="h">Atrasados</p>
+      <div class="list" id="listaAtr"></div>
+    </div>
+
+    <!-- INMUEBLES -->
+    <div class="screen" id="s-props">
+      <p class="h">Tus inmuebles</p>
+      <div class="list" id="listaProps"></div>
+    </div>
+
+    <!-- ALERTAS -->
+    <div class="screen" id="s-alertas">
+      <p class="h" id="hAum">Aumentos que puedes aplicar</p>
+      <div id="ipc"></div>
+      <p class="h">Contratos</p>
+      <div id="contratos"></div>
+      <p class="h" id="hDecl">Para la declaración de renta</p>
+      <div class="anual">
+        <div class="l" id="anualL">Acumulado</div>
+        <div class="v mono" id="anualV">—</div>
+        <div class="d" id="anualD">—</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-s="mes" onclick="go('mes')">
+      <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h5v8H3zM10 3h4v18h-4zM16 9h5v12h-5z"/></svg>
+      <span class="lb">Este mes</span>
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-s="props" onclick="go('props')">
+      <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20z"/><path d="M9.5 21.5V13h5v8.5"/></svg>
+      <span class="lb">Inmuebles</span>
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-s="alertas" onclick="go('alertas')">
+      <span class="tabwrap">
+        <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span class="badge mono" id="tabBadge">0</span>
+      </span>
+      <span class="lb">Alertas</span>
+    </button>
+  </div>
+
+  <!-- ENTRAR -->
+  <div class="gate on" id="gate-auth">
+    <div class="marca">Canon</div>
+    <div class="baja">Los arriendos de tus inmuebles,<br>ordenados en tu celular</div>
+    <h3 id="auth-titulo">Entrar</h3>
+    <div class="campo"><label>Correo</label><input id="a_mail" type="email" autocomplete="email" placeholder="tu@correo.com"></div>
+    <div class="campo"><label>Contraseña</label><input id="a_pass" type="password" autocomplete="current-password" placeholder="Tu contraseña"></div>
+    <p class="err" id="a_err"></p>
+    <button class="btn primary" id="a_btn" onclick="acceder()">Entrar</button>
+    <p class="alt">¿No tienes cuenta? <button onclick="modoRegistro()">Regístrate</button></p>
+    <p class="alt" style="margin-top:10px">¿Solo quieres verla? <button onclick="verDemo()">Ver demostración</button></p>
+  </div>
+
+  <!-- CONFIGURAR -->
+  <div class="gate" id="gate-setup">
+    <div class="marca">Canon</div>
+    <div class="baja">Falta saber quién eres y dónde cobras</div>
+    <h3>Configura tu cuenta</h3>
+    <div class="campo"><label>País</label><select id="s_pais">
+      <option value="co">Colombia</option>
+      <option value="pe">Perú</option>
+    </select><div class="ay">Define la moneda, los medios de pago y las reglas de aumento.</div></div>
+    <div class="campo"><label>Tu nombre o el de tu inmobiliaria</label><input id="s_nom" type="text" placeholder="Ej: Inversiones Ortiz"></div>
+    <div class="campo"><label>Tu teléfono</label><input id="s_tel" type="tel" placeholder="310 555 2233"></div>
+    <div class="campo"><label>Dónde te transfieren</label><input id="s_cta" type="text" placeholder="Ej: Nequi 300 123 4567"><div class="ay">Aparece en los cobros que mandes por WhatsApp.</div></div>
+    <p class="err" id="s_err"></p>
+    <button class="btn primary" id="s_btn" onclick="crearCuenta()">Empezar</button>
+    <p class="alt"><button onclick="salir()">Salir</button></p>
+  </div>
+
+  <!-- PANEL (solo administradora) -->
+  <div class="gate panel" id="gate-admin">
+    <div class="panel-head"><div class="marca">Canon</div><button class="volver" onclick="salir()">Salir</button></div>
+    <div class="baja" style="text-align:left" id="admin-sub">Cargando…</div>
+    <div class="resumen" id="resumen"></div>
+    <div class="negs" id="admin-lista"></div>
+  </div>
+
+  <div class="scrim" id="scrim" onclick="closeSheet()"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="grab"></div><div class="sin" id="sin"></div></div>
+  <button class="fab" id="fab" aria-label="Agregar inmueble" onclick="nuevoInmueble()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+  <div class="toast" id="toast"><span class="d"></span><span id="toastTxt"></span></div>
+</div>
+
+<p class="pagefoot">Tus datos se guardan en la nube. Puedes entrar desde cualquier celular o computador con tu correo y contraseña.</p>
+
+<script>
+(function(){
+"use strict";
+
+/* ── configuración ─────────────────── */
+var SUPABASE_URL = "https://ncfcpbkeabolvodjyggh.supabase.co";
+var SUPABASE_KEY = "sb_publishable_4062t_iB1h0Vle6LUXgb8Q_bhoeGxcq";
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+var ADMIN_EMAIL = "dayana20aguirre@gmail.com";
+
+/* Tope legal de aumento = IPC del año ANTERIOR (Colombia, Ley 820 art. 20).
+   Actualizar cada enero con el IPC que publica el DANE. */
+var IPC_POR_ANIO = { 2026: 5.10 };
+
+var PAISES = {
+  co: { moneda:"$", loc:"es-CO", palabra:"canon", tope:true,
+        medios:[{k:"nequi",n:"Nequi"},{k:"daviplata",n:"Daviplata"},{k:"banco",n:"Bancolombia"},{k:"efectivo",n:"Efectivo"}] },
+  pe: { moneda:"S/ ", loc:"es-PE", palabra:"alquiler", tope:false,
+        medios:[{k:"yape",n:"Yape"},{k:"plin",n:"Plin"},{k:"banco",n:"BCP"},{k:"efectivo",n:"Efectivo"}] }
+};
+
+var TIPOS = [
+  {k:"apto",    n:"Apartamento", e:"🏢", viv:true},
+  {k:"casa",    n:"Casa",        e:"🏡", viv:true},
+  {k:"hab",     n:"Habitación",  e:"🚪", viv:true},
+  {k:"local",   n:"Local",       e:"🏬", viv:false},
+  {k:"bodega",  n:"Bodega",      e:"🏭", viv:false},
+  {k:"finca",   n:"Finca",       e:"🌾", viv:true}
+];
+
+var MESES_L=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+var MESES_C=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+
+/* ── estado ─────────────────── */
+var CUENTA=null, PAIS="co", inmuebles=[], pagos=[], DEMO=false, esAdmin=false, soloLectura=false;
+var hoy=new Date();
+var HOY_Y=hoy.getFullYear(), HOY_M=hoy.getMonth(), HOY_D=hoy.getDate();
+
+var $=function(x){return document.getElementById(x);};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function cfg(){return PAISES[PAIS]||PAISES.co;}
+function cop(n){return cfg().moneda+Math.round(Number(n)||0).toLocaleString(cfg().loc);}
+function palabra(){return cfg().palabra;}
+function nombreMedio(k){var m=cfg().medios,i;for(i=0;i<m.length;i++){if(m[i].k===k)return m[i].n;}return "—";}
+function primerNombre(n){return String(n||"").trim().split(/\s+/)[0]||"vecino";}
+function dias(n){return n===1?"1 día":n+" días";}
+function tipoDe(k){for(var i=0;i<TIPOS.length;i++){if(TIPOS[i].k===k)return TIPOS[i];}return TIPOS[0];}
+function hoyD(){return new Date(HOY_Y,HOY_M,HOY_D);}
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function deISO(s){if(!s)return null;var p=String(s).slice(0,10).split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+function fechaCorta(s){var d=deISO(s);return d?d.getDate()+" de "+MESES_C[d.getMonth()]:"—";}
+function diasDelMes(y,m){return new Date(y,m+1,0).getDate();}
+function num(v){var n=Number(String(v==null?"":v).replace(/[^0-9.-]/g,""));return isFinite(n)?n:0;}
+
+/* Próximo aniversario del contrato, contado desde el último aumento
+   (o desde el inicio si nunca se ha aumentado). Devuelve días que faltan. */
+function diasAniversario(p){
+  var base=deISO(p.ultimoAumento||p.inicio); if(!base) return null;
+  var h=hoyD(), n=new Date(base.getFullYear(),base.getMonth(),base.getDate());
+  var guarda=0;
+  while(n<=h && guarda++<200) n.setFullYear(n.getFullYear()+1);
+  return Math.round((n-h)/86400000);
+}
+/* Fin del período de contrato vigente. Si ya se renovó tácitamente,
+   avanza al siguiente período completo. */
+function diasContrato(p){
+  var base=deISO(p.inicio); if(!base) return null;
+  var meses=p.meses||12, h=hoyD();
+  var n=new Date(base.getFullYear(),base.getMonth(),base.getDate());
+  n.setMonth(n.getMonth()+meses);
+  var guarda=0;
+  while(n<=h && guarda++<200) n.setMonth(n.getMonth()+meses);
+  return Math.round((n-h)/86400000);
+}
+
+/* ── pagos del mes en curso ─────────────────── */
+function pagoDe(id){
+  for(var i=0;i<pagos.length;i++){
+    if(pagos[i].inmuebleId===id && pagos[i].anio===HOY_Y && pagos[i].mes===HOY_M+1) return pagos[i];
+  }
+  return null;
+}
+function estado(p){
+  if(pagoDe(p.id)) return "ok";
+  var tope=Math.min(p.dia, diasDelMes(HOY_Y,HOY_M));
+  return HOY_D>tope ? "bad" : "warn";
+}
+var LBL={ok:"Pagó",warn:"Por vencer",bad:"Atrasado"};
+function diasAtraso(p){return Math.max(HOY_D-Math.min(p.dia,diasDelMes(HOY_Y,HOY_M)),0);}
+
+/* ── demostración (no toca la base de datos) ─────────────────── */
+window.verDemo=function(){
+  DEMO=true; PAIS="co";
+  CUENTA={id:"demo", nombre:"Inversiones Ortiz", cuenta:"Nequi 300 123 4567", pais:"co"};
+  var hoyI=hoyD();
+  function atras(d){var x=new Date(hoyI);x.setDate(x.getDate()-d);return iso(x);}
+  inmuebles=[
+    {id:"d1",nombre:"Apto 302 · Cedritos",ciudad:"Bogotá",inq:"Marcela Ortiz",tel:"3001234567",canon:1850000,admin:280000,dia:5,tipo:"apto",vivienda:true,inicio:atras(552),meses:12,ultimoAumento:null,rec:false},
+    {id:"d2",nombre:"Apto 801 · Chapinero",ciudad:"Bogotá",inq:"Andrés Gaitán",tel:"3109876543",canon:2400000,admin:340000,dia:1,tipo:"apto",vivienda:true,inicio:atras(310),meses:12,ultimoAumento:atras(67),rec:false},
+    {id:"d3",nombre:"Casa · Laureles",ciudad:"Medellín",inq:"Familia Restrepo",tel:"3145558822",canon:3200000,admin:0,dia:10,tipo:"casa",vivienda:true,inicio:atras(540),meses:12,ultimoAumento:atras(356),rec:false},
+    {id:"d4",nombre:"Apto 104 · Suba",ciudad:"Bogotá",inq:"Diana Cortés",tel:"3201112233",canon:1100000,admin:190000,dia:3,tipo:"apto",vivienda:true,inicio:atras(845),meses:12,ultimoAumento:atras(340),rec:false},
+    {id:"d5",nombre:"Local · Envigado",ciudad:"Antioquia",inq:"Ferretería El Roble",tel:"3157778899",canon:2750000,admin:0,dia:5,tipo:"local",vivienda:false,inicio:atras(430),meses:12,ultimoAumento:atras(325),rec:false}
+  ];
+  /* dos pagados este mes, y ocho meses de historial para el acumulado */
+  pagos=[];
+  pagos.push({id:"p1",inmuebleId:"d1",anio:HOY_Y,mes:HOY_M+1,monto:1850000,medio:"nequi",fecha:atras(3)});
+  pagos.push({id:"p2",inmuebleId:"d2",anio:HOY_Y,mes:HOY_M+1,monto:2400000,medio:"banco",fecha:atras(HOY_D-1>0?HOY_D-1:0)});
+  var k=0;
+  for(var m=1;m<=HOY_M;m++){
+    inmuebles.forEach(function(p){
+      pagos.push({id:"h"+(k++),inmuebleId:p.id,anio:HOY_Y,mes:m,monto:p.canon,medio:"banco",fecha:HOY_Y+"-"+String(m).padStart(2,"0")+"-05"});
+    });
+  }
+  gate(null);
+  $("negNombre").textContent=CUENTA.nombre;
+  var t=document.querySelector(".demotag");
+  if(t){ t.textContent="DEMOSTRACIÓN · no se guarda nada"; t.style.color="var(--brand)"; t.style.borderColor="var(--brand)"; }
+  pintar();
+  toast("Estás en la demostración");
+};
+
+/* ── datos ─────────────────── */
+function mapInmueble(r){
+  return {id:r.id, nombre:r.nombre, ciudad:r.ciudad||"", inq:r.inquilino||"Sin inquilino",
+          tel:r.telefono||"", canon:Number(r.canon)||0, admin:Number(r.administracion)||0,
+          dia:Number(r.dia_pago)||1, tipo:r.tipo||"apto", vivienda:r.vivienda!==false,
+          inicio:r.inicio?String(r.inicio).slice(0,10):null, meses:Number(r.meses_contrato)||12,
+          ultimoAumento:r.ultimo_aumento?String(r.ultimo_aumento).slice(0,10):null, rec:false};
+}
+function mapPago(r){
+  return {id:r.id, inmuebleId:r.inmueble_id, anio:Number(r.anio), mes:Number(r.mes),
+          monto:Number(r.monto)||0, medio:r.medio||"", fecha:r.fecha?String(r.fecha).slice(0,10):null};
+}
+
+async function cargarTodo(){
+  var ri = await sb.from("canon_inmuebles").select("*").eq("propietario_id",CUENTA.id).eq("activo",true).order("created_at");
+  var rp = await sb.from("canon_pagos").select("*").eq("propietario_id",CUENTA.id).eq("anio",HOY_Y);
+  if(ri.error || rp.error){ toast("No se pudieron cargar los datos"); return; }
+  inmuebles=(ri.data||[]).map(mapInmueble);
+  pagos=(rp.data||[]).map(mapPago);
+  pintar();
+}
+
+/* ── acceso ─────────────────── */
+var modoNuevo=false;
+function gate(cual){
+  ["auth","setup","admin"].forEach(function(g){ $("gate-"+g).classList.toggle("on", g===cual); });
+}
+window.modoRegistro=function(){
+  modoNuevo=!modoNuevo;
+  $("auth-titulo").textContent = modoNuevo?"Crear cuenta":"Entrar";
+  $("a_btn").textContent       = modoNuevo?"Crear cuenta":"Entrar";
+  $("a_err").classList.remove("on");
+  document.querySelector("#gate-auth .alt").innerHTML = modoNuevo
+    ? '¿Ya tienes cuenta? <button onclick="modoRegistro()">Entrar</button>'
+    : '¿No tienes cuenta? <button onclick="modoRegistro()">Regístrate</button>';
+};
+function errAuth(t){var e=$("a_err");e.textContent=t;e.classList.add("on");}
+
+window.acceder=async function(){
+  var mail=($("a_mail").value||"").trim(), pass=$("a_pass").value||"";
+  if(!mail || pass.length<6){ errAuth("Escribe tu correo y una contraseña de al menos 6 caracteres."); return; }
+  $("a_btn").disabled=true; $("a_btn").textContent="Un momento…";
+  var r = modoNuevo ? await sb.auth.signUp({email:mail,password:pass})
+                    : await sb.auth.signInWithPassword({email:mail,password:pass});
+  $("a_btn").disabled=false; $("a_btn").textContent=modoNuevo?"Crear cuenta":"Entrar";
+  if(r.error){ errAuth(r.error.message); return; }
+  if(modoNuevo && !r.data.session){ errAuth("Cuenta creada. Revisa tu correo para confirmarla y vuelve a entrar."); return; }
+  arrancar();
+};
+
+window.crearCuenta=async function(){
+  var nom=($("s_nom").value||"").trim(), e=$("s_err");
+  if(!nom){ e.textContent="Escribe tu nombre o el de tu inmobiliaria."; e.classList.add("on"); return; }
+  $("s_btn").disabled=true;
+  var u=(await sb.auth.getUser()).data.user;
+  var r=await sb.from("canon_propietarios").insert({
+    owner_id:u.id, nombre:nom, pais:$("s_pais").value,
+    telefono:($("s_tel").value||"").trim()||null,
+    cuenta:($("s_cta").value||"").trim()||null
+  }).select().single();
+  $("s_btn").disabled=false;
+  if(r.error){ e.textContent=r.error.message; e.classList.add("on"); return; }
+  CUENTA=r.data; PAIS=CUENTA.pais||"co";
+  gate(null); $("negNombre").textContent=CUENTA.nombre; cargarTodo();
+};
+
+window.salir=async function(){ await sb.auth.signOut(); location.reload(); };
+
+async function arrancar(){
+  var ses=(await sb.auth.getSession()).data.session;
+  if(!ses){ gate("auth"); return; }
+  esAdmin = (ses.user.email===ADMIN_EMAIL);
+  if(esAdmin){ gate("admin"); cargarPanel(); return; }
+  var r=await sb.from("canon_propietarios").select("*").eq("owner_id",ses.user.id).limit(1);
+  if(r.error){ gate("auth"); errAuth(r.error.message); return; }
+  if(!r.data || !r.data.length){ gate("setup"); return; }
+  CUENTA=r.data[0]; PAIS=CUENTA.pais||"co";
+  gate(null); $("negNombre").textContent=CUENTA.nombre; cargarTodo();
+}
+
+/* ── panel de cobro (solo administradora) ─────────────────── */
+var PANEL=[];
+function dDias(f){ if(!f) return null; var d=deISO(f); return Math.round((d-hoyD())/86400000); }
+function estadoCobro(n){
+  var d=dDias(n.paga_hasta);
+  if(d===null) return {k:"prueba", t:"En prueba", cls:"bien", txt:"Sin fecha de cobro"};
+  if(d<0)      return {k:"vencido",t:"Vencido",  cls:"mal", txt:"Venció hace "+(-d)+(d===-1?" día":" días")};
+  if(d<=7)     return {k:"pronto", t:"Por vencer",cls:"ojo", txt:(d===0?"Vence hoy":"Vence en "+d+(d===1?" día":" días"))};
+  return {k:"activo", t:"Al día", cls:"bien", txt:"Vence en "+d+" días"};
+}
+var ORDEN={vencido:0, pronto:1, prueba:2, activo:3};
+
+async function cargarPanel(){
+  var r=await sb.from("canon_propietarios").select("*").order("created_at",{ascending:false});
+  var L=$("admin-lista");
+  if(r.error){ $("admin-sub").textContent="No se pudo cargar: "+r.error.message; return; }
+  PANEL=r.data||[];
+  var cnt={vencido:0,pronto:0,prueba:0,activo:0};
+  PANEL.forEach(function(n){ cnt[estadoCobro(n).k]++; });
+  $("resumen").innerHTML=
+    '<div class="rs v"><div class="n">'+cnt.vencido+'</div><div class="l">VENCIDOS</div></div>'+
+    '<div class="rs p"><div class="n">'+cnt.pronto+'</div><div class="l">POR VENCER</div></div>'+
+    '<div class="rs a"><div class="n">'+(cnt.activo+cnt.prueba)+'</div><div class="l">AL DÍA</div></div>';
+  $("admin-sub").textContent = PANEL.length
+    ? (PANEL.length+(PANEL.length===1?" propietario registrado":" propietarios registrados"))
+    : "Todavía no hay propietarios registrados.";
+  L.innerHTML = PANEL.slice().sort(function(a,b){
+    var ea=estadoCobro(a), eb=estadoCobro(b);
+    if(ORDEN[ea.k]!==ORDEN[eb.k]) return ORDEN[ea.k]-ORDEN[eb.k];
+    return (dDias(a.paga_hasta)||0)-(dDias(b.paga_hasta)||0);
+  }).map(function(n){
+    var e=estadoCobro(n);
+    return '<div class="neg">'+
+      '<div class="cab"><span class="nm">'+esc(n.nombre)+'</span><span class="pillc '+e.k+'">'+e.t+'</span></div>'+
+      '<div class="rb">'+((n.pais==="pe")?"Perú":"Colombia")+(n.plan?" · "+esc(n.plan):"")+'</div>'+
+      '<div class="vence '+e.cls+'">'+e.txt+'</div>'+
+      '<div class="tl">'+esc(n.telefono||"sin teléfono")+'</div>'+
+      '<div class="acciones">'+
+        '<button class="abrir" onclick="entrarComoAdmin(&quot;'+n.id+'&quot;)">Ver sus datos</button>'+
+        '<button class="cobrar" onclick="cobrarA(&quot;'+n.id+'&quot;)">Cobrar</button>'+
+      '</div></div>';
+  }).join("");
+}
+
+window.marcarPagado=async function(id){
+  var n=null; PANEL.forEach(function(x){ if(x.id===id) n=x; });
+  if(!n) return;
+  var base = dDias(n.paga_hasta)>0 ? deISO(n.paga_hasta) : hoyD();
+  base.setMonth(base.getMonth()+1);
+  var r=await sb.from("canon_propietarios").update({paga_hasta:iso(base)}).eq("id",id);
+  if(r.error){ toast("No se pudo actualizar: "+r.error.message); return; }
+  closeSheet(); cargarPanel();
+  toast(n.nombre+" · pagado hasta el "+base.getDate()+"/"+(base.getMonth()+1));
+};
+
+window.cobrarA=function(id){
+  var n=null; PANEL.forEach(function(x){ if(x.id===id) n=x; });
+  if(!n) return;
+  var e=estadoCobro(n), d=dDias(n.paga_hasta);
+  var msg="Hola! Te escribo por la app de Canon.\n\n"+
+    (e.k==="vencido" ? "La mensualidad venció hace "+(-d)+" días."
+                     : "La mensualidad "+(d===0?"vence hoy":"vence en "+d+" días")+".")+
+    (n.plan?" Son "+n.plan+".":"")+"\n\n¿Te va bien que la renovemos esta semana?";
+  var tel=String(n.telefono||"").replace(/[^0-9]/g,"");
+  openSheet('<h3>'+esc(n.nombre)+'</h3><div class="ss">'+e.txt+(n.plan?" · "+esc(n.plan):"")+'</div>'+
+    '<div class="msgbox" style="margin-top:16px"><div class="msglab">Mensaje</div>'+esc(msg)+'</div>'+
+    (tel ? '<button class="btn wa" onclick="abrirWa('+JSON.stringify(tel)+','+JSON.stringify(msg)+')">Escribirle por WhatsApp</button>'
+         : '<p class="nota">Este propietario no tiene teléfono guardado.</p>')+
+    '<button class="btn primary" onclick="marcarPagado(&quot;'+id+'&quot;)">Marcar pagado · +1 mes</button>'+
+    '<button class="btn ghost" onclick="closeSheet()">Cerrar</button>');
+};
+
+window.abrirWa=function(tel,msg){ window.open("https://wa.me/"+tel+"?text="+encodeURIComponent(msg),"_blank"); };
+
+window.entrarComoAdmin=async function(id){
+  var r=await sb.from("canon_propietarios").select("*").eq("id",id).single();
+  if(r.error){ toast("No se pudo abrir"); return; }
+  CUENTA=r.data; PAIS=CUENTA.pais||"co"; soloLectura=true;
+  gate(null); $("negNombre").textContent=CUENTA.nombre;
+  $("soloLectura").style.display="block";
+  var b=document.querySelector(".salir");
+  if(b){ b.textContent="← Panel"; b.setAttribute("onclick","volverAlPanel()"); }
+  cargarTodo();
+};
+window.volverAlPanel=function(){
+  CUENTA=null; soloLectura=false; inmuebles=[]; pagos=[];
+  $("soloLectura").style.display="none";
+  gate("admin"); cargarPanel();
+};
+
+/* ── interfaz base ─────────────────── */
+var tT;
+function toast(m){$("toastTxt").textContent=m;$("toast").classList.add("on");clearTimeout(tT);
+  tT=setTimeout(function(){$("toast").classList.remove("on");},2800);}
+function openSheet(h){$("sin").innerHTML=h;$("sheet").classList.add("on");$("scrim").classList.add("on");}
+window.closeSheet=function(){$("sheet").classList.remove("on");$("scrim").classList.remove("on");};
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeSheet();});
+function find(i){for(var k=0;k<inmuebles.length;k++){if(inmuebles[k].id===i)return inmuebles[k];}return null;}
+
+window.go=function(s){
+  ["mes","props","alertas"].forEach(function(x){$("s-"+x).classList.toggle("on",x===s);});
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"),function(t){
+    t.setAttribute("aria-selected",t.dataset.s===s?"true":"false");
+  });
+  $("fab").classList.toggle("on", s==="props" && !soloLectura);
+  $("body").scrollTop=0;
+};
+
+/* ── pantalla: este mes ─────────────────── */
+function metricas(){
+  var meta=0,rec=0,c={ok:0,warn:0,bad:0},atr=[];
+  inmuebles.forEach(function(p){
+    meta+=p.canon;
+    var pg=pagoDe(p.id);
+    if(pg) rec+=pg.monto;
+    var e=estado(p); c[e]++;
+    if(e==="bad") atr.push(p);
+  });
+  return {meta:meta, rec:rec, c:c, atrasado:atr};
+}
+
+function pintarMes(){
+  var k=metricas();
+  $("hAmt").textContent=cop(k.rec);
+  $("hMeta").textContent=cop(k.meta);
+  $("hBar").style.width=(k.meta?Math.min(Math.round(k.rec/k.meta*100),100):0)+"%";
+  $("cPag").textContent=k.c.ok; $("cPen").textContent=k.c.warn; $("cAtr").textContent=k.c.bad;
+  $("mesLab").textContent=MESES_L[HOY_M].charAt(0).toUpperCase()+MESES_L[HOY_M].slice(1)+" · día "+HOY_D;
+
+  var box=$("alertBox"), deuda=k.atrasado.reduce(function(a,p){return a+p.canon;},0);
+  if(!k.atrasado.length){
+    box.classList.add("clear");
+    $("aAmt").textContent = inmuebles.length ? "Todo al día" : "Sin inmuebles";
+    $("aTxt").textContent = inmuebles.length ? "ningún inmueble atrasado" : "agrega el primero en Inmuebles";
+  }else{
+    box.classList.remove("clear");
+    $("aAmt").textContent=cop(deuda);
+    $("aTxt").textContent="sin cobrar de "+k.atrasado.length+(k.atrasado.length===1?" inmueble":" inmuebles");
+  }
+
+  var el=$("listaAtr");
+  if(!k.atrasado.length){
+    el.className="";
+    el.innerHTML='<div class="empty"><div class="e">✅</div><div class="t">Nadie debe nada</div>'+
+      '<div class="s">'+(inmuebles.length?"Todos los arriendos de este mes están cobrados.":"Cuando agregues inmuebles, aquí verás quién se atrasó.")+'</div></div>';
+  }else{
+    el.className="list";
+    el.innerHTML=k.atrasado.map(function(p){
+      return '<div class="row"><div class="ic bad">'+tipoDe(p.tipo).e+'</div>'+
+        '<div class="who"><div class="nm">'+esc(p.inq)+'</div>'+
+        '<div class="sub">'+esc(p.nombre)+' · '+dias(diasAtraso(p))+' de atraso'+
+        (p.rec?' <span class="pill sent">Avisado</span>':'')+'</div></div>'+
+        '<button class="wabtn'+(p.rec?' done':'')+'" onclick="recordar(&quot;'+p.id+'&quot;)">'+
+        '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2z"/></svg>'+
+        (p.rec?"Enviado":"Cobrar")+'</button></div>';
+    }).join("");
+  }
+
+  var n=alertasAumento().length + inmuebles.filter(function(p){var d=diasContrato(p);return d!==null&&d<=90;}).length;
+  var b=$("tabBadge"); b.textContent=n; b.style.display=n?"grid":"none";
+}
+
+/* ── pantalla: inmuebles ─────────────────── */
+function pintarProps(){
+  var el=$("listaProps");
+  if(!inmuebles.length){
+    el.className="";
+    el.innerHTML='<div class="empty"><div class="e">🏠</div><div class="t">Todavía no hay inmuebles</div>'+
+      '<div class="s">Toca el botón + para agregar el primero.</div></div>';
+    return;
+  }
+  el.className="list";
+  el.innerHTML=inmuebles.map(function(p){
+    var e=estado(p), pg=pagoDe(p.id);
+    var sub = e==="ok" ? (nombreMedio(pg.medio)+" · "+fechaCorta(pg.fecha))
+            : e==="bad" ? ("venció el "+p.dia+" · "+dias(diasAtraso(p))+" tarde")
+            : ("vence el "+p.dia+" de "+MESES_C[HOY_M]);
+    return '<button class="row" onclick="verPredio(&quot;'+p.id+'&quot;)"><div class="ic '+e+'">'+tipoDe(p.tipo).e+'</div>'+
+      '<div class="who"><div class="nm">'+esc(p.nombre)+'</div><div class="sub">'+esc(p.inq)+' · '+sub+'</div></div>'+
+      '<div class="right"><div class="v">'+cop(p.canon)+'</div>'+
+      '<div class="pill '+e+'">'+LBL[e]+'</div></div></button>';
+  }).join("");
+}
+
+/* ── pantalla: alertas ─────────────────── */
+function alertasAumento(){
+  return inmuebles.filter(function(p){var d=diasAniversario(p);return d!==null&&d<=60;})
+                  .sort(function(a,b){return diasAniversario(a)-diasAniversario(b);});
+}
+function topeIPC(){ return IPC_POR_ANIO[HOY_Y]; }
+function pct(v){ return v.toFixed(2).replace(".",","); }
+
+function pintarAlertas(){
+  var lista=alertasAumento(), el=$("ipc"), tope=topeIPC();
+  $("hAum").textContent = "Aumentos que puedes aplicar";
+  if(!lista.length){
+    el.innerHTML='<div class="empty"><div class="e">📅</div><div class="t">Ningún aumento cerca</div>'+
+      '<div class="s">Te aviso 60 días antes de cada aniversario.</div></div>';
+  }else{
+    el.innerHTML=lista.map(function(p){
+      var d=diasAniversario(p);
+      var libre = !cfg().tope || !p.vivienda;
+      if(libre){
+        return '<button class="card nota" style="width:100%;text-align:left" onclick="verAumento(&quot;'+p.id+'&quot;)">'+
+          '<div class="top"><span class="nm">'+esc(p.nombre)+'</span>'+
+          '<span class="when" style="color:var(--warn)">en '+dias(d)+'</span></div>'+
+          '<div class="sub">'+esc(p.inq)+' · '+cop(p.canon)+'</div>'+
+          '<p class="legal">'+(PAIS==="pe"
+            ? 'En Perú no hay tope legal de aumento: sube lo que hayan pactado en el contrato.'
+            : 'Es <b>local comercial</b>, así que el tope del IPC de la Ley 820 no le aplica: el aumento es el que hayan pactado en el contrato.')+'</p></button>';
+      }
+      if(tope===undefined){
+        return '<button class="card nota" style="width:100%;text-align:left" onclick="verAumento(&quot;'+p.id+'&quot;)">'+
+          '<div class="top"><span class="nm">'+esc(p.nombre)+'</span>'+
+          '<span class="when" style="color:var(--warn)">en '+dias(d)+'</span></div>'+
+          '<div class="sub">'+esc(p.inq)+' · '+cop(p.canon)+'</div>'+
+          '<p class="legal">Falta cargar el <b>IPC de '+(HOY_Y-1)+'</b>, que es el tope de este año. Búscalo en el DANE antes de avisar el aumento.</p></button>';
+      }
+      var nuevo=Math.round(p.canon*(1+tope/100));
+      return '<button class="card hot" style="width:100%;text-align:left" onclick="verAumento(&quot;'+p.id+'&quot;)">'+
+        '<div class="top"><span class="nm">'+esc(p.nombre)+'</span><span class="when">en '+dias(d)+'</span></div>'+
+        '<div class="sub">'+esc(p.inq)+' · cumple 12 meses con el mismo '+palabra()+'</div>'+
+        '<div class="subida"><span class="de">'+cop(p.canon)+'</span><span class="fl">→</span>'+
+        '<span class="a">'+cop(nuevo)+'</span><span class="pc">+'+pct(tope)+'%</span></div>'+
+        '<p class="legal">Tope legal para '+HOY_Y+': <b>'+pct(tope)+'%</b>, el IPC de '+(HOY_Y-1)+'. Puedes subir menos, nunca más. Avísale por escrito antes del aniversario.</p></button>';
+    }).join("");
+  }
+
+  var venc=inmuebles.filter(function(p){var d=diasContrato(p);return d!==null&&d<=90;})
+                    .sort(function(a,b){return diasContrato(a)-diasContrato(b);});
+  $("contratos").innerHTML = venc.length
+    ? venc.map(function(p){
+        return '<div class="card"><div class="top"><span class="nm">'+esc(p.nombre)+'</span>'+
+          '<span class="when">en '+dias(diasContrato(p))+'</span></div>'+
+          '<div class="sub">'+esc(p.inq)+' · vence el contrato</div>'+
+          '<p class="legal">'+(PAIS==="co"
+            ? 'Si no van a renovar, el preaviso se manda con <b>3 meses</b> de anticipación. Ya estás dentro de ese plazo.'
+            : 'Si no van a renovar, avísale por escrito con la anticipación que diga el contrato.')+'</p></div>';
+      }).join("")
+    : '<div class="empty"><div class="e">📄</div><div class="t">Ningún contrato por vencer</div>'+
+      '<div class="s">Todos tienen más de 90 días por delante.</div></div>';
+
+  var acum=0;
+  pagos.forEach(function(p){ if(p.anio===HOY_Y) acum+=p.monto; });
+  $("anualL").textContent="Recibido en "+HOY_Y;
+  $("anualV").textContent=cop(acum);
+  $("hDecl").textContent = PAIS==="pe" ? "Para la SUNAT" : "Para la declaración de renta";
+  $("anualD").textContent = PAIS==="pe"
+    ? "En Perú el alquiler se declara mes a mes con el Formulario 1683: 5% de lo que recibiste, según el último dígito de tu RUC. Este total te sirve para cuadrar la declaración anual."
+    : "Declaras renta si tus ingresos brutos del año pasan de 1.400 UVT. Este total es solo de arriendos: súmalo con tus otros ingresos y confírmalo con tu contador. El plazo va entre el 12 de agosto y el 26 de octubre según los dos últimos dígitos de tu cédula.";
+}
+
+function pintar(){ pintarMes(); pintarProps(); pintarAlertas(); }
+
+/* ── ficha del inmueble ─────────────────── */
+var medioSel=null;
+window.verPredio=function(i){
+  var p=find(i); if(!p) return;
+  var e=estado(p), pg=pagoDe(p.id), dA=diasAniversario(p), dC=diasContrato(p);
+  var h='<h3>'+esc(p.nombre)+'</h3><div class="ss">'+esc(p.inq)+(p.ciudad?' · '+esc(p.ciudad):'')+'</div>'+
+    '<div style="margin:17px 0 6px">'+
+    '<div class="kv"><span class="k">'+(palabra()==="canon"?"Canon mensual":"Alquiler mensual")+'</span><span class="v">'+cop(p.canon)+'</span></div>'+
+    (p.admin?'<div class="kv"><span class="k">Administración</span><span class="v">'+cop(p.admin)+'</span></div>':'')+
+    '<div class="kv"><span class="k">Estado</span><span class="v '+(e==="bad"?"bad":e==="ok"?"ok":"")+'">'+LBL[e]+'</span></div>'+
+    (pg?'<div class="kv"><span class="k">Pagó</span><span class="v">'+nombreMedio(pg.medio)+' · '+fechaCorta(pg.fecha)+'</span></div>':
+        '<div class="kv"><span class="k">Vence</span><span class="v">el '+p.dia+' de cada mes</span></div>')+
+    '<div class="kv"><span class="k">Uso</span><span class="v">'+(p.vivienda?"Vivienda":"Comercial")+'</span></div>'+
+    (dA!==null?'<div class="kv"><span class="k">Próximo aumento</span><span class="v">en '+dias(dA)+'</span></div>':'')+
+    (dC!==null?'<div class="kv"><span class="k">Vence contrato</span><span class="v">en '+dias(dC)+'</span></div>':'')+
+    '</div>';
+
+  if(soloLectura){
+    h+='<button class="btn ghost" onclick="closeSheet()">Cerrar</button>';
+    openSheet(h); return;
+  }
+
+  if(!pg){
+    medioSel=cfg().medios[0].k;
+    h+='<div class="mrow" id="mrow">'+cfg().medios.map(function(m,ix){
+      return '<button class="mb" data-m="'+m.k+'" aria-pressed="'+(ix===0)+'">'+m.n+'</button>';
+    }).join("")+'</div>'+
+    '<button class="btn primary" onclick="registrarPago(&quot;'+p.id+'&quot;)">Registrar pago de '+cop(p.canon)+'</button>'+
+    '<button class="btn wa" onclick="closeSheet();recordar(&quot;'+p.id+'&quot;)">Cobrar por WhatsApp</button>';
+  }
+  h+='<button class="btn ghost" onclick="editarInmueble(&quot;'+p.id+'&quot;)">Editar inmueble</button>';
+  openSheet(h);
+
+  var mr=$("mrow");
+  if(mr) mr.addEventListener("click",function(ev){
+    var b=ev.target.closest(".mb"); if(!b) return;
+    medioSel=b.dataset.m;
+    Array.prototype.forEach.call(this.querySelectorAll(".mb"),function(x){
+      x.setAttribute("aria-pressed", x===b?"true":"false");
+    });
+  });
+};
+
+window.registrarPago=async function(i){
+  var p=find(i); if(!p) return;
+  if(pagoDe(p.id)){ toast("Ese mes ya estaba registrado"); closeSheet(); return; }
+  var reg={inmuebleId:p.id, anio:HOY_Y, mes:HOY_M+1, monto:p.canon, medio:medioSel||cfg().medios[0].k, fecha:iso(hoyD())};
+  if(DEMO){
+    reg.id="x"+Date.now(); pagos.push(reg); p.rec=false;
+    closeSheet(); pintar(); toast("Pago de "+cop(p.canon)+" registrado"); return;
+  }
+  var r=await sb.from("canon_pagos").insert({
+    propietario_id:CUENTA.id, inmueble_id:p.id, anio:reg.anio, mes:reg.mes,
+    monto:reg.monto, medio:reg.medio, fecha:reg.fecha
+  }).select().single();
+  if(r.error){
+    toast(r.error.code==="23505" ? "Ese mes ya estaba registrado" : "No se pudo guardar: "+r.error.message);
+    return;
+  }
+  pagos.push(mapPago(r.data)); p.rec=false;
+  closeSheet(); pintar(); toast("Pago de "+cop(p.canon)+" registrado");
+};
+
+/* ── cobro por WhatsApp ─────────────────── */
+window.recordar=function(i){
+  var p=find(i); if(!p) return;
+  var donde = (CUENTA && CUENTA.cuenta) ? CUENTA.cuenta : "la cuenta de siempre";
+  var msg="Hola "+primerNombre(p.inq)+" 👋\nTe escribo por el arriendo de "+p.nombre+".\n\n"+
+    "El "+palabra()+" de "+cop(p.canon)+" venció el "+p.dia+" de "+MESES_L[HOY_M]+". "+
+    "Puedes transferir a "+donde+".\n\n¡Gracias!";
+  var tel=String(p.tel||"").replace(/[^0-9]/g,"");
+  openSheet('<h3>Cobrar por WhatsApp</h3>'+
+    '<div class="ss">'+(tel?'Se abre el chat de '+esc(primerNombre(p.inq))+'.':'No tiene teléfono guardado; puedes copiar el mensaje.')+'</div>'+
+    '<div class="msgbox"><div class="msglab">Mensaje</div>'+esc(msg)+'</div>'+
+    (tel?'<button class="btn wa" onclick="enviar(&quot;'+p.id+'&quot;,'+JSON.stringify(tel)+','+JSON.stringify(msg)+')">Enviar cobro</button>':'')+
+    '<button class="btn ghost" onclick="closeSheet()">Cancelar</button>');
+};
+window.enviar=function(i,tel,msg){
+  var p=find(i); if(!p) return;
+  window.open("https://wa.me/"+tel+"?text="+encodeURIComponent(msg),"_blank");
+  p.rec=true; closeSheet(); pintar();
+  toast("Cobro enviado a "+primerNombre(p.inq));
+};
+
+/* ── agregar y editar inmuebles ─────────────────── */
+var editandoId=null;
+function formInmueble(p){
+  var t=p||{};
+  return '<h3>'+(p?"Editar inmueble":"Nuevo inmueble")+'</h3>'+
+  '<div class="sec">Qué es</div>'+
+  '<div class="dos">'+
+    '<div class="campo"><label>Tipo</label><select id="i_tipo">'+
+      TIPOS.map(function(x){return '<option value="'+x.k+'"'+(t.tipo===x.k?' selected':'')+'>'+x.e+' '+x.n+'</option>';}).join("")+
+    '</select></div>'+
+    '<div class="campo"><label>Uso</label><select id="i_uso">'+
+      '<option value="viv"'+(t.vivienda===false?'':' selected')+'>Vivienda</option>'+
+      '<option value="com"'+(t.vivienda===false?' selected':'')+'>Comercial</option>'+
+    '</select></div>'+
+  '</div>'+
+  '<div class="campo"><label>Cómo lo identificas</label><input id="i_nom" type="text" value="'+esc(t.nombre||"")+'" placeholder="Ej: Apto 302 · Cedritos"></div>'+
+  '<div class="campo"><label>Ciudad</label><input id="i_ciu" type="text" value="'+esc(t.ciudad||"")+'" placeholder="Bogotá"></div>'+
+  '<div class="sec">Quién vive ahí</div>'+
+  '<div class="campo"><label>Inquilino</label><input id="i_inq" type="text" value="'+esc(t.inq==="Sin inquilino"?"":(t.inq||""))+'" placeholder="Nombre completo"></div>'+
+  '<div class="campo"><label>Teléfono</label><input id="i_tel" type="tel" value="'+esc(t.tel||"")+'" placeholder="310 555 2233"><div class="ay">Con indicativo del país si vas a cobrar por WhatsApp.</div></div>'+
+  '<div class="sec">Cuánto y cuándo</div>'+
+  '<div class="dos">'+
+    '<div class="campo"><label>'+(palabra()==="canon"?"Canon":"Alquiler")+' mensual</label><input id="i_canon" type="number" inputmode="numeric" value="'+(t.canon||"")+'" placeholder="1850000"></div>'+
+    '<div class="campo"><label>Administración</label><input id="i_admin" type="number" inputmode="numeric" value="'+(t.admin||"")+'" placeholder="0"></div>'+
+  '</div>'+
+  '<div class="campo"><label>Día de pago</label><input id="i_dia" type="number" min="1" max="31" inputmode="numeric" value="'+(t.dia||5)+'"><div class="ay">El día del mes en que le toca pagar.</div></div>'+
+  '<div class="sec">El contrato</div>'+
+  '<div class="dos">'+
+    '<div class="campo"><label>Empezó el</label><input id="i_ini" type="date" value="'+esc(t.inicio||"")+'"></div>'+
+    '<div class="campo"><label>Duración (meses)</label><input id="i_mes" type="number" min="1" value="'+(t.meses||12)+'"></div>'+
+  '</div>'+
+  '<div class="campo"><label>Último aumento</label><input id="i_aum" type="date" value="'+esc(t.ultimoAumento||"")+'"><div class="ay">Si nunca le has subido, déjalo vacío: cuento desde que empezó el contrato.</div></div>'+
+  '<p class="err" id="i_err"></p>'+
+  '<button class="btn primary" id="i_btn" onclick="guardarInmueble()">'+(p?"Guardar cambios":"Agregar inmueble")+'</button>'+
+  (p?'<button class="btn ghost" onclick="confirmarBorrar(&quot;'+p.id+'&quot;)">Quitar este inmueble</button>':'')+
+  '<button class="btn ghost" onclick="closeSheet()">Cancelar</button>';
+}
+
+window.nuevoInmueble=function(){ editandoId=null; openSheet(formInmueble(null)); };
+window.editarInmueble=function(i){ var p=find(i); if(!p) return; editandoId=i; openSheet(formInmueble(p)); };
+
+window.guardarInmueble=async function(){
+  var e=$("i_err");
+  function mal(t){ e.textContent=t; e.classList.add("on"); }
+  var nom=($("i_nom").value||"").trim();
+  var canon=num($("i_canon").value);
+  var dia=Math.round(num($("i_dia").value));
+  if(!nom) return mal("Ponle un nombre para reconocerlo.");
+  if(canon<=0) return mal("Escribe cuánto cobras de "+palabra()+".");
+  if(dia<1||dia>31) return mal("El día de pago tiene que estar entre 1 y 31.");
+
+  var tipo=$("i_tipo").value;
+  var datos={
+    nombre:nom, ciudad:($("i_ciu").value||"").trim()||null,
+    inquilino:($("i_inq").value||"").trim()||null, telefono:($("i_tel").value||"").trim()||null,
+    canon:canon, administracion:num($("i_admin").value), dia_pago:dia, tipo:tipo,
+    vivienda:$("i_uso").value==="viv",
+    inicio:$("i_ini").value||null, meses_contrato:Math.max(Math.round(num($("i_mes").value))||12,1),
+    ultimo_aumento:$("i_aum").value||null
+  };
+
+  if(DEMO){
+    if(editandoId){
+      var p=find(editandoId);
+      if(p){ p.nombre=nom; p.ciudad=datos.ciudad||""; p.inq=datos.inquilino||"Sin inquilino";
+             p.tel=datos.telefono||""; p.canon=canon; p.admin=datos.administracion; p.dia=dia;
+             p.tipo=tipo; p.vivienda=datos.vivienda; p.inicio=datos.inicio; p.meses=datos.meses_contrato;
+             p.ultimoAumento=datos.ultimo_aumento; }
+    }else{
+      inmuebles.push(mapInmueble(Object.assign({id:"n"+Date.now(), activo:true}, datos)));
+    }
+    closeSheet(); pintar(); toast(editandoId?"Inmueble actualizado":"Inmueble agregado"); return;
+  }
+
+  $("i_btn").disabled=true;
+  var r;
+  if(editandoId){
+    r=await sb.from("canon_inmuebles").update(datos).eq("id",editandoId).select().single();
+  }else{
+    datos.propietario_id=CUENTA.id;
+    r=await sb.from("canon_inmuebles").insert(datos).select().single();
+  }
+  $("i_btn").disabled=false;
+  if(r.error) return mal(r.error.message);
+  if(editandoId){
+    for(var k=0;k<inmuebles.length;k++){ if(inmuebles[k].id===editandoId) inmuebles[k]=mapInmueble(r.data); }
+  }else{
+    inmuebles.push(mapInmueble(r.data));
+  }
+  closeSheet(); pintar(); toast(editandoId?"Inmueble actualizado":"Inmueble agregado");
+};
+
+window.confirmarBorrar=function(i){
+  var p=find(i); if(!p) return;
+  openSheet('<h3>¿Quitar '+esc(p.nombre)+'?</h3>'+
+    '<div class="ss">Deja de aparecer en la lista. Los pagos que ya registraste se conservan.</div>'+
+    '<button class="btn primary" style="background:var(--bad)" onclick="borrarInmueble(&quot;'+p.id+'&quot;)">Sí, quitarlo</button>'+
+    '<button class="btn ghost" onclick="editarInmueble(&quot;'+p.id+'&quot;)">Cancelar</button>');
+};
+window.borrarInmueble=async function(i){
+  if(DEMO){
+    inmuebles=inmuebles.filter(function(p){return p.id!==i;});
+    closeSheet(); pintar(); toast("Inmueble quitado"); return;
+  }
+  var r=await sb.from("canon_inmuebles").update({activo:false}).eq("id",i);
+  if(r.error){ toast("No se pudo quitar: "+r.error.message); return; }
+  inmuebles=inmuebles.filter(function(p){return p.id!==i;});
+  closeSheet(); pintar(); toast("Inmueble quitado");
+};
+
+/* ── aplicar el aumento anual ─────────────────── */
+window.verAumento=function(i){
+  var p=find(i); if(!p) return;
+  if(soloLectura){ verPredio(i); return; }
+  var tope=topeIPC(), libre=!cfg().tope||!p.vivienda;
+  var sug = (!libre && tope!==undefined) ? Math.round(p.canon*(1+tope/100)) : p.canon;
+  openSheet('<h3>Subir el '+palabra()+'</h3>'+
+    '<div class="ss">'+esc(p.nombre)+' · '+esc(p.inq)+'</div>'+
+    '<div style="margin:16px 0 4px"><div class="kv"><span class="k">'+(palabra()==="canon"?"Canon":"Alquiler")+' actual</span><span class="v">'+cop(p.canon)+'</span></div></div>'+
+    '<div class="campo"><label>Nuevo '+palabra()+'</label><input id="au_v" type="number" inputmode="numeric" value="'+sug+'">'+
+      '<div class="ay">'+(libre
+        ? 'Sin tope legal: pon lo que hayan pactado en el contrato.'
+        : (tope===undefined
+            ? 'Falta el IPC de '+(HOY_Y-1)+'. Búscalo en el DANE antes de subirlo.'
+            : 'Tope legal '+HOY_Y+': +'+pct(tope)+'% ('+cop(Math.round(p.canon*(1+tope/100)))+'). Puedes poner menos, nunca más.'))+
+      '</div></div>'+
+    '<p class="err" id="au_err"></p>'+
+    '<button class="btn primary" onclick="aplicarAumento(&quot;'+p.id+'&quot;)">Aplicar desde hoy</button>'+
+    '<button class="btn ghost" onclick="closeSheet()">Cancelar</button>');
+};
+
+window.aplicarAumento=async function(i){
+  var p=find(i); if(!p) return;
+  var v=num($("au_v").value), e=$("au_err");
+  if(v<=0){ e.textContent="Escribe el nuevo valor."; e.classList.add("on"); return; }
+  var tope=topeIPC(), libre=!cfg().tope||!p.vivienda;
+  if(!libre && tope!==undefined && v>Math.round(p.canon*(1+tope/100))+1){
+    e.textContent="Ese valor pasa el tope legal de "+pct(tope)+"%. El máximo es "+cop(Math.round(p.canon*(1+tope/100)))+".";
+    e.classList.add("on"); return;
+  }
+  var f=iso(hoyD());
+  if(DEMO){ p.canon=v; p.ultimoAumento=f; closeSheet(); pintar(); toast(palabra()==="canon"?"Canon actualizado":"Alquiler actualizado"); return; }
+  var r=await sb.from("canon_inmuebles").update({canon:v, ultimo_aumento:f}).eq("id",i).select().single();
+  if(r.error){ e.textContent=r.error.message; e.classList.add("on"); return; }
+  for(var k=0;k<inmuebles.length;k++){ if(inmuebles[k].id===i) inmuebles[k]=mapInmueble(r.data); }
+  closeSheet(); pintar(); toast(palabra()==="canon"?"Canon actualizado":"Alquiler actualizado");
+};
+
+/* ── arranque ─────────────────── */
+sb.auth.getSession().then(function(){ arrancar(); });
+if("serviceWorker" in navigator){
+  window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
+}
+})();
+</script>
+</body>
+</html>
