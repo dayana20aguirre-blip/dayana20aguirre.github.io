@@ -203,9 +203,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;pad
 .badge{position:absolute;transform:translate(13px,-5px);background:var(--bad);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:100px;display:grid;place-items:center;padding:0 4px;font-family:"Roboto Mono",monospace}
 
 /* sheet */
-.scrim{position:absolute;inset:0;background:rgba(12,10,12,.46);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:20}
+.scrim{position:absolute;inset:0;background:rgba(12,10,12,.46);opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:49}
 .scrim.on{opacity:1;pointer-events:auto}
-.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surf);border-radius:22px 22px 0 0;box-shadow:var(--sh-sheet);z-index:21;transform:translateY(102%);transition:transform .28s cubic-bezier(.2,.85,.25,1);max-height:90%;overflow-y:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surf);border-radius:22px 22px 0 0;box-shadow:var(--sh-sheet);z-index:50;transform:translateY(102%);transition:transform .28s cubic-bezier(.2,.85,.25,1);max-height:90%;overflow-y:auto}
 .sheet.on{transform:none}
 @media (prefers-reduced-motion:reduce){.sheet,.scrim{transition:none}}
 .grab{width:36px;height:4px;background:var(--rule-2);border-radius:100px;margin:10px auto 0}
@@ -230,7 +230,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;pad
 .mb{flex:none;font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:100px;border:1px solid var(--rule-2);color:var(--ink-2);transition:all .14s ease}
 .mb[aria-pressed="true"]{background:var(--ink);color:var(--page);border-color:var(--ink)}
 
-.toast{position:absolute;left:16px;right:16px;bottom:74px;z-index:30;background:var(--ink);color:var(--page);border-radius:13px;padding:12px 16px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(12px);pointer-events:none;transition:all .25s cubic-bezier(.2,.85,.25,1)}
+.toast{position:absolute;left:16px;right:16px;bottom:74px;z-index:55;background:var(--ink);color:var(--page);border-radius:13px;padding:12px 16px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(12px);pointer-events:none;transition:all .25s cubic-bezier(.2,.85,.25,1)}
 .toast.on{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
 .toast .d{width:7px;height:7px;border-radius:100px;background:var(--brand);flex:none}
@@ -703,18 +703,47 @@ window.marcarPagado=async function(id){
 window.cobrarA=function(id){
   var n=null; PANEL.forEach(function(x){ if(x.id===id) n=x; });
   if(!n) return;
-  var e=estadoCobro(n), d=dDias(n.paga_hasta);
-  var msg="Hola! Te escribo por la app de Canon.\n\n"+
-    (e.k==="vencido" ? "La mensualidad venció hace "+(-d)+" días."
-                     : "La mensualidad "+(d===0?"vence hoy":"vence en "+d+" días")+".")+
-    (n.plan?" Son "+n.plan+".":"")+"\n\n¿Te va bien que la renovemos esta semana?";
+  var e=estadoCobro(n), d=dDias(n.paga_hasta), msg;
+  if(e.k==="prueba"){
+    /* Todavia no tiene fecha de cobro: no se le "renueva" nada, se le propone arrancar. */
+    msg="Hola! Te escribo por la app de Canon.\n\n¿Cómo te ha ido probándola? Si te está sirviendo, la dejamos activa"+
+        (n.plan?" por "+n.plan:"")+".\n\n¿Te va bien que arranquemos este mes?";
+  }else{
+    msg="Hola! Te escribo por la app de Canon.\n\n"+
+      (e.k==="vencido" ? "La mensualidad venció hace "+(-d)+(d===-1?" día.":" días.")
+                       : "La mensualidad "+(d===0?"vence hoy":"vence en "+d+(d===1?" día":" días"))+".")+
+      (n.plan?" Son "+n.plan+".":"")+"\n\n¿Te va bien que la renovemos esta semana?";
+  }
   var tel=String(n.telefono||"").replace(/[^0-9]/g,"");
   openSheet('<h3>'+esc(n.nombre)+'</h3><div class="ss">'+e.txt+(n.plan?" · "+esc(n.plan):"")+'</div>'+
-    '<div class="msgbox" style="margin-top:16px"><div class="msglab">Mensaje</div>'+esc(msg)+'</div>'+
+    '<div class="sec">Lo que me paga</div>'+
+    '<div class="campo"><label>Cuánto paga</label><input id="c_plan" type="text" value="'+esc(n.plan||"")+'" placeholder="$120.000 al mes">'+
+      '<div class="ay">Aparece en el mensaje de cobro.</div></div>'+
+    '<div class="campo"><label>Está pagado hasta</label><input id="c_hasta" type="date" value="'+esc(n.paga_hasta?String(n.paga_hasta).slice(0,10):"")+'">'+
+      '<div class="ay">Déjalo vacío mientras esté en prueba.</div></div>'+
+    '<p class="err" id="c_err"></p>'+
+    '<button class="btn ghost" onclick="guardarCobro(&quot;'+id+'&quot;)">Guardar</button>'+
+    '<div class="sec">Cobrarle</div>'+
+    '<div class="msgbox"><div class="msglab">Mensaje</div>'+esc(msg)+'</div>'+
     (tel ? '<button class="btn wa" onclick="abrirWa('+JSON.stringify(tel)+','+JSON.stringify(msg)+')">Escribirle por WhatsApp</button>'
          : '<p class="nota">Este propietario no tiene teléfono guardado.</p>')+
     '<button class="btn primary" onclick="marcarPagado(&quot;'+id+'&quot;)">Marcar pagado · +1 mes</button>'+
     '<button class="btn ghost" onclick="closeSheet()">Cerrar</button>');
+};
+
+/* Guardar el precio y la fecha de cobro, y volver a abrir la ficha
+   para que el mensaje de WhatsApp salga ya con el precio nuevo. */
+window.guardarCobro=async function(id){
+  var e=$("c_err");
+  var r=await sb.from("canon_propietarios").update({
+    plan:($("c_plan").value||"").trim()||null,
+    paga_hasta:$("c_hasta").value||null
+  }).eq("id",id).select().single();
+  if(r.error){ e.textContent=r.error.message; e.classList.add("on"); return; }
+  for(var k=0;k<PANEL.length;k++){ if(PANEL[k].id===id) PANEL[k]=r.data; }
+  await cargarPanel();
+  cobrarA(id);
+  toast("Guardado");
 };
 
 window.abrirWa=function(tel,msg){ window.open("https://wa.me/"+tel+"?text="+encodeURIComponent(msg),"_blank"); };
